@@ -1,0 +1,5665 @@
+@start
+; Entry point for RST $00
+@org $0000
+@label=start
+c00000 di            ; Disable interrupts
+ 00001 ld sp,24064   ; Setup the stack pointer
+ 00004 jp 257        ; Continue initialization
+
+; Routine at 7
+c00007 rst 56        ;
+; This entry point is used by the routines at #R237, #R673, #R717, #R735,
+; #R1073, #R1519, #R1777, #R1860, #R2806, #R3540, #R4261, #R4271, #R4277,
+; #R4683, #R4952, #R6082, #R6856, #R6894 and #R8076.
+*00008 jp 2456       ;
+
+; Entry point for RST $08
+c00011 ld hl,(23645) ;
+ 00014 jr 21         ;
+
+; Routine at 16
+;
+; Used by the routines at #R257, #R673, #R1107, #R1162, #R1329, #R2127, #R2160,
+; #R2213, #R2238, #R2276, #R2283, #R3232 and #R6993.
+c00016 jp 2134       ;
+
+; Routine at 19
+c00019 rst 56        ;
+ 00020 rst 56        ;
+; This entry point is used by the routine at #R11.
+*00021 jp 3300       ;
+
+; Routine at 24
+;
+; Used by the routines at #R1541, #R1719, #R2134, #R3101, #R3300, #R3367 and
+; #R3429.
+c00024 jp 3277       ;
+
+; Routine at 27
+;
+; Used by the routine at #R35.
+c00027 jp 3101       ;
+
+; Routine at 30
+c00030 rst 56        ;
+; This entry point is used by the routine at #R53.
+*00031 jr 75         ;
+
+; Data block at 33
+b00033 defb 93,92
+
+; Routine at 35
+c00035 ld (23647),hl ;
+ 00038 jr 27         ;
+
+; Routine at 40
+;
+; Used by the routines at #R1477, #R6760 and #R7122.
+c00040 push hl       ;
+ 00041 ld hl,(15854) ;
+ 00044 ex (sp),hl    ;
+ 00045 ret           ;
+
+; Routine at 46
+c00046 rst 56        ;
+ 00047 rst 56        ;
+; This entry point is used by the routines at #R673, #R3018, #R3429, #R3607,
+; #R3667, #R3719, #R3909, #R4037, #R4472, #R4588, #R4874, #R4938, #R5434,
+; #R5773, #R5862, #R5928, #R6082, #R6255, #R6489, #R6564, #R6568 and #R7438.
+*00048 jr 134        ;
+
+; Message at 50
+t00050 defm "/BI"
+
+; Routine at 53
+c00053 ld c,(hl)     ;
+ 00054 cpl           ;
+ 00055 rst 56        ;
+; This entry point is used by the routines at #R7, #R19, #R30, #R46, #R7212 and
+; #R7383.
+*00056 jr 31         ;
+
+; Routine at 58
+c00058 ld hl,57      ;
+ 00061 jp 8180       ;
+
+; Message at 64
+t00064 defm "PLUS"
+
+; Routine at 68
+c00068 inc sp        ;
+ 00069 ld b,h        ;
+ 00070 ld c,a        ;
+ 00071 ld d,e        ;
+ 00072 ld a,(de)     ;
+ 00073 ld bc,64256   ;
+ 00076 ret           ;
+
+; Routine at 77
+c00077 cpl           ;
+ 00078 ld d,e        ;
+ 00079 ld e,c        ;
+ 00080 ld d,e        ;
+ 00081 nop           ;
+ 00082 ret           ;
+
+; Routine at 83
+;
+; Used by the routines at #R770 and #R792.
+c00083 ld a,(hl)     ;
+ 00084 and a         ;
+ 00085 ret z         ;
+ 00086 ld (de),a     ;
+ 00087 inc hl        ;
+ 00088 inc de        ;
+ 00089 jr 83         ;
+
+; Routine at 91
+c00091 ei            ;
+ 00092 push af       ;
+ 00093 ld a,(11899)  ;
+ 00096 out (227),a   ;
+ 00098 pop af        ;
+ 00099 jp 8186       ;
+
+; Routine at 102
+c00102 ret           ;
+
+; Unused
+s00103 defs 1
+
+; Routine at 104
+c00104 ld (15860),hl ;
+ 00107 ld hl,(15865) ;
+ 00110 ld h,a        ;
+ 00111 ld a,0        ;
+ 00113 out (227),a   ;
+ 00115 ld (11899),hl ;
+ 00118 ld a,l        ;
+ 00119 out (227),a   ;
+ 00121 ld hl,(15860) ;
+ 00124 ld a,0        ;
+ 00126 out (227),a   ;
+ 00128 ld a,(11900)  ;
+ 00131 jp 8222       ;
+
+; Routine at 134
+;
+; Used by the routine at #R46.
+c00134 ld (15860),hl ;
+ 00137 pop hl        ;
+ 00138 inc hl        ;
+ 00139 push hl       ;
+ 00140 dec hl        ;
+ 00141 push de       ;
+ 00142 ld d,0        ;
+ 00144 ld e,(hl)     ;
+ 00145 ld hl,1458    ;
+ 00148 add hl,de     ;
+ 00149 add hl,de     ;
+ 00150 ld e,(hl)     ;
+ 00151 inc hl        ;
+ 00152 ld h,(hl)     ;
+ 00153 ld l,e        ;
+ 00154 pop de        ;
+ 00155 push hl       ;
+ 00156 ld hl,(15860) ;
+ 00159 ret           ;
+
+; Unused
+u00160 defb 255
+
+; Version string
+t00161 defb 19,1,23,19,1,19,0    ; BRIGHT 1; TAB 256 + 19; BRIGHT 0
+ 00168 defm "v0.8.9-DivMMC"
+ 00181 defb 13,19,1,23,21,1,19,0 ; <CR>; BRIGHT 1; TAB 256 + 21; BRIGHT 0
+ 00189 defb 127                  ; (C) + end of message
+
+; Copyright date
+t00190 defm " 2005-2021"
+ 00200 defb 13,19,1,23,19,1,19,0 ; <CR>; BRIGHT 1; TAB 256 + 19; BRIGHT 0
+ 00208 defm "Papaya Dezign"
+ 00221 defb 13,141               ; <CR>; <CR> + end of message
+
+; Map 48K ROM
+;
+; The upper bit of the ROM selection is in bit 2 of the ZX Spectrum +2A/+3 page
+; control register at $1ffd and the lower bit is in bit 4 of the ZX Spectrum
+; 128 page control register at $7ffd.
+; .
+; This routine works on all Spectrums >= 128K
+; .
+; ROM selection is as follows:
+; #LIST
+; { 00b: 128k editor, menu system and self-test program }
+; { 01b: 128k syntax checker }
+; { 10b: +3DOS }
+; { 11b: 48K BASIC }
+; LIST#
+;
+; .
+;
+; Used by the routine at #R257.
+@label=map48ROM
+c00223 ld bc,8189    ; ZX Spectrum +2A/+3 page control register
+ 00226 ld a,4        ; Upper bit of ROM selection
+ 00228 out (c),a     ;
+ 00230 ld b,127      ; ZX Spectrum 128 page control register
+ 00232 ld a,16       ; Lower bit of ROM selection
+ 00234 out (c),a     ;
+ 00236 ret           ;
+
+; Routine at 237
+;
+; Used by the routines at #R699, #R717, #R735 and #R1410.
+c00237 ld a,36       ;
+ 00239 ld b,1        ;
+ 00241 rst 8         ;
+ 00242 sbc a,d       ;
+ 00243 ret           ;
+
+; Routine at 244
+;
+; Used by the routine at #R257.
+c00244 ld b,255      ;
+*00246 djnz 246      ;
+ 00248 dec de        ;
+ 00249 ld a,d        ;
+ 00250 or e          ;
+ 00251 jr nz,244     ;
+ 00253 ret           ;
+
+; Data at 254
+b00254 defb 0,90,61
+
+; Controller init
+;
+; Used by the routine at #R0.
+@label=init
+c00257 ld bc,10800   ; Delay counter
+ 00260 xor a         ; Map DivMMC RAM bank 0 to address $2000
+ 00261 out (227),a   ;
+@label=delay
+*00263 dec bc        ; Decrement delay counter
+ 00264 nop           ; 4 t-states
+ 00265 nop           ; 4 t-states
+ 00266 nop           ; 4 t-states
+ 00267 nop           ; 4 t-states
+ 00268 ld a,b        ; Check if counter is zero
+ 00269 or c          ; and continue to loop if
+ 00270 jr nz,263     ; its not.
+ 00272 call 223      ; Map the Spectrum 48K ROM
+ 00275 call 1279     ; Initialize the AY sound chip
+ 00278 ld a,15       ;
+ 00280 ld (8223),a   ;
+ 00283 ld a,(11586)  ;
+ 00286 cp 170        ;
+ 00288 jr nz,298     ;
+ 00290 ld a,127      ; Check if the break key is being pressed
+ 00292 in a,(254)    ; Read the port
+ 00294 rra           ; Break key is in bit 0, move it to the carry flag
+ 00295 jp c,610      ; Carry flag is set if break key is not pressed
+; Set the border to black
+*00298 xor a         ;
+ 00299 out (254),a   ;
+; Clear the screen (backwards)
+ 00301 ld hl,24319   ;
+ 00304 ld de,24318   ;
+ 00307 ld bc,7935    ;
+ 00310 ld (hl),a     ;
+ 00311 lddr          ;
+; Setup the DivMMC memory banks
+ 00313 ld a,4        ; Start with bank 4
+@label=nextBank
+*00315 out (227),a   ; Select the bank
+; Write the entire bank with 0's
+ 00317 ld hl,8192    ;
+ 00320 ld de,8193    ;
+ 00323 ld bc,8191    ;
+ 00326 ld (hl),l     ;
+ 00327 ldir          ;
+ 00329 ld (15865),a  ; Save the last bank selected
+ 00332 ld hl,15869   ; Write op-code $c9 (ret) to $3dfd
+ 00335 ld (hl),201   ;
+ 00337 ld hl,15664   ; and $3d30
+ 00340 ld (hl),201   ;
+ 00342 dec a         ; On to the next bank
+ 00343 cp 255        ; Is it the last bank?
+ 00345 jr nz,315     ; If not, loop
+ 00347 ld a,4        ; Select DivMMC bank 4
+ 00349 out (227),a   ;
+ 00351 ld l,0        ; Set l = 0, h already equals $3d from above
+ 00353 ld a,(hl)     ; Read the value from $3d00
+ 00354 inc (hl)      ; Now increment the value at $3d00
+ 00355 cp (hl)       ; Compare the 2 values
+ 00356 jr nz,360     ; If they are not equal, jump forward
+ 00358 ld l,28       ; l = $1c
+*00360 xor a         ; Select DivMMC bank 0
+ 00361 out (227),a   ;
+ 00363 ld a,l        ; Save the value from l
+ 00364 ld (11923),a  ;
+ 00367 ld a,170      ; a = $aa
+ 00369 ld (11586),a  ; Save it
+ 00372 ld hl,2548    ;
+ 00375 ld (23631),hl ;
+ 00378 ld hl,23631   ;
+ 00381 ld (23633),hl ;
+ 00384 ld a,7        ;
+ 00386 ld (23695),a  ;
+ 00389 ld hl,16384   ;
+ 00392 ld (23684),hl ;
+ 00395 ld hl,6177    ;
+ 00398 ld (23688),hl ;
+ 00401 ld hl,15360   ;
+ 00404 ld (23606),hl ;
+ 00407 ld hl,161     ; Version string
+ 00410 call 3232     ; Display message
+ 00413 ld hl,190     ; Date string
+ 00416 call 3232     ; Display message
+ 00419 call 1131     ;
+ 00422 call 815      ;
+ 00425 call 954      ;
+ 00428 ld hl,8199    ;
+ 00431 call 7049     ;
+ 00434 ld (8212),a   ;
+ 00437 ld hl,2083    ;
+ 00440 ld (8215),hl  ;
+ 00443 ld a,24       ;
+ 00445 ld (8222),a   ;
+ 00448 ld hl,50161   ;
+ 00451 ld (8238),hl  ;
+ 00454 ld hl,91      ;
+ 00457 ld (8240),hl  ;
+ 00460 ld a,201      ;
+ 00462 ld (12032),a  ;
+ 00465 ld hl,51511   ;
+ 00468 ld (9254),hl  ;
+ 00471 ld (9959),hl  ;
+ 00474 ld hl,7004    ;
+ 00477 call 2127     ;
+ 00480 ld a,13       ;
+ 00482 rst 16        ;
+ 00483 ld a,128      ;
+ 00485 call 673      ;
+ 00488 ld a,136      ;
+ 00490 call 673      ;
+ 00493 ld hl,1666    ;
+ 00496 call 2127     ;
+ 00499 call 1777     ;
+ 00502 ld a,(11521)  ;
+ 00505 ld (11590),a  ;
+ 00508 ld (11594),a  ;
+ 00511 call 1073     ;
+ 00514 ld a,13       ;
+ 00516 rst 16        ;
+ 00517 ld hl,1732    ;
+ 00520 call 635      ;
+ 00523 call 735      ;
+ 00526 push af       ;
+ 00527 call 662      ;
+ 00530 pop af        ;
+ 00531 jr c,618      ;
+ 00533 call 9961     ;
+ 00536 ld hl,9984    ;
+ 00539 call 7049     ;
+ 00542 ld hl,1409    ;
+ 00545 call 635      ;
+ 00548 call 1413     ;
+ 00551 call 662      ;
+ 00554 ld hl,1769    ;
+ 00557 call 635      ;
+ 00560 call 717      ;
+ 00563 call 662      ;
+ 00566 jr nz,591     ;
+ 00568 ld a,(11923)  ;
+ 00571 and a         ;
+ 00572 jr nz,591     ;
+ 00574 ld hl,1449    ;
+ 00577 call 635      ;
+ 00580 call 699      ;
+ 00583 push af       ;
+ 00584 call nc,983   ;
+ 00587 pop af        ;
+ 00588 call 662      ;
+*00591 call 627      ;
+ 00594 ld de,2000    ;
+ 00597 call 244      ;
+ 00600 call 9862     ;
+ 00603 and 1         ;
+ 00605 call nz,9836  ;
+ 00608 jr 618        ;
+
+; Routine at 610
+;
+; Used by the routine at #R257.
+c00610 call 9862     ;
+ 00613 and 2         ;
+ 00615 call nz,9836  ;
+; This entry point is used by the routine at #R257.
+*00618 call 627      ;
+ 00621 ld hl,1       ;
+ 00624 jp 8187       ;
+
+; Routine at 627
+;
+; Used by the routines at #R257 and #R610.
+c00627 ld a,127      ;
+ 00629 in a,(254)    ;
+ 00631 rra           ;
+ 00632 ret c         ;
+ 00633 jr 627        ;
+
+; Routine at 635
+;
+; Used by the routine at #R257.
+c00635 ex de,hl      ;
+ 00636 ld hl,1760    ;
+ 00639 call 2127     ;
+ 00642 ex de,hl      ;
+ 00643 call 770      ;
+ 00646 push hl       ;
+ 00647 ld de,5       ;
+ 00650 add hl,de     ;
+ 00651 call 2127     ;
+ 00654 ld hl,1773    ;
+ 00657 call 2127     ;
+ 00660 pop hl        ;
+ 00661 ret           ;
+
+; Routine at 662
+;
+; Used by the routine at #R257.
+c00662 ld hl,1751    ;
+ 00665 jr nc,670     ;
+ 00667 ld hl,1739    ;
+*00670 jp 2127       ;
+
+; Routine at 673
+;
+; Used by the routine at #R257.
+c00673 ld de,11762   ;
+ 00676 rst 8         ;
+ 00677 add a,b       ;
+ 00678 ret c         ;
+ 00679 and 248       ;
+ 00681 rst 48        ;
+ 00682 ld c,62       ;
+ 00684 ld a,(16087)  ;
+ 00687 jr nz,648     ;
+ 00689 ld hl,11762   ;
+ 00692 call 2127     ;
+ 00695 ld a,13       ;
+ 00697 rst 16        ;
+ 00698 ret           ;
+
+; Routine at 699
+;
+; Used by the routine at #R257.
+c00699 call 237      ;
+ 00702 ret c         ;
+ 00703 push af       ;
+ 00704 ld a,3        ;
+ 00706 out (227),a   ;
+ 00708 pop af        ;
+ 00709 ld hl,8192    ;
+ 00712 ld bc,7168    ;
+ 00715 jr 727        ;
+
+; Routine at 717
+;
+; Used by the routine at #R257.
+c00717 call 237      ;
+ 00720 ret c         ;
+ 00721 ld hl,12032   ;
+ 00724 ld bc,3584    ;
+; This entry point is used by the routines at #R699 and #R1410.
+*00727 ld e,a        ;
+ 00728 push de       ;
+ 00729 rst 8         ;
+ 00730 sbc a,l       ;
+ 00731 pop de        ;
+ 00732 ld a,e        ;
+ 00733 jr 763        ;
+
+; Routine at 735
+;
+; Used by the routine at #R257.
+c00735 call 237      ;
+ 00738 ret c         ;
+ 00739 push af       ;
+ 00740 ld hl,8192    ;
+ 00743 ld bc,2043    ;
+ 00746 rst 8         ;
+ 00747 sbc a,l       ;
+ 00748 ld a,1        ;
+ 00750 out (227),a   ;
+ 00752 pop af        ;
+ 00753 push af       ;
+ 00754 ld hl,12288   ;
+ 00757 ld bc,2047    ;
+ 00760 rst 8         ;
+ 00761 sbc a,l       ;
+ 00762 pop af        ;
+; This entry point is used by the routine at #R717.
+*00763 rst 8         ;
+ 00764 sbc a,e       ;
+ 00765 ld a,0        ;
+ 00767 out (227),a   ;
+ 00769 ret           ;
+
+; Routine at 770
+;
+; Used by the routine at #R635.
+c00770 call 792      ;
+ 00773 ld hl,78      ;
+; This entry point is used by the routine at #R784.
+*00776 call 83       ;
+ 00779 ld (de),a     ;
+ 00780 ld hl,11726   ;
+ 00783 ret           ;
+
+; Routine at 784
+c00784 call 792      ;
+ 00787 ld hl,8219    ;
+ 00790 jr 776        ;
+
+; Routine at 792
+;
+; Used by the routines at #R770 and #R784.
+c00792 push hl       ;
+ 00793 ld de,11726   ;
+ 00796 ld hl,77      ;
+ 00799 call 83       ;
+ 00802 ld a,47       ;
+ 00804 ld (de),a     ;
+ 00805 inc de        ;
+ 00806 pop hl        ;
+ 00807 call 83       ;
+ 00810 ld a,46       ;
+ 00812 ld (de),a     ;
+ 00813 inc de        ;
+ 00814 ret           ;
+
+; Routine at 815
+;
+; Used by the routine at #R257.
+c00815 ld hl,11556   ;
+ 00818 ld de,7408    ;
+ 00821 ld (hl),e     ;
+ 00822 inc hl        ;
+ 00823 ld (hl),d     ;
+ 00824 inc hl        ;
+ 00825 ld de,9751    ;
+ 00828 ld (hl),e     ;
+ 00829 inc hl        ;
+ 00830 ld (hl),d     ;
+ 00831 inc hl        ;
+ 00832 ret           ;
+
+; Routine at 833
+;
+; Used by the routine at #R7954.
+c00833 ld c,a        ;
+ 00834 ld a,(11591)  ;
+ 00837 cp 6          ;
+ 00839 scf           ;
+ 00840 ret z         ;
+ 00841 ld hl,11264   ;
+*00844 ld a,(hl)     ;
+ 00845 and a         ;
+ 00846 jr z,854      ;
+ 00848 ld a,40       ;
+ 00850 add a,l       ;
+ 00851 ld l,a        ;
+ 00852 jr 844        ;
+
+; Routine at 854
+;
+; Used by the routine at #R833.
+c00854 ld (hl),c     ;
+ 00855 push hl       ;
+ 00856 pop iy        ;
+ 00858 ld hl,11591   ;
+ 00861 inc (hl)      ;
+ 00862 ret           ;
+
+; Routine at 863
+;
+; Used by the routine at #R2560.
+c00863 call 886      ;
+ 00866 ret c         ;
+ 00867 xor a         ;
+ 00868 ld (hl),a     ;
+ 00869 ld hl,11591   ;
+ 00872 dec (hl)      ;
+ 00873 or a          ;
+ 00874 ret           ;
+
+; Routine at 875
+;
+; Used by the routines at #R2648 and #R2965.
+c00875 push hl       ;
+ 00876 push bc       ;
+ 00877 call 886      ;
+ 00880 push hl       ;
+ 00881 pop iy        ;
+ 00883 pop bc        ;
+ 00884 pop hl        ;
+ 00885 ret           ;
+
+; Routine at 886
+;
+; Used by the routines at #R863, #R875 and #R2590.
+c00886 ld c,a        ;
+ 00887 ld b,6        ;
+ 00889 ld hl,11264   ;
+*00892 ld a,(hl)     ;
+ 00893 xor c         ;
+ 00894 and 248       ;
+ 00896 jr z,906      ;
+ 00898 ld a,40       ;
+ 00900 add a,l       ;
+ 00901 ld l,a        ;
+ 00902 djnz 892      ;
+ 00904 scf           ;
+ 00905 ret           ;
+
+; Routine at 906
+;
+; Used by the routine at #R886.
+c00906 ld a,(hl)     ;
+ 00907 cp c          ;
+ 00908 ret c         ;
+ 00909 ld a,c        ;
+ 00910 and 7         ;
+ 00912 ret           ;
+
+; Routine at 913
+;
+; Used by the routines at #R1058 and #R2840.
+c00913 push hl       ;
+ 00914 ld hl,(15867) ;
+ 00917 ex (sp),hl    ;
+ 00918 ret           ;
+
+; Routine at 919
+c00919 push de       ;
+ 00920 push hl       ;
+ 00921 ld a,iyl      ;
+ 00923 ld ixl,a      ;
+ 00925 ld de,9216    ;
+ 00928 ld h,0        ;
+ 00930 ld a,ixh      ;
+ 00932 add a,a       ;
+ 00933 add a,a       ;
+ 00934 add a,a       ;
+ 00935 add a,a       ;
+ 00936 add a,a       ;
+ 00937 ld l,a        ;
+ 00938 rl h          ;
+ 00940 add hl,de     ;
+ 00941 ld a,iyh      ;
+ 00943 call 999      ;
+ 00946 ld a,ixl      ;
+ 00948 push hl       ;
+ 00949 pop ix        ;
+ 00951 pop hl        ;
+ 00952 pop de        ;
+ 00953 ret           ;
+
+; Routine at 954
+;
+; Used by the routine at #R257.
+c00954 ld hl,11562   ;
+ 00957 ld de,3574    ;
+ 00960 ld bc,919     ;
+ 00963 ld a,1        ;
+ 00965 ld (hl),a     ;
+ 00966 inc hl        ;
+ 00967 ld (hl),e     ;
+ 00968 inc hl        ;
+ 00969 ld (hl),d     ;
+ 00970 inc hl        ;
+ 00971 ld (hl),255   ;
+ 00973 out (227),a   ;
+ 00975 ld (15867),bc ;
+ 00979 xor a         ;
+ 00980 out (227),a   ;
+ 00982 ret           ;
+
+; Unused
+;
+; Used by the routine at #R257.
+s00983 defs 5
+
+; Routine at 988
+c00988 ld a,3        ;
+ 00990 out (227),a   ;
+ 00992 call 8192     ;
+ 00995 xor a         ;
+ 00996 out (227),a   ;
+ 00998 ret           ;
+
+; Routine at 999
+;
+; Used by the routine at #R919.
+c00999 push bc       ;
+ 01000 ld iy,8192    ;
+ 01004 ld b,4        ;
+*01006 cp (iy+0)     ;
+ 01009 jr z,1018     ;
+ 01011 inc iyh       ;
+ 01013 djnz 1006     ;
+ 01015 pop bc        ;
+ 01016 scf           ;
+ 01017 ret           ;
+
+; Routine at 1018
+;
+; Used by the routine at #R999.
+c01018 or a          ;
+ 01019 pop bc        ;
+ 01020 ret           ;
+
+; Routine at 1021
+;
+; Used by the routine at #R1894.
+c01021 ld b,a        ;
+ 01022 ld hl,11562   ;
+*01025 call 1255     ;
+ 01028 ld ixh,a      ;
+ 01030 ld a,(hl)     ;
+ 01031 cp 255        ;
+ 01033 jr z,1054     ;
+ 01035 ld e,a        ;
+ 01036 push de       ;
+ 01037 inc hl        ;
+ 01038 ld e,(hl)     ;
+ 01039 inc hl        ;
+ 01040 ld d,(hl)     ;
+ 01041 inc hl        ;
+ 01042 push hl       ;
+ 01043 push bc       ;
+ 01044 call 1058     ;
+ 01047 pop bc        ;
+ 01048 pop hl        ;
+ 01049 pop ix        ;
+ 01051 ret nc        ;
+ 01052 jr 1025       ;
+
+; Routine at 1054
+;
+; Used by the routine at #R1021.
+c01054 ld a,30       ;
+ 01056 scf           ;
+ 01057 ret           ;
+
+; Routine at 1058
+;
+; Used by the routine at #R1021.
+c01058 push hl       ;
+ 01059 push hl       ;
+ 01060 out (227),a   ;
+ 01062 ld (15864),a  ;
+ 01065 ld h,d        ;
+ 01066 ld l,e        ;
+ 01067 call 913      ;
+ 01070 jp 2924       ;
+
+; Routine at 1073
+;
+; Used by the routine at #R257.
+c01073 ld hl,11762   ;
+ 01076 push hl       ;
+ 01077 rst 8         ;
+ 01078 adc a,d       ;
+ 01079 pop hl        ;
+ 01080 ld b,a        ;
+ 01081 and a         ;
+ 01082 ret z         ;
+*01083 push bc       ;
+ 01084 call 1091     ;
+ 01087 pop bc        ;
+ 01088 djnz 1083     ;
+ 01090 ret           ;
+
+; Data block at 1091
+;
+; Used by the routine at #R1073.
+b01091 defb 126,247,9,62,32,215,35,35
+ 01099 defb 35,247,1,197,229,1,255,0
+
+; Routine at 1107
+c01107 xor a         ;
+ 01108 cpir          ;
+ 01110 call 6993     ;
+ 01113 ld b,h        ;
+ 01114 ld c,l        ;
+ 01115 pop hl        ;
+ 01116 call 6993     ;
+ 01119 ld l,e        ;
+ 01120 ld h,d        ;
+ 01121 pop de        ;
+ 01122 push bc       ;
+ 01123 call 2219     ;
+ 01126 ld a,13       ;
+ 01128 rst 16        ;
+ 01129 pop hl        ;
+ 01130 ret           ;
+
+; Routine at 1131
+;
+; Used by the routine at #R257.
+c01131 ld hl,7107    ;
+ 01134 ld de,16384   ;
+ 01137 ld c,16       ;
+*01139 ld a,(hl)     ;
+ 01140 inc b         ;
+ 01141 and 240       ;
+ 01143 cp 160        ;
+ 01145 ld a,(hl)     ;
+ 01146 inc hl        ;
+ 01147 jr nz,1154    ;
+ 01149 and 15        ;
+ 01151 ret z         ;
+ 01152 ld b,a        ;
+*01153 xor a         ;
+*01154 ld (de),a     ;
+ 01155 call 1426     ;
+ 01158 djnz 1153     ;
+ 01160 jr 1139       ;
+
+; Routine at 1162
+c01162 ld l,a        ;
+ 01163 and 224       ;
+ 01165 ret z         ;
+ 01166 ld e,48       ;
+ 01168 ld c,102      ;
+ 01170 cp 32         ;
+ 01172 jr z,1190     ;
+ 01174 ld c,118      ;
+ 01176 cp 96         ;
+ 01178 jr z,1190     ;
+ 01180 ld e,97       ;
+ 01182 cp 128        ;
+ 01184 ld c,115      ;
+ 01186 jr z,1190     ;
+ 01188 ld c,104      ;
+*01190 ld a,c        ;
+ 01191 rst 16        ;
+ 01192 ld a,100      ;
+ 01194 rst 16        ;
+ 01195 ld a,l        ;
+ 01196 rrca          ;
+ 01197 rrca          ;
+ 01198 rrca          ;
+ 01199 and 3         ;
+ 01201 add a,e       ;
+ 01202 rst 16        ;
+ 01203 ld a,l        ;
+ 01204 and 7         ;
+ 01206 ret z         ;
+ 01207 add a,48      ;
+ 01209 rst 16        ;
+ 01210 ret           ;
+
+; Unused
+s01211 defs 11
+
+; Routine at 1222
+c01222 ld hl,8064    ;
+ 01225 push hl       ;
+ 01226 ld b,a        ;
+ 01227 xor a         ;
+ 01228 out (227),a   ;
+ 01230 ld a,(11596)  ;
+ 01233 and a         ;
+ 01234 ld a,b        ;
+ 01235 jr z,1249     ;
+ 01237 push de       ;
+ 01238 push bc       ;
+ 01239 call 9369     ;
+ 01242 pop bc        ;
+ 01243 pop de        ;
+ 01244 pop hl        ;
+ 01245 ld a,b        ;
+ 01246 jp nc,8209    ;
+*01249 ld hl,1225    ;
+ 01252 jp 8180       ;
+
+; Routine at 1255
+;
+; Used by the routines at #R1021 and #R2840.
+c01255 push hl       ;
+ 01256 push bc       ;
+ 01257 ld hl,11505   ;
+ 01260 ld bc,15      ;
+ 01263 xor a         ;
+ 01264 cpir          ;
+ 01266 ld a,12       ;
+ 01268 scf           ;
+ 01269 call z,1275   ;
+ 01272 pop bc        ;
+ 01273 pop hl        ;
+ 01274 ret           ;
+
+; Routine at 1275
+;
+; Used by the routine at #R1255.
+c01275 ld a,15       ;
+ 01277 sub c         ;
+ 01278 ret           ;
+
+; Routine at 1279
+;
+; Used by the routine at #R257.
+@label=initAY
+c01279 ld bc,65533   ; Register select port
+ 01282 out (c),b     ;
+ 01284 ld a,7        ; Select the mixer register
+ 01286 out (c),a     ;
+ 01288 ld b,191      ; Register data port
+ 01290 out (c),b     ; Disable all tone and noise channels
+ 01292 ret           ;
+
+; Routine at 1293
+c01293 push af       ;
+ 01294 push ix       ;
+ 01296 push hl       ;
+ 01297 pop ix        ;
+ 01299 ld hl,(15864) ;
+ 01302 ld c,227      ;
+ 01304 ld b,127      ;
+*01306 out (c),l     ;
+ 01308 ld a,(ix+0)   ;
+ 01311 out (c),h     ;
+ 01313 ld (de),a     ;
+ 01314 inc ix        ;
+ 01316 inc de        ;
+ 01317 and a         ;
+ 01318 jr z,1322     ;
+ 01320 djnz 1306     ;
+; This entry point is used by the routine at #R1629.
+*01322 push ix       ;
+ 01324 pop hl        ;
+ 01325 pop ix        ;
+ 01327 pop af        ;
+ 01328 ret           ;
+
+; Routine at 1329
+c01329 push bc       ;
+ 01330 cp 42         ;
+ 01332 jr nz,1350    ;
+ 01334 ld a,(15865)  ;
+ 01337 ld b,a        ;
+ 01338 ld a,0        ;
+ 01340 out (227),a   ;
+ 01342 ld a,(11590)  ;
+ 01345 ld c,a        ;
+ 01346 ld a,b        ;
+ 01347 out (227),a   ;
+ 01349 ld a,c        ;
+*01350 push af       ;
+ 01351 and 248       ;
+ 01353 srl a         ;
+ 01355 srl a         ;
+ 01357 srl a         ;
+ 01359 or 96         ;
+ 01361 rst 16        ;
+ 01362 ld a,100      ;
+ 01364 rst 16        ;
+ 01365 pop af        ;
+ 01366 push af       ;
+ 01367 and 7         ;
+ 01369 add a,48      ;
+ 01371 rst 16        ;
+ 01372 ld a,58       ;
+ 01374 rst 16        ;
+ 01375 pop af        ;
+ 01376 pop bc        ;
+ 01377 ret           ;
+
+; Routine at 1378
+c01378 in a,(254)    ;
+ 01380 ld a,0        ;
+ 01382 out (227),a   ;
+ 01384 ld a,(11595)  ;
+ 01387 and a         ;
+ 01388 jr nz,1399    ;
+; This entry point is used by the routine at #R1399.
+*01390 push hl       ;
+ 01391 ld hl,1380    ;
+ 01394 in a,(254)    ;
+ 01396 jp 8180       ;
+
+; Routine at 1399
+;
+; Used by the routine at #R1378.
+c01399 push de       ;
+ 01400 call 9369     ;
+ 01403 pop de        ;
+ 01404 jr c,1390     ;
+ 01406 jp 8206       ;
+
+; Data block at 1409
+b01409 defb 82
+
+; Routine at 1410
+c01410 ld d,h        ;
+ 01411 ld b,e        ;
+ 01412 nop           ;
+; This entry point is used by the routine at #R257.
+*01413 call 237      ;
+ 01416 ret c         ;
+ 01417 ld hl,9984    ;
+ 01420 ld bc,256     ;
+ 01423 jp 727        ;
+
+; Routine at 1426
+;
+; Used by the routine at #R1131.
+c01426 inc e         ;
+ 01427 dec c         ;
+ 01428 ret nz        ;
+ 01429 ld c,16       ;
+ 01431 ld a,e        ;
+ 01432 sub c         ;
+ 01433 ld e,a        ;
+ 01434 inc d         ;
+ 01435 ld a,d        ;
+ 01436 and 7         ;
+ 01438 ret nz        ;
+ 01439 ld a,e        ;
+ 01440 add a,32      ;
+ 01442 ld e,a        ;
+ 01443 ret c         ;
+ 01444 ld a,d        ;
+ 01445 sub 8         ;
+ 01447 ld d,a        ;
+ 01448 ret           ;
+
+; Message at 1449
+t01449 defm "BETADISK"
+
+; Data block at 1457
+b01457 defb 0,187,6,152,6,5,6,183
+ 01465 defb 6,93,6,13,5,85,6,43
+ 01473 defb 6,166,6,49
+
+; Routine at 1477
+c01477 dec b         ;
+ 01478 ret nc        ;
+ 01479 dec b         ;
+ 01480 push de       ;
+ 01481 dec b         ;
+ 01482 rst 40        ;
+ 01483 dec b         ;
+ 01484 and c         ;
+ 01485 ld b,138      ;
+ 01487 inc b         ;
+ 01488 ld de,8192    ;
+ 01491 jr 1498       ;
+
+; Routine at 1493
+c01493 ld hl,8192    ;
+ 01496 jr 1498       ;
+
+; Routine at 1498
+;
+; Used by the routines at #R1477 and #R1493.
+c01498 call 1512     ;
+ 01501 ret z         ;
+ 01502 ld a,4        ;
+ 01504 out (227),a   ;
+ 01506 ldir          ;
+ 01508 xor a         ;
+ 01509 out (227),a   ;
+ 01511 ret           ;
+
+; Routine at 1512
+;
+; Used by the routines at #R1498 and #R1519.
+c01512 ld a,(11923)  ;
+ 01515 cp 28         ;
+ 01517 scf           ;
+ 01518 ret           ;
+
+; Routine at 1519
+c01519 ld e,a        ;
+ 01520 call 1512     ;
+ 01523 ret z         ;
+ 01524 ld a,4        ;
+ 01526 out (227),a   ;
+ 01528 ld a,e        ;
+ 01529 ld hl,8192    ;
+ 01532 rst 8         ;
+ 01533 sbc a,(hl)    ;
+ 01534 ld e,a        ;
+ 01535 ld a,0        ;
+ 01537 out (227),a   ;
+ 01539 ld a,e        ;
+ 01540 ret           ;
+
+; Routine at 1541
+c01541 rst 24        ;
+ 01542 jr nz,1544    ;
+*01544 ret           ;
+
+; Routine at 1545
+;
+; Used by the routine at #R1579.
+c01545 push ix       ;
+ 01547 push hl       ;
+ 01548 pop ix        ;
+ 01550 ld hl,(15864) ;
+*01553 push bc       ;
+ 01554 ld c,227      ;
+ 01556 out (c),l     ;
+ 01558 ld a,(ix+0)   ;
+ 01561 out (c),h     ;
+ 01563 ld (de),a     ;
+ 01564 inc ix        ;
+ 01566 inc de        ;
+ 01567 pop bc        ;
+ 01568 dec bc        ;
+ 01569 ld a,b        ;
+ 01570 or c          ;
+ 01571 jr nz,1553    ;
+ 01573 push ix       ;
+ 01575 pop hl        ;
+ 01576 pop ix        ;
+ 01578 ret           ;
+
+; Routine at 1579
+c01579 ld a,d        ;
+ 01580 cp 64         ;
+ 01582 jr c,1545     ;
+ 01584 ldir          ;
+ 01586 ret           ;
+
+; Routine at 1587
+;
+; Used by the routine at #R1621.
+c01587 push ix       ;
+ 01589 push hl       ;
+ 01590 pop ix        ;
+ 01592 ld hl,(15864) ;
+*01595 push bc       ;
+ 01596 ld c,227      ;
+ 01598 ld a,(ix+0)   ;
+ 01601 out (c),l     ;
+ 01603 ld (de),a     ;
+ 01604 out (c),h     ;
+ 01606 inc ix        ;
+ 01608 inc de        ;
+ 01609 pop bc        ;
+ 01610 dec bc        ;
+ 01611 ld a,b        ;
+ 01612 or c          ;
+ 01613 jr nz,1595    ;
+ 01615 push ix       ;
+ 01617 pop hl        ;
+ 01618 pop ix        ;
+ 01620 ret           ;
+
+; Routine at 1621
+c01621 ld a,d        ;
+ 01622 cp 64         ;
+ 01624 jr c,1587     ;
+ 01626 ldir          ;
+ 01628 ret           ;
+
+; Routine at 1629
+c01629 push af       ;
+ 01630 push ix       ;
+ 01632 push hl       ;
+ 01633 pop ix        ;
+ 01635 ld hl,(15864) ;
+ 01638 ld a,h        ;
+ 01639 ld h,l        ;
+ 01640 ld l,a        ;
+ 01641 ld c,227      ;
+ 01643 ld b,127      ;
+*01645 out (c),l     ;
+ 01647 ld a,(ix+0)   ;
+ 01650 out (c),h     ;
+ 01652 ld (de),a     ;
+ 01653 inc ix        ;
+ 01655 inc de        ;
+ 01656 and a         ;
+ 01657 jr z,1661     ;
+ 01659 djnz 1645     ;
+*01661 out (c),l     ;
+ 01663 jp 1322       ;
+
+; Data block at 1666
+b01666 defb 13
+
+; Message at 1667
+t01667 defm "Mounting drives..."
+
+; Data block at 1685
+b01685 defb 13
+
+; Routine at 1686
+c01686 dec c         ;
+ 01687 nop           ;
+ 01688 ld e,(hl)     ;
+ 01689 inc hl        ;
+ 01690 ld d,(hl)     ;
+ 01691 inc hl        ;
+ 01692 ld c,(hl)     ;
+ 01693 inc hl        ;
+ 01694 ld b,(hl)     ;
+ 01695 inc hl        ;
+ 01696 ret           ;
+
+; Routine at 1697
+c01697 ld a,b        ;
+ 01698 or c          ;
+ 01699 or d          ;
+ 01700 or e          ;
+ 01701 ret           ;
+
+; Routine at 1702
+;
+; Used by the routines at #R2697, #R2710, #R4297, #R4632, #R5186, #R5208 and
+; #R6760.
+c01702 ld a,(hl)     ;
+ 01703 cp b          ;
+ 01704 ret nz        ;
+ 01705 dec hl        ;
+ 01706 ld a,(hl)     ;
+ 01707 cp c          ;
+ 01708 ret nz        ;
+ 01709 dec hl        ;
+ 01710 ld a,(hl)     ;
+ 01711 cp d          ;
+ 01712 ret nz        ;
+ 01713 dec hl        ;
+ 01714 ld a,(hl)     ;
+ 01715 cp e          ;
+ 01716 ret nz        ;
+ 01717 scf           ;
+ 01718 ret           ;
+
+; Routine at 1719
+c01719 rst 24        ;
+ 01720 jr nc,1759    ;
+ 01722 ret           ;
+
+; Routine at 1723
+;
+; Used by the routine at #R6802.
+c01723 ld (hl),e     ;
+ 01724 inc hl        ;
+ 01725 ld (hl),d     ;
+ 01726 inc hl        ;
+ 01727 ld (hl),c     ;
+ 01728 inc hl        ;
+ 01729 ld (hl),b     ;
+ 01730 inc hl        ;
+ 01731 ret           ;
+
+; Routine at 1732
+c01732 ld b,l        ;
+ 01733 ld d,e        ;
+ 01734 ld e,b        ;
+ 01735 ld b,h        ;
+ 01736 ld c,a        ;
+ 01737 ld d,e        ;
+ 01738 nop           ;
+ 01739 rla           ;
+ 01740 jr 1743       ;
+
+; Message at 1742
+t01742 defm "[ERROR]"
+
+; Data block at 1749
+b01749 defb 13,0,23,27,1
+
+; Message at 1754
+t01754 defm "[OK]"
+
+; Data block at 1758
+b01758 defb 13,0
+
+; Message at 1760
+t01760 defm "Loading "
+
+; Data block at 1768
+b01768 defb 0
+
+; Message at 1769
+t01769 defm "NMI"
+
+; Data block at 1772
+b01772 defb 0
+
+; Message at 1773
+t01773 defm "..."
+
+; Data block at 1776
+b01776 defb 0
+
+; Routine at 1777
+;
+; Used by the routine at #R257.
+c01777 ld hl,11762   ;
+ 01780 push hl       ;
+ 01781 rst 8         ;
+ 01782 add a,h       ;
+ 01783 pop hl        ;
+*01784 ld a,(hl)     ;
+ 01785 and a         ;
+ 01786 ret z         ;
+ 01787 push hl       ;
+ 01788 ld bc,0       ;
+ 01791 rst 8         ;
+ 01792 sbc a,b       ;
+ 01793 pop hl        ;
+ 01794 ld de,6       ;
+ 01797 add hl,de     ;
+ 01798 jr 1784       ;
+
+; Routine at 1800
+c01800 call 1828     ;
+ 01803 scf           ;
+ 01804 ret z         ;
+ 01805 ld l,a        ;
+ 01806 push hl       ;
+ 01807 call 2859     ;
+ 01810 pop hl        ;
+ 01811 ret c         ;
+ 01812 ld a,l        ;
+ 01813 call 2003     ;
+ 01816 ret c         ;
+ 01817 xor a         ;
+ 01818 push iy       ;
+ 01820 pop hl        ;
+ 01821 ld (hl),a     ;
+ 01822 inc hl        ;
+ 01823 ld (hl),a     ;
+ 01824 inc hl        ;
+ 01825 ld (hl),a     ;
+ 01826 or a          ;
+ 01827 ret           ;
+
+; Routine at 1828
+;
+; Used by the routine at #R1800.
+c01828 push bc       ;
+ 01829 ld hl,11504   ;
+ 01832 ld bc,15      ;
+ 01835 cpir          ;
+ 01837 pop bc        ;
+ 01838 ret nz        ;
+ 01839 ld a,29       ;
+ 01841 ret           ;
+
+; Routine at 1842
+;
+; Used by the routine at #R1860.
+c01842 ld hl,11520   ;
+ 01845 ld b,12       ;
+*01847 cp (hl)       ;
+ 01848 jr z,1856     ;
+ 01850 inc hl        ;
+ 01851 inc hl        ;
+ 01852 inc hl        ;
+ 01853 djnz 1847     ;
+ 01855 ret           ;
+
+; Routine at 1856
+;
+; Used by the routine at #R1842.
+c01856 ld a,31       ;
+ 01858 scf           ;
+ 01859 ret           ;
+
+; Routine at 1860
+c01860 ld l,a        ;
+ 01861 push hl       ;
+ 01862 push bc       ;
+ 01863 call 1842     ;
+ 01866 pop bc        ;
+ 01867 pop hl        ;
+ 01868 ret c         ;
+ 01869 ld a,c        ;
+ 01870 and a         ;
+ 01871 jr z,1880     ;
+ 01873 call 2003     ;
+ 01876 ld a,11       ;
+ 01878 ccf           ;
+ 01879 ret c         ;
+*01880 inc c         ;
+ 01881 ld a,l        ;
+ 01882 ld hl,11762   ;
+ 01885 push bc       ;
+ 01886 push hl       ;
+ 01887 rst 8         ;
+ 01888 add a,h       ;
+ 01889 pop hl        ;
+ 01890 jr nc,1894    ;
+ 01892 pop bc        ;
+ 01893 ret           ;
+
+; Routine at 1894
+;
+; Used by the routine at #R1860.
+c01894 call 2038     ;
+ 01897 pop bc        ;
+ 01898 ld a,(hl)     ;
+ 01899 call 1935     ;
+ 01902 dec c         ;
+ 01903 jr nz,1913    ;
+ 01905 push hl       ;
+ 01906 push bc       ;
+ 01907 call 1979     ;
+ 01910 pop bc        ;
+ 01911 pop hl        ;
+ 01912 ld c,a        ;
+*01913 ex de,hl      ;
+ 01914 ld a,(de)     ;
+ 01915 push hl       ;
+ 01916 push bc       ;
+ 01917 call 1021     ;
+ 01920 pop bc        ;
+ 01921 pop hl        ;
+ 01922 ret c         ;
+ 01923 ld (hl),a     ;
+ 01924 inc hl        ;
+ 01925 ld (hl),c     ;
+ 01926 inc hl        ;
+ 01927 ld a,b        ;
+ 01928 or ixl        ;
+ 01930 or 128        ;
+ 01932 ld (hl),a     ;
+ 01933 ld a,c        ;
+ 01934 ret           ;
+
+; Routine at 1935
+;
+; Used by the routine at #R1894.
+c01935 push hl       ;
+ 01936 push bc       ;
+ 01937 inc hl        ;
+ 01938 and 224       ;
+ 01940 cp 128        ;
+ 01942 jr nz,1963    ;
+ 01944 ld a,(hl)     ;
+ 01945 bit 7,a       ;
+ 01947 ld a,64       ;
+ 01949 jr z,1963     ;
+ 01951 ld b,64       ;
+ 01953 and 7         ;
+ 01955 cp 5          ;
+ 01957 ld a,48       ;
+ 01959 jr nz,1963    ;
+ 01961 ld a,24       ;
+*01963 dec hl        ;
+ 01964 ld c,a        ;
+ 01965 ld a,(hl)     ;
+ 01966 and 224       ;
+ 01968 cp 96         ;
+ 01970 jr nz,1974    ;
+ 01972 ld c,176      ;
+*01974 ld a,c        ;
+ 01975 pop hl        ;
+ 01976 ld c,l        ;
+ 01977 pop hl        ;
+ 01978 ret           ;
+
+; Routine at 1979
+;
+; Used by the routine at #R1894.
+c01979 ld c,a        ;
+ 01980 call 1988     ;
+ 01983 ld a,c        ;
+ 01984 ret c         ;
+ 01985 inc a         ;
+ 01986 jr 1979       ;
+
+; Routine at 1988
+;
+; Used by the routine at #R1979.
+c01988 ld hl,11521   ;
+ 01991 ld b,12       ;
+*01993 ld a,(hl)     ;
+ 01994 cp c          ;
+ 01995 ret z         ;
+ 01996 inc hl        ;
+ 01997 inc hl        ;
+ 01998 inc hl        ;
+ 01999 djnz 1993     ;
+ 02001 scf           ;
+ 02002 ret           ;
+
+; Routine at 2003
+;
+; Used by the routines at #R1800, #R1860, #R2540 and #R2840.
+c02003 push bc       ;
+ 02004 call 2062     ;
+ 02007 jr c,2025     ;
+ 02009 ld iy,11520   ;
+ 02013 ld b,12       ;
+*02015 cp (iy+1)     ;
+ 02018 jr z,2030     ;
+ 02020 call 2055     ;
+ 02023 djnz 2015     ;
+*02025 pop bc        ;
+ 02026 ld a,11       ;
+ 02028 scf           ;
+ 02029 ret           ;
+
+; Routine at 2030
+;
+; Used by the routine at #R2003.
+c02030 ld a,(iy+2)   ;
+ 02033 and 15        ;
+ 02035 or a          ;
+ 02036 pop bc        ;
+ 02037 ret           ;
+
+; Routine at 2038
+;
+; Used by the routine at #R1894.
+c02038 ld de,11520   ;
+ 02041 ld b,12       ;
+*02043 ld a,(de)     ;
+ 02044 and a         ;
+ 02045 ret z         ;
+ 02046 inc de        ;
+ 02047 inc de        ;
+ 02048 inc de        ;
+ 02049 djnz 2043     ;
+ 02051 ld a,11       ;
+ 02053 scf           ;
+ 02054 ret           ;
+
+; Routine at 2055
+;
+; Used by the routine at #R2003.
+c02055 inc iy        ;
+ 02057 inc iy        ;
+ 02059 inc iy        ;
+ 02061 ret           ;
+
+; Routine at 2062
+;
+; Used by the routine at #R2003.
+c02062 ld b,a        ;
+ 02063 and a         ;
+ 02064 scf           ;
+ 02065 ret z         ;
+ 02066 cp 42         ;
+ 02068 ld a,(11590)  ;
+ 02071 ret z         ;
+ 02072 ld a,b        ;
+ 02073 cp 36         ;
+ 02075 ld a,(11594)  ;
+ 02078 jr z,2062     ;
+ 02080 ld a,b        ;
+ 02081 or a          ;
+ 02082 ret           ;
+
+; Data block at 2083
+b02083 defb 128
+
+; Message at 2084
+t02084 defm "No SYST"
+
+; Routine at 2091
+c02091 ld b,l        ;
+ 02092 call 49180    ;
+ 02095 inc d         ;
+ 02096 ret nz        ;
+ 02097 inc c         ;
+ 02098 ret nz        ;
+ 02099 inc b         ;
+ 02100 ret           ;
+
+; Routine at 2101
+;
+; Used by the routine at #R4919.
+c02101 ld a,255      ;
+ 02103 dec e         ;
+ 02104 cp e          ;
+ 02105 ret nz        ;
+ 02106 dec d         ;
+ 02107 cp d          ;
+ 02108 ret nz        ;
+ 02109 dec c         ;
+ 02110 cp c          ;
+ 02111 ret nz        ;
+ 02112 dec b         ;
+ 02113 ret           ;
+
+; Routine at 2114
+;
+; Used by the routines at #R3719, #R4472 and #R6608.
+c02114 add hl,de     ;
+ 02115 ex de,hl      ;
+ 02116 ret nc        ;
+ 02117 inc bc        ;
+ 02118 ret           ;
+
+; Routine at 2119
+;
+; Used by the routines at #R3909 and #R6894.
+c02119 or a          ;
+ 02120 ex de,hl      ;
+ 02121 sbc hl,de     ;
+ 02123 ex de,hl      ;
+ 02124 ret nc        ;
+ 02125 dec bc        ;
+ 02126 ret           ;
+
+; Routine at 2127
+;
+; Used by the routines at #R257, #R635, #R662, #R673 and #R6993.
+c02127 ld a,(hl)     ;
+ 02128 and a         ;
+ 02129 ret z         ;
+ 02130 rst 16        ;
+ 02131 inc hl        ;
+ 02132 jr 2127       ;
+
+; Routine at 2134
+;
+; Used by the routine at #R16.
+c02134 push hl       ;
+ 02135 push de       ;
+ 02136 push bc       ;
+ 02137 push af       ;
+ 02138 push iy       ;
+ 02140 ld iy,23610   ;
+ 02144 rst 24        ;
+ 02145 djnz 2147     ;
+*02147 pop iy        ;
+ 02149 pop af        ;
+ 02150 pop bc        ;
+ 02151 pop de        ;
+ 02152 pop hl        ;
+ 02153 ret           ;
+
+; Routine at 2154
+;
+; Used by the routine at #R3191.
+c02154 ld c,48       ;
+ 02156 ld h,0        ;
+ 02158 jr 2180       ;
+
+; Routine at 2160
+c02160 ld c,32       ;
+; This entry point is used by the routine at #R2283.
+*02162 ld de,10000   ;
+ 02165 call 2190     ;
+ 02168 ld de,1000    ;
+ 02171 call 2190     ;
+ 02174 ld de,100     ;
+ 02177 call 2190     ;
+; This entry point is used by the routine at #R2154.
+*02180 ld de,10      ;
+ 02183 call 2190     ;
+ 02186 ld e,1        ;
+ 02188 ld c,48       ;
+*02190 ld a,47       ;
+*02192 inc a         ;
+ 02193 or a          ;
+ 02194 sbc hl,de     ;
+ 02196 jr nc,2192    ;
+ 02198 add hl,de     ;
+ 02199 cp 58         ;
+ 02201 jr nc,2213    ;
+ 02203 cp 48         ;
+ 02205 jr nz,2215    ;
+ 02207 ld a,c        ;
+ 02208 or a          ;
+ 02209 call nz,16    ;
+ 02212 ret           ;
+
+; Routine at 2213
+;
+; Used by the routine at #R2160.
+c02213 add a,7       ;
+; This entry point is used by the routine at #R2160.
+*02215 ld c,48       ;
+ 02217 rst 16        ;
+ 02218 ret           ;
+
+; Routine at 2219
+;
+; Used by the routine at #R1107.
+c02219 ld a,d        ;
+ 02220 or e          ;
+ 02221 jr nz,2238    ;
+ 02223 ld e,h        ;
+ 02224 ld h,l        ;
+ 02225 ld l,0        ;
+ 02227 sla h         ;
+ 02229 rl e          ;
+ 02231 rl d          ;
+ 02233 call 2276     ;
+ 02236 jr 2268       ;
+
+; Routine at 2238
+;
+; Used by the routine at #R2219.
+c02238 ld l,h        ;
+ 02239 ld h,e        ;
+ 02240 ld e,d        ;
+ 02241 ld d,0        ;
+ 02243 srl e         ;
+ 02245 rr h          ;
+ 02247 rr l          ;
+ 02249 srl e         ;
+ 02251 rr h          ;
+ 02253 rr l          ;
+ 02255 srl e         ;
+ 02257 rr h          ;
+ 02259 rr l          ;
+ 02261 xor a         ;
+ 02262 call 2283     ;
+ 02265 ld a,77       ;
+ 02267 rst 16        ;
+; This entry point is used by the routine at #R2219.
+*02268 ld a,b        ;
+ 02269 cp 66         ;
+ 02271 ret z         ;
+ 02272 ld a,66       ;
+ 02274 rst 16        ;
+ 02275 ret           ;
+
+; Routine at 2276
+;
+; Used by the routine at #R2219.
+c02276 xor a         ;
+ 02277 call 2283     ;
+ 02280 ld a,b        ;
+ 02281 rst 16        ;
+ 02282 ret           ;
+
+; Routine at 2283
+;
+; Used by the routines at #R2238 and #R2276.
+c02283 ld bc,16896   ;
+ 02286 ex af,af'     ;
+ 02287 ld a,e        ;
+ 02288 or d          ;
+ 02289 jr z,2305     ;
+ 02291 call 2323     ;
+ 02294 ld a,e        ;
+ 02295 or a          ;
+ 02296 ld b,75       ;
+ 02298 jr z,2305     ;
+ 02300 call 2323     ;
+ 02303 ld b,77       ;
+*02305 push bc       ;
+ 02306 ex af,af'     ;
+ 02307 ld c,a        ;
+ 02308 call 2162     ;
+ 02311 pop bc        ;
+ 02312 ld a,c        ;
+ 02313 or a          ;
+ 02314 ret z         ;
+ 02315 ld a,46       ;
+ 02317 rst 16        ;
+ 02318 ld a,48       ;
+ 02320 add a,c       ;
+ 02321 rst 16        ;
+ 02322 ret           ;
+
+; Routine at 2323
+;
+; Used by the routine at #R2283.
+c02323 xor a         ;
+ 02324 ld l,h        ;
+ 02325 ld h,e        ;
+ 02326 ld e,d        ;
+ 02327 ld d,a        ;
+ 02328 srl e         ;
+ 02330 rr h          ;
+ 02332 rr l          ;
+ 02334 jr nc,2338    ;
+ 02336 add a,2       ;
+*02338 srl e         ;
+ 02340 rr h          ;
+ 02342 rr l          ;
+ 02344 jr nc,2348    ;
+ 02346 add a,5       ;
+*02348 ld c,a        ;
+ 02349 ret           ;
+
+; Data block at 2350
+b02350 defb 30,10,99,10,99,10,113,10
+ 02358 defb 149,11,0,10,219,9,219,9
+
+; Routine at 2366
+c02366 jr 2380       ;
+
+; Data block at 2368
+b02368 defb 228,9,246,10,0,32,7,32
+ 02376 defb 223,9,146,38,18,37,109,35
+ 02384 defb 219,9,219,9,219,9,219,9
+ 02392 defb 219,9,219,9,219,9
+
+; Routine at 2398
+c02398 ld b,h        ;
+ 02399 rlca          ;
+ 02400 ex af,af'     ;
+ 02401 rlca          ;
+ 02402 or h          ;
+ 02403 ld a,(bc)     ;
+ 02404 call z,57866  ;
+ 02407 ld a,(bc)     ;
+ 02408 jp po,57866   ;
+ 02411 ld a,(bc)     ;
+ 02412 jp po,57866   ;
+ 02415 ld a,(bc)     ;
+ 02416 jp po,57866   ;
+ 02419 ld a,(bc)     ;
+ 02420 or h          ;
+ 02421 ld a,(bc)     ;
+ 02422 jp po,57866   ;
+ 02425 ld a,(bc)     ;
+ 02426 jp po,57866   ;
+ 02429 ld a,(bc)     ;
+ 02430 dec hl        ;
+ 02431 dec bc        ;
+ 02432 dec hl        ;
+ 02433 dec bc        ;
+ 02434 dec hl        ;
+ 02435 dec bc        ;
+ 02436 dec hl        ;
+ 02437 dec bc        ;
+ 02438 dec hl        ;
+ 02439 dec bc        ;
+ 02440 dec hl        ;
+ 02441 dec bc        ;
+ 02442 dec hl        ;
+ 02443 dec bc        ;
+ 02444 dec hl        ;
+ 02445 dec bc        ;
+ 02446 dec hl        ;
+ 02447 dec bc        ;
+ 02448 dec hl        ;
+ 02449 dec bc        ;
+ 02450 jr 2463       ;
+
+; Routine at 2452
+c02452 dec hl        ;
+ 02453 dec bc        ;
+ 02454 dec hl        ;
+ 02455 dec bc        ;
+; This entry point is used by the routine at #R7.
+*02456 ex (sp),hl    ;
+ 02457 ld (15866),a  ;
+ 02460 ld a,(hl)     ;
+ 02461 inc hl        ;
+ 02462 ex (sp),hl    ;
+; This entry point is used by the routines at #R2398 and #R3348.
+*02463 push iy       ;
+ 02465 push ix       ;
+ 02467 sub 128       ;
+ 02469 ld iyl,a      ;
+ 02471 ld ix,(15865) ;
+ 02475 xor a         ;
+ 02476 out (227),a   ;
+ 02478 ld a,ixl      ;
+ 02480 ld (15864),a  ;
+ 02483 push ix       ;
+ 02485 call 2503     ;
+ 02488 pop ix        ;
+ 02490 ld iyl,a      ;
+ 02492 ld a,ixl      ;
+ 02494 out (227),a   ;
+ 02496 ld a,iyl      ;
+ 02498 pop ix        ;
+ 02500 pop iy        ;
+ 02502 ret           ;
+
+; Routine at 2503
+;
+; Used by the routine at #R2452.
+c02503 ld a,iyl      ;
+ 02505 push hl       ;
+ 02506 ld hl,2350    ;
+ 02509 add a,a       ;
+ 02510 add a,l       ;
+ 02511 ld l,a        ;
+ 02512 jr nc,2515    ;
+ 02514 inc h         ;
+*02515 ld a,(hl)     ;
+ 02516 inc hl        ;
+ 02517 ld h,(hl)     ;
+ 02518 ld l,a        ;
+ 02519 ld a,ixh      ;
+ 02521 ex (sp),hl    ;
+ 02522 ret           ;
+
+; Routine at 2523
+c02523 ld a,20       ;
+ 02525 scf           ;
+ 02526 ret           ;
+
+; Routine at 2527
+c02527 ld a,(11826)  ;
+ 02530 or a          ;
+ 02531 ret           ;
+
+; Routine at 2532
+c02532 and a         ;
+ 02533 jr nz,2540    ;
+ 02535 ld a,(11590)  ;
+ 02538 or a          ;
+ 02539 ret           ;
+
+; Routine at 2540
+;
+; Used by the routine at #R2532.
+c02540 cp 42         ;
+ 02542 ret z         ;
+ 02543 ld c,a        ;
+ 02544 call 2003     ;
+ 02547 ret c         ;
+ 02548 ld a,c        ;
+ 02549 cp 36         ;
+ 02551 jr nz,2556    ;
+ 02553 ld a,(11594)  ;
+*02556 ld (11590),a  ;
+ 02559 ret           ;
+
+; Routine at 2560
+c02560 and 248       ;
+ 02562 ld c,a        ;
+ 02563 ld hl,11520   ;
+ 02566 ld b,12       ;
+*02568 ld a,(hl)     ;
+ 02569 inc hl        ;
+ 02570 inc hl        ;
+ 02571 inc hl        ;
+ 02572 and 248       ;
+ 02574 cp c          ;
+ 02575 scf           ;
+ 02576 ret z         ;
+ 02577 djnz 2568     ;
+ 02579 ld a,c        ;
+ 02580 push bc       ;
+ 02581 call 2673     ;
+ 02584 pop bc        ;
+ 02585 ret c         ;
+ 02586 ld a,c        ;
+ 02587 jp 863        ;
+
+; Routine at 2590
+c02590 ld (15860),hl ;
+ 02593 ld (15866),a  ;
+ 02596 ld (15862),bc ;
+ 02600 ld (15858),de ;
+ 02604 call 886      ;
+ 02607 ccf           ;
+ 02608 ld a,31       ;
+ 02610 ret c         ;
+ 02611 ld hl,11556   ;
+*02614 ld e,(hl)     ;
+ 02615 inc hl        ;
+ 02616 ld d,(hl)     ;
+ 02617 inc hl        ;
+ 02618 ld a,d        ;
+ 02619 and a         ;
+ 02620 ld a,14       ;
+ 02622 scf           ;
+ 02623 ret z         ;
+ 02624 push hl       ;
+ 02625 call 2632     ;
+ 02628 pop hl        ;
+ 02629 ret nc        ;
+ 02630 jr 2614       ;
+
+; Routine at 2632
+;
+; Used by the routine at #R2590.
+c02632 ld hl,(15860) ;
+ 02635 ld bc,(15862) ;
+ 02639 ld a,(15866)  ;
+ 02642 push de       ;
+ 02643 ld de,(15858) ;
+ 02647 ret           ;
+
+; Routine at 2648
+;
+; Used by the routines at #R2659 and #R2673.
+c02648 push de       ;
+ 02649 ld e,iyl      ;
+ 02651 ld a,ixh      ;
+ 02653 ld ixh,e      ;
+ 02655 pop de        ;
+ 02656 jp 875        ;
+
+; Routine at 2659
+c02659 call 2648     ;
+ 02662 ret c         ;
+ 02663 push hl       ;
+ 02664 call 2697     ;
+ 02667 pop hl        ;
+ 02668 jr nc,2677    ;
+ 02670 ld a,10       ;
+ 02672 ret           ;
+
+; Routine at 2673
+;
+; Used by the routine at #R2560.
+c02673 call 2648     ;
+ 02676 ret c         ;
+; This entry point is used by the routine at #R2659.
+*02677 push hl       ;
+ 02678 ld h,(iy+3)   ;
+ 02681 ld a,ixh      ;
+ 02683 add a,a       ;
+ 02684 add a,(iy+2)  ;
+ 02687 ld l,a        ;
+ 02688 jr nc,2691    ;
+ 02690 inc h         ;
+*02691 ld a,(hl)     ;
+ 02692 inc hl        ;
+ 02693 ld h,(hl)     ;
+ 02694 ld l,a        ;
+ 02695 ex (sp),hl    ;
+ 02696 ret           ;
+
+; Routine at 2697
+;
+; Used by the routine at #R2659.
+c02697 push iy       ;
+ 02699 pop hl        ;
+ 02700 and a         ;
+ 02701 jr nz,2710    ;
+ 02703 ld a,7        ;
+ 02705 add a,l       ;
+ 02706 ld l,a        ;
+ 02707 jp 1702       ;
+
+; Routine at 2710
+;
+; Used by the routine at #R2697.
+c02710 add a,a       ;
+ 02711 add a,a       ;
+ 02712 add a,a       ;
+ 02713 add a,l       ;
+ 02714 ld l,a        ;
+ 02715 push hl       ;
+ 02716 add a,7       ;
+ 02718 ld l,a        ;
+ 02719 call 1702     ;
+ 02722 pop hl        ;
+ 02723 ret c         ;
+ 02724 ld a,(hl)     ;
+ 02725 inc hl        ;
+ 02726 add a,e       ;
+ 02727 ld e,a        ;
+ 02728 ld a,(hl)     ;
+ 02729 inc hl        ;
+ 02730 adc a,d       ;
+ 02731 ld d,a        ;
+ 02732 ld a,(hl)     ;
+ 02733 inc hl        ;
+ 02734 adc a,c       ;
+ 02735 ld c,a        ;
+ 02736 ld a,(hl)     ;
+ 02737 adc a,b       ;
+ 02738 ld b,a        ;
+ 02739 ret           ;
+
+; Routine at 2740
+c02740 call 2859     ;
+ 02743 ret c         ;
+ 02744 push hl       ;
+ 02745 ld hl,11504   ;
+ 02748 ld a,ixh      ;
+ 02750 push af       ;
+ 02751 add a,l       ;
+ 02752 ld l,a        ;
+ 02753 ld a,iyh      ;
+ 02755 ld (hl),a     ;
+ 02756 ld a,ixh      ;
+ 02758 call 2949     ;
+ 02761 pop af        ;
+ 02762 pop hl        ;
+ 02763 ret           ;
+
+; Routine at 2764
+c02764 call 2786     ;
+ 02767 ret c         ;
+ 02768 ld a,ixh      ;
+ 02770 push af       ;
+ 02771 ld hl,11504   ;
+ 02774 call 2781     ;
+ 02777 pop af        ;
+ 02778 ld hl,11810   ;
+*02781 add a,l       ;
+ 02782 ld l,a        ;
+ 02783 xor a         ;
+ 02784 ld (hl),a     ;
+ 02785 ret           ;
+
+; Routine at 2786
+;
+; Used by the routine at #R2764.
+c02786 push de       ;
+ 02787 ld de,11504   ;
+ 02790 add a,e       ;
+ 02791 ld e,a        ;
+ 02792 ld a,(de)     ;
+ 02793 and a         ;
+ 02794 ld d,a        ;
+ 02795 ld a,ixh      ;
+ 02797 ld ixh,d      ;
+ 02799 jr nz,2864    ;
+ 02801 ld a,13       ;
+; This entry point is used by the routine at #R2840.
+*02803 pop de        ;
+ 02804 scf           ;
+ 02805 ret           ;
+
+; Routine at 2806
+c02806 ld de,11521   ;
+ 02809 ld b,12       ;
+ 02811 ld c,0        ;
+*02813 ld a,(de)     ;
+ 02814 and a         ;
+ 02815 jr z,2833     ;
+ 02817 inc c         ;
+ 02818 push de       ;
+ 02819 push bc       ;
+ 02820 ld c,a        ;
+ 02821 ld a,ixl      ;
+ 02823 out (227),a   ;
+ 02825 ld a,c        ;
+ 02826 rst 8         ;
+ 02827 or d          ;
+ 02828 xor a         ;
+ 02829 out (227),a   ;
+ 02831 pop bc        ;
+ 02832 pop de        ;
+*02833 inc de        ;
+ 02834 inc de        ;
+ 02835 inc de        ;
+ 02836 djnz 2813     ;
+ 02838 ld a,c        ;
+ 02839 ret           ;
+
+; Routine at 2840
+c02840 push iy       ;
+ 02842 call 2003     ;
+ 02845 pop bc        ;
+ 02846 ret c         ;
+ 02847 ld a,(iy+1)   ;
+ 02850 ld b,a        ;
+ 02851 ld d,(iy+0)   ;
+ 02854 ld e,(iy+2)   ;
+ 02857 ld iyl,c      ;
+; This entry point is used by the routines at #R1800 and #R2740.
+*02859 call 1255     ;
+ 02862 ret c         ;
+ 02863 push de       ;
+; This entry point is used by the routine at #R2786.
+*02864 ld e,a        ;
+ 02865 ld d,iyl      ;
+ 02867 ld a,ixh      ;
+ 02869 cp 42         ;
+ 02871 jr nz,2876    ;
+ 02873 ld a,(11590)  ;
+*02876 call 2003     ;
+ 02879 jr c,2803     ;
+ 02881 push af       ;
+ 02882 ld a,(iy+1)   ;
+ 02885 ld iyh,a      ;
+ 02887 ld iyl,d      ;
+ 02889 ld ixh,e      ;
+ 02891 pop af        ;
+ 02892 pop de        ;
+ 02893 push ix       ;
+ 02895 push iy       ;
+ 02897 out (227),a   ;
+ 02899 ld a,ixl      ;
+ 02901 ld (15864),a  ;
+ 02904 ld (15860),hl ;
+ 02907 call 913      ;
+ 02910 sub 24        ;
+ 02912 ld l,(iy+2)   ;
+ 02915 ld h,(iy+3)   ;
+ 02918 add a,a       ;
+ 02919 add a,l       ;
+ 02920 ld l,a        ;
+ 02921 jr nc,2924    ;
+ 02923 inc h         ;
+; This entry point is used by the routine at #R1058.
+*02924 ld a,(hl)     ;
+ 02925 inc hl        ;
+ 02926 ld h,(hl)     ;
+ 02927 ld l,a        ;
+ 02928 call 2944     ;
+ 02931 ld ixh,a      ;
+ 02933 ld a,0        ;
+ 02935 out (227),a   ;
+ 02937 ld a,ixh      ;
+ 02939 pop iy        ;
+ 02941 pop ix        ;
+ 02943 ret           ;
+
+; Routine at 2944
+;
+; Used by the routine at #R2840.
+c02944 push hl       ;
+ 02945 ld hl,(15860) ;
+ 02948 ret           ;
+
+; Routine at 2949
+;
+; Used by the routine at #R2740.
+c02949 ld ixh,a      ;
+ 02951 ld hl,11810   ;
+ 02954 add a,l       ;
+ 02955 ld l,a        ;
+ 02956 ld a,ixl      ;
+ 02958 cp 2          ;
+ 02960 ret nz        ;
+ 02961 ld a,ixh      ;
+ 02963 ld (hl),a     ;
+ 02964 ret           ;
+
+; Routine at 2965
+c02965 and a         ;
+ 02966 jr z,3018     ;
+ 02968 ld b,a        ;
+ 02969 call 875      ;
+ 02972 jr nc,2977    ;
+; This entry point is used by the routine at #R2977.
+*02974 ld a,14       ;
+ 02976 ret           ;
+
+; Routine at 2977
+;
+; Used by the routine at #R2965.
+c02977 ld c,a        ;
+ 02978 ld a,b        ;
+ 02979 and 7         ;
+ 02981 cp c          ;
+ 02982 jr c,2974     ;
+ 02984 push hl       ;
+ 02985 push iy       ;
+ 02987 pop hl        ;
+ 02988 ld de,11762   ;
+ 02991 ld a,b        ;
+ 02992 ld (de),a     ;
+ 02993 inc de        ;
+ 02994 inc hl        ;
+ 02995 ldi           ;
+ 02997 inc hl        ;
+ 02998 inc hl        ;
+ 02999 and 7         ;
+ 03001 add a,a       ;
+ 03002 add a,a       ;
+ 03003 add a,a       ;
+ 03004 add a,l       ;
+ 03005 ld l,a        ;
+ 03006 jr nc,3009    ;
+ 03008 inc h         ;
+*03009 ld bc,4       ;
+ 03012 ldir          ;
+ 03014 ld c,6        ;
+ 03016 jr 3088       ;
+
+; Routine at 3018
+;
+; Used by the routine at #R2965.
+c03018 push hl       ;
+ 03019 ld b,6        ;
+ 03021 ld hl,11264   ;
+ 03024 ld de,11762   ;
+*03027 push bc       ;
+ 03028 push hl       ;
+ 03029 ld a,(hl)     ;
+ 03030 inc hl        ;
+ 03031 and a         ;
+ 03032 jr z,3071     ;
+ 03034 ld b,a        ;
+ 03035 and 248       ;
+ 03037 ld c,a        ;
+ 03038 ld a,b        ;
+ 03039 and 7         ;
+ 03041 ld b,a        ;
+ 03042 ld a,(hl)     ;
+ 03043 ld ixl,a      ;
+ 03045 dec hl        ;
+ 03046 xor a         ;
+*03047 push af       ;
+ 03048 or c          ;
+ 03049 ld (de),a     ;
+ 03050 inc de        ;
+ 03051 ld a,ixl      ;
+ 03053 ld (de),a     ;
+ 03054 inc de        ;
+ 03055 push bc       ;
+ 03056 inc hl        ;
+ 03057 inc hl        ;
+ 03058 inc hl        ;
+ 03059 inc hl        ;
+ 03060 ld bc,4       ;
+ 03063 ldir          ;
+ 03065 pop bc        ;
+ 03066 pop af        ;
+ 03067 cp b          ;
+ 03068 inc a         ;
+ 03069 jr c,3047     ;
+*03071 pop hl        ;
+ 03072 ld bc,40      ;
+ 03075 add hl,bc     ;
+ 03076 pop bc        ;
+ 03077 djnz 3027     ;
+ 03079 xor a         ;
+ 03080 ld (de),a     ;
+ 03081 inc de        ;
+ 03082 ld hl,53774   ;
+ 03085 add hl,de     ;
+ 03086 ld b,h        ;
+ 03087 ld c,l        ;
+; This entry point is used by the routine at #R2977.
+*03088 ld hl,11762   ;
+ 03091 pop de        ;
+ 03092 rst 48        ;
+ 03093 ld b,183      ;
+ 03095 ret           ;
+
+; Routine at 3096
+c03096 or a          ;
+ 03097 ld hl,2192    ;
+ 03100 ret           ;
+
+; Routine at 3101
+;
+; Used by the routine at #R27.
+c03101 ld (23610),a  ;
+ 03104 res 5,(iy+1)  ;
+ 03108 ld sp,(23613) ;
+ 03112 rst 24        ;
+ 03113 jr nc,3152    ;
+ 03115 ld hl,5829    ;
+ 03118 jp z,8187     ;
+ 03121 ld hl,0       ;
+ 03124 ld (iy+55),h  ;
+ 03127 ld (iy+38),h  ;
+ 03130 ld (23563),hl ;
+ 03133 inc l         ;
+ 03134 ld (23574),hl ;
+ 03137 rst 24        ;
+ 03138 or b          ;
+ 03139 ld d,253      ;
+ 03141 sll a         ;
+ 03143 xor (hl)      ;
+ 03144 rst 24        ;
+ 03145 ld l,(hl)     ;
+ 03146 dec c         ;
+ 03147 set 5,(iy+2)  ;
+ 03151 res 3,(iy+2)  ;
+ 03155 ld a,(23610)  ;
+ 03158 and a         ;
+ 03159 ld hl,(15848) ;
+ 03162 ld b,a        ;
+ 03163 ld a,(15865)  ;
+ 03166 push af       ;
+ 03167 jr z,3218     ;
+ 03169 xor a         ;
+ 03170 out (227),a   ;
+ 03172 ld hl,9362    ;
+ 03175 push bc       ;
+ 03176 call 9254     ;
+ 03179 pop bc        ;
+ 03180 jr nc,3208    ;
+ 03182 cp 12         ;
+ 03184 jr nz,3191    ;
+ 03186 ld hl,3258    ;
+ 03189 jr 3218       ;
+
+; Routine at 3191
+;
+; Used by the routine at #R3101.
+c03191 ld a,b        ;
+ 03192 cp 1          ;
+ 03194 jr z,3208     ;
+ 03196 ld hl,3244    ; ESXDOS error # message
+ 03199 call 3232     ; Display message
+ 03202 ld l,b        ;
+ 03203 call 2154     ;
+ 03206 jr 3221       ;
+
+; Routine at 3208
+;
+; Used by the routines at #R3101 and #R3191.
+c03208 ld hl,(8215)  ;
+*03211 bit 7,(hl)    ;
+ 03213 inc hl        ;
+ 03214 jr z,3211     ;
+ 03216 djnz 3211     ;
+; This entry point is used by the routine at #R3101.
+*03218 call 3232     ; Display message
+; This entry point is used by the routine at #R3191.
+*03221 pop af        ;
+ 03222 out (227),a   ;
+ 03224 inc sp        ;
+ 03225 inc sp        ;
+ 03226 ld hl,4937    ;
+ 03229 jp 8187       ;
+
+; Display message
+;
+; Display the string pointed to by hl terminated by a value >= $7f.
+;
+; Used by the routines at #R257, #R3191 and #R3208.
+@label=displayMessage
+c03232 ld a,(hl)     ; Get a character from the string
+ 03233 cp 127        ; and compare it with $7f.
+ 03235 push af       ; Save the flags and
+ 03236 and 127       ; remove bit 7.
+ 03238 rst 16        ; Display the character.
+ 03239 pop af        ; Restore the flags.
+ 03240 ret nc        ; If no carry, end of string.
+ 03241 inc hl        ; Move the string pointer to the next character
+ 03242 jr 3232       ; and loop.
+
+; Error message
+t03244 defm "ESXDOS error "
+ 03257 defb 163             ; '#' + end of message
+
+; Too many open files message
+t03258 defm "Too many OPEN FILE"
+ 03276 defb 211                  ; 'S' + end of message
+
+; Routine at 3277
+;
+; Used by the routine at #R24.
+c03277 ld (15858),de ;
+ 03281 ex (sp),hl    ;
+ 03282 ld e,(hl)     ;
+ 03283 inc hl        ;
+ 03284 ld d,(hl)     ;
+ 03285 inc hl        ;
+ 03286 ex (sp),hl    ;
+ 03287 push hl       ;
+ 03288 ld hl,15869   ;
+ 03291 ex (sp),hl    ;
+ 03292 push de       ;
+ 03293 ld de,(15858) ;
+ 03297 jp 8186       ;
+
+; Routine at 3300
+;
+; Used by the routine at #R19.
+c03300 ld l,a        ;
+ 03301 ld a,(15865)  ;
+ 03304 ld h,a        ;
+ 03305 xor a         ;
+ 03306 out (227),a   ;
+ 03308 ld a,h        ;
+ 03309 ld (15864),a  ;
+ 03312 ld a,l        ;
+ 03313 ld (15866),a  ;
+ 03316 pop hl        ;
+ 03317 rst 24        ;
+ 03318 ld a,e        ;
+ 03319 nop           ;
+ 03320 inc hl        ;
+ 03321 push hl       ;
+ 03322 cp 254        ;
+ 03324 jr c,3351     ;
+ 03326 jr z,3367     ;
+ 03328 ld a,h        ;
+ 03329 cp 64         ;
+ 03331 jr c,3348     ;
+ 03333 ld sp,(23613) ;
+ 03337 ld a,(15864)  ;
+ 03340 out (227),a   ;
+ 03342 ld hl,5829    ;
+ 03345 jp 8187       ;
+
+; Routine at 3348
+;
+; Used by the routine at #R3300.
+c03348 ld a,1        ;
+ 03350 rst 32        ;
+; This entry point is used by the routine at #R3300.
+*03351 cp 27         ;
+ 03353 jr c,3367     ;
+ 03355 push ix       ;
+ 03357 pop hl        ;
+ 03358 call 2463     ;
+ 03361 push hl       ;
+ 03362 pop ix        ;
+ 03364 jp 8186       ;
+
+; Routine at 3367
+;
+; Used by the routines at #R3300 and #R3348.
+c03367 bit 7,(iy+0)  ;
+ 03371 ld (23610),a  ;
+ 03374 ld hl,(23645) ;
+ 03377 ld (23647),hl ;
+ 03380 jp z,3466     ;
+ 03383 cp 11         ;
+ 03385 jr z,3404     ;
+ 03387 cp 14         ;
+ 03389 jr z,3404     ;
+ 03391 cp 23         ;
+ 03393 jr z,3404     ;
+ 03395 cp 25         ;
+ 03397 jr z,3404     ;
+ 03399 cp 1          ;
+ 03401 jp nz,3466    ;
+*03404 bit 5,(iy+55) ;
+ 03408 jp nz,3466    ;
+ 03411 ld de,(23641) ;
+ 03415 and a         ;
+ 03416 sbc hl,de     ;
+ 03418 jr c,3429     ;
+ 03420 rst 24        ;
+ 03421 ei            ;
+ 03422 add hl,de     ;
+ 03423 ld hl,(23645) ;
+ 03426 dec hl        ;
+ 03427 jr 3438       ;
+
+; Routine at 3429
+;
+; Used by the routine at #R3367.
+c03429 ld hl,(23621) ;
+ 03432 rst 24        ;
+ 03433 ld l,(hl)     ;
+ 03434 add hl,de     ;
+ 03435 inc hl        ;
+ 03436 inc hl        ;
+ 03437 inc hl        ;
+; This entry point is used by the routine at #R3367.
+*03438 ld a,(iy+13)  ;
+ 03441 and a         ;
+ 03442 jr nz,3445    ;
+ 03444 inc a         ;
+*03445 ld d,a        ;
+ 03446 ld e,0        ;
+ 03448 rst 24        ;
+ 03449 adc a,e       ;
+ 03450 add hl,de     ;
+ 03451 rst 48        ;
+ 03452 inc bc        ;
+ 03453 jr nz,3458    ;
+ 03455 rst 24        ;
+ 03456 and a         ;
+ 03457 ld de,49119   ;
+ 03460 ld d,247      ;
+ 03462 ld (bc),a     ;
+ 03463 call 8212     ;
+; This entry point is used by the routine at #R3367.
+*03466 ld a,(15864)  ;
+ 03469 out (227),a   ;
+ 03471 res 3,(iy+2)  ;
+ 03475 ld hl,88      ;
+ 03478 jp 8187       ;
+
+; Routine at 3481
+c03481 call 3540     ;
+ 03484 jp c,32       ;
+ 03487 call 3568     ;
+ 03490 ld hl,(11846) ;
+ 03493 ld a,2        ;
+ 03495 out (227),a   ;
+ 03497 call 8192     ;
+ 03500 ld (15848),hl ;
+ 03503 jp c,32       ;
+ 03506 ld a,0        ;
+ 03508 out (227),a   ;
+ 03510 jp 9649       ;
+
+; Routine at 3513
+c03513 push hl       ;
+ 03514 call 3540     ;
+ 03517 pop hl        ;
+ 03518 jr c,3527     ;
+ 03520 ld a,2        ;
+ 03522 out (227),a   ;
+ 03524 call 8192     ;
+*03527 push af       ;
+ 03528 ld a,0        ;
+ 03530 out (227),a   ;
+ 03532 ld a,(15856)  ;
+ 03535 ld (15864),a  ;
+ 03538 pop af        ;
+ 03539 ret           ;
+
+; Routine at 3540
+;
+; Used by the routines at #R3481 and #R3513.
+c03540 ld b,a        ;
+ 03541 ld a,2        ;
+ 03543 out (227),a   ;
+ 03545 ld a,b        ;
+ 03546 push bc       ;
+ 03547 ld hl,8192    ;
+ 03550 ld bc,7168    ;
+ 03553 rst 8         ;
+ 03554 sbc a,l       ;
+ 03555 pop bc        ;
+ 03556 push af       ;
+ 03557 ld a,b        ;
+ 03558 rst 8         ;
+ 03559 sbc a,e       ;
+ 03560 pop af        ;
+ 03561 ld b,a        ;
+ 03562 ld a,0        ;
+ 03564 out (227),a   ;
+ 03566 ld a,b        ;
+ 03567 ret           ;
+
+; Data block at 3568
+;
+; Used by the routine at #R3481.
+b03568 defb 62,2,223,1,22,201,93,14
+ 03576 defb 174,49,244,22,165,22,173,22
+ 03584 defb 3,25,62,49,207,54,92,53
+ 03592 defb 20,54,131,54,231,51,23,52
+ 03600 defb 92,53,197,54,201,54,141
+
+; Routine at 3607
+c03607 ld d,194      ;
+ 03609 inc sp        ;
+ 03610 dec bc        ;
+ 03611 inc sp        ;
+ 03612 ld h,c        ;
+ 03613 dec (hl)      ;
+ 03614 ret m         ;
+ 03615 dec (hl)      ;
+ 03616 or d          ;
+ 03617 dec (hl)      ;
+ 03618 ld c,a        ;
+ 03619 ld (hl),165   ;
+ 03621 ld (12736),a  ;
+ 03624 jr nz,3679    ;
+ 03626 ld sp,12302   ;
+ 03629 ld c,251      ;
+ 03631 ld (60361),a  ;
+ 03634 ld a,b        ;
+ 03635 call 3667     ;
+ 03638 ld a,d        ;
+ 03639 call 3667     ;
+ 03642 ld a,e        ;
+ 03643 call 3667     ;
+ 03646 push iy       ;
+ 03648 pop hl        ;
+ 03649 ld l,24       ;
+ 03651 ld bc,4       ;
+ 03654 rst 48        ;
+ 03655 ld b,46       ;
+ 03657 inc b         ;
+ 03658 rst 48        ;
+ 03659 inc b         ;
+ 03660 ld l,12       ;
+ 03662 rst 48        ;
+ 03663 inc b         ;
+ 03664 ex de,hl      ;
+ 03665 or a          ;
+ 03666 ret           ;
+
+; Routine at 3667
+;
+; Used by the routine at #R3607.
+c03667 ld hl,15866   ;
+ 03670 ld (hl),a     ;
+ 03671 ld bc,1       ;
+ 03674 rst 48        ;
+ 03675 ld b,201      ;
+ 03677 push bc       ;
+ 03678 call 3700     ;
+ 03681 pop bc        ;
+ 03682 ret c         ;
+ 03683 push hl       ;
+ 03684 pop iy        ;
+ 03686 ld (hl),c     ;
+ 03687 inc l         ;
+ 03688 ld (hl),b     ;
+ 03689 inc l         ;
+ 03690 ld (hl),e     ;
+ 03691 inc l         ;
+ 03692 ld (hl),d     ;
+ 03693 call 3719     ;
+ 03696 ld a,(iy+1)   ;
+ 03699 ret           ;
+
+; Routine at 3700
+;
+; Used by the routine at #R3667.
+c03700 ld hl,8192    ;
+ 03703 ld b,4        ;
+*03705 ld a,(hl)     ;
+ 03706 and a         ;
+ 03707 ret z         ;
+ 03708 inc h         ;
+ 03709 djnz 3705     ;
+ 03711 scf           ;
+ 03712 ret           ;
+
+; Routine at 3713
+;
+; Used by the routine at #R3719.
+c03713 xor a         ;
+ 03714 ld (iy+0),a   ;
+ 03717 scf           ;
+ 03718 ret           ;
+
+; Routine at 3719
+;
+; Used by the routine at #R3667.
+c03719 ld hl,11520   ;
+ 03722 ld bc,0       ;
+ 03725 ld de,0       ;
+ 03728 push hl       ;
+ 03729 call 4261     ;
+ 03732 pop hl        ;
+ 03733 jr c,3713     ;
+ 03735 inc h         ;
+ 03736 ld l,254      ;
+ 03738 ld a,(hl)     ;
+ 03739 inc l         ;
+ 03740 and (hl)      ;
+ 03741 jr nz,3713    ;
+ 03743 dec h         ;
+ 03744 ld l,11       ;
+ 03746 ld a,(hl)     ;
+ 03747 inc l         ;
+ 03748 or (hl)       ;
+ 03749 cp 2          ;
+ 03751 jr nz,3713    ;
+ 03753 ld l,16       ;
+ 03755 ld a,(hl)     ;
+ 03756 cp 2          ;
+ 03758 jr nz,3713    ;
+ 03760 ld hl,11520   ;
+ 03763 ld l,19       ;
+ 03765 ld e,(hl)     ;
+ 03766 inc l         ;
+ 03767 ld d,(hl)     ;
+ 03768 ld a,d        ;
+ 03769 or e          ;
+ 03770 jr nz,3782    ;
+ 03772 ld l,32       ;
+ 03774 rst 48        ;
+ 03775 ld bc,28925   ;
+ 03778 dec de        ;
+ 03779 ld (iy+26),c  ;
+*03782 ld (iy+25),d  ;
+ 03785 ld (iy+24),e  ;
+ 03788 ld l,13       ;
+ 03790 ld a,(hl)     ;
+ 03791 ld (iy+37),a  ;
+ 03794 inc l         ;
+ 03795 ld e,(hl)     ;
+ 03796 inc l         ;
+ 03797 ld d,(hl)     ;
+ 03798 ld (iy+30),d  ;
+ 03801 ld (iy+29),e  ;
+ 03804 ld l,58       ;
+ 03806 ld a,(hl)     ;
+ 03807 cp 50         ;
+ 03809 jr z,3713     ;
+ 03811 dec l         ;
+ 03812 ld a,(hl)     ;
+ 03813 ld l,54       ;
+ 03815 cp 49         ;
+ 03817 ld a,0        ;
+ 03819 jr z,3824     ;
+ 03821 ld l,82       ;
+ 03823 inc a         ;
+*03824 ld (iy+28),a  ;
+ 03827 push de       ;
+ 03828 push iy       ;
+ 03830 pop de        ;
+ 03831 ld e,4        ;
+ 03833 ld bc,5       ;
+ 03836 ldir          ;
+ 03838 pop de        ;
+ 03839 cp 1          ;
+ 03841 jr z,3909     ;
+ 03843 push hl       ;
+ 03844 ld l,22       ;
+ 03846 ld a,(hl)     ;
+ 03847 inc l         ;
+ 03848 ld h,(hl)     ;
+ 03849 ld l,a        ;
+ 03850 xor a         ;
+ 03851 ld (iy+34),a  ;
+ 03854 ld (iy+33),a  ;
+ 03857 ld (iy+32),h  ;
+ 03860 ld (iy+31),l  ;
+ 03863 sla l         ;
+ 03865 rl h          ;
+ 03867 add hl,de     ;
+ 03868 ex de,hl      ;
+ 03869 ld (iy+36),d  ;
+ 03872 ld (iy+35),e  ;
+ 03875 pop hl        ;
+ 03876 ld l,17       ;
+ 03878 ld a,(hl)     ;
+ 03879 inc l         ;
+ 03880 ld h,(hl)     ;
+ 03881 ld l,a        ;
+ 03882 srl h         ;
+ 03884 rr l          ;
+ 03886 srl h         ;
+ 03888 rr l          ;
+ 03890 srl h         ;
+ 03892 rr l          ;
+ 03894 srl h         ;
+ 03896 rr l          ;
+ 03898 ld (iy+66),l  ;
+ 03901 ld bc,0       ;
+ 03904 call 2114     ;
+ 03907 jr 3951       ;
+
+; Routine at 3909
+;
+; Used by the routine at #R3719.
+c03909 push iy       ;
+ 03911 pop de        ;
+ 03912 ld e,38       ;
+ 03914 ld l,44       ;
+ 03916 ldi           ;
+ 03918 ldi           ;
+ 03920 ldi           ;
+ 03922 ldi           ;
+ 03924 ld l,36       ;
+ 03926 rst 48        ;
+ 03927 ld bc,28925   ;
+ 03930 ld (29181),hl ;
+ 03933 ld hl,29437   ;
+ 03936 jr nz,3935    ;
+ 03938 ld (hl),e     ;
+ 03939 rra           ;
+ 03940 sla e         ;
+ 03942 rl d          ;
+ 03944 rl c          ;
+ 03946 rl b          ;
+ 03948 call 4482     ;
+; This entry point is used by the routine at #R3719.
+*03951 ld h,0        ;
+ 03953 ld l,(iy+37)  ;
+ 03956 sla l         ;
+ 03958 rl h          ;
+ 03960 call 2119     ;
+ 03963 ld (iy+45),b  ;
+ 03966 ld (iy+44),c  ;
+ 03969 ld (iy+43),d  ;
+ 03972 ld (iy+42),e  ;
+ 03975 call 3989     ;
+ 03978 call 4037     ;
+ 03981 call 4212     ;
+ 03984 call 4144     ;
+ 03987 or a          ;
+ 03988 ret           ;
+
+; Routine at 3989
+;
+; Used by the routine at #R3909.
+c03989 ld h,(iy+25)  ;
+ 03992 ld l,(iy+24)  ;
+ 03995 or a          ;
+ 03996 sbc hl,de     ;
+ 03998 ex de,hl      ;
+ 03999 ld h,(iy+27)  ;
+ 04002 ld l,(iy+26)  ;
+ 04005 sbc hl,bc     ;
+ 04007 ld a,(iy+37)  ;
+*04010 srl a         ;
+ 04012 jr c,4024     ;
+ 04014 srl h         ;
+ 04016 rr l          ;
+ 04018 rr d          ;
+ 04020 rr e          ;
+ 04022 jr 4010       ;
+
+; Routine at 4024
+;
+; Used by the routine at #R3989.
+c04024 ld (iy+62),e  ;
+ 04027 ld (iy+63),d  ;
+ 04030 ld (iy+64),l  ;
+ 04033 ld (iy+65),h  ;
+ 04036 ret           ;
+
+; Routine at 4037
+;
+; Used by the routine at #R3909.
+c04037 ld a,(iy+28)  ;
+ 04040 cp 1          ;
+ 04042 jr nz,4126    ;
+ 04044 ld hl,11568   ;
+ 04047 ld a,(hl)     ;
+ 04048 dec a         ;
+ 04049 jr nz,4126    ;
+ 04051 ld hl,15872   ;
+ 04054 ld bc,0       ;
+ 04057 ld de,1       ;
+ 04060 push hl       ;
+ 04061 call 4261     ;
+ 04064 pop hl        ;
+ 04065 jr c,4126     ;
+ 04067 inc h         ;
+ 04068 ld l,228      ;
+ 04070 ld a,(hl)     ;
+ 04071 inc l         ;
+ 04072 xor (hl)      ;
+ 04073 inc l         ;
+ 04074 add a,(hl)    ;
+ 04075 inc l         ;
+ 04076 and (hl)      ;
+ 04077 cp 65         ;
+ 04079 jr nz,4126    ;
+ 04081 ld l,254      ;
+ 04083 ld a,(hl)     ;
+ 04084 inc l         ;
+ 04085 and (hl)      ;
+ 04086 jr nz,4126    ;
+ 04088 ld a,1        ;
+ 04090 ld (iy+61),a  ;
+ 04093 ld a,(11585)  ;
+ 04096 and 1         ;
+ 04098 jr nz,4126    ;
+ 04100 ld l,232      ;
+ 04102 rst 48        ;
+ 04103 ld bc,45432   ;
+ 04106 or d          ;
+ 04107 or e          ;
+ 04108 jr z,4126     ;
+ 04110 call 4575     ;
+ 04113 rst 48        ;
+ 04114 ld bc,41336   ;
+ 04117 and d         ;
+ 04118 and e         ;
+ 04119 cp 255        ;
+ 04121 jr z,4135     ;
+ 04123 jp 4549       ;
+
+; Routine at 4126
+;
+; Used by the routine at #R4037.
+c04126 ld bc,65535   ;
+ 04129 ld de,65535   ;
+ 04132 call 4575     ;
+; This entry point is used by the routine at #R4037.
+*04135 ld bc,0       ;
+ 04138 ld de,2       ;
+ 04141 jp 4549       ;
+
+; Routine at 4144
+;
+; Used by the routine at #R3909.
+c04144 ld hl,5164    ;
+ 04147 ld a,8        ;
+ 04149 call 5254     ;
+ 04152 jr nc,4157    ;
+ 04154 ld hl,11563   ;
+*04157 push iy       ;
+ 04159 pop de        ;
+ 04160 ld e,12       ;
+ 04162 ld a,(hl)     ;
+ 04163 and a         ;
+ 04164 jr nz,4169    ;
+; This entry point is used by the routine at #R4186.
+*04166 ld hl,4203    ;
+*04169 call 4173     ;
+ 04172 ret           ;
+
+; Routine at 4173
+;
+; Used by the routine at #R4144.
+c04173 ld b,11       ;
+*04175 ld a,(hl)     ;
+ 04176 cp 32         ;
+ 04178 jr z,4186     ;
+; This entry point is used by the routine at #R4186.
+*04180 ld (de),a     ;
+ 04181 inc hl        ;
+ 04182 inc de        ;
+ 04183 djnz 4175     ;
+ 04185 ret           ;
+
+; Routine at 4186
+;
+; Used by the routine at #R4173.
+c04186 inc hl        ;
+ 04187 ld a,(hl)     ;
+ 04188 cp 32         ;
+ 04190 dec hl        ;
+ 04191 ld a,(hl)     ;
+ 04192 jr nz,4180    ;
+ 04194 ld a,b        ;
+ 04195 cp 11         ;
+ 04197 jr z,4166     ;
+ 04199 ld a,0        ;
+ 04201 ld (de),a     ;
+ 04202 ret           ;
+
+; Message at 4203
+t04203 defm "UNNAMED"
+
+; Routine at 4210
+c04210 jr nz,4244    ;
+; This entry point is used by the routine at #R3909.
+*04212 call 4472     ;
+ 04215 call 4234     ;
+ 04218 push iy       ;
+ 04220 pop hl        ;
+ 04221 ld l,128      ;
+ 04223 ld a,47       ;
+ 04225 ld (hl),a     ;
+ 04226 inc l         ;
+ 04227 ld a,l        ;
+ 04228 ld (iy+127),l ;
+ 04231 xor a         ;
+ 04232 ld (hl),a     ;
+ 04233 ret           ;
+
+; Routine at 4234
+;
+; Used by the routine at #R4210.
+c04234 ld a,(iy+28)  ;
+ 04237 cp 1          ;
+ 04239 jr nz,4248    ;
+ 04241 ld a,b        ;
+ 04242 or c          ;
+ 04243 or d          ;
+; This entry point is used by the routine at #R4210.
+*04244 or e          ;
+ 04245 call z,4472   ;
+*04248 ld (iy+49),b  ;
+ 04251 ld (iy+48),c  ;
+ 04254 ld (iy+47),d  ;
+ 04257 ld (iy+46),e  ;
+ 04260 ret           ;
+
+; Routine at 4261
+;
+; Used by the routines at #R3719, #R4037, #R4292, #R4297 and #R4625.
+c04261 push bc       ;
+ 04262 push de       ;
+ 04263 ld a,(iy+1)   ;
+ 04266 rst 8         ;
+ 04267 add a,c       ;
+ 04268 pop de        ;
+ 04269 pop bc        ;
+ 04270 ret           ;
+
+; Routine at 4271
+;
+; Used by the routine at #R4588.
+c04271 ld a,(iy+1)   ;
+ 04274 rst 8         ;
+ 04275 add a,d       ;
+ 04276 ret           ;
+
+; Routine at 4277
+;
+; Used by the routines at #R4287 and #R4384.
+c04277 push bc       ;
+ 04278 push de       ;
+ 04279 ld a,(15397)  ;
+ 04282 rst 8         ;
+ 04283 add a,d       ;
+ 04284 pop de        ;
+ 04285 pop bc        ;
+ 04286 ret           ;
+
+; Routine at 4287
+;
+; Used by the routine at #R4384.
+c04287 call 4494     ;
+ 04290 jr 4277       ;
+
+; Routine at 4292
+;
+; Used by the routine at #R4297.
+c04292 call 4494     ;
+ 04295 jr 4261       ;
+
+; Routine at 4297
+;
+; Used by the routines at #R4829 and #R4874.
+c04297 ld a,(15397)  ;
+ 04300 cp (iy+1)     ;
+ 04303 jr nz,4311    ;
+ 04305 ld hl,15380   ;
+ 04308 call 1702     ;
+*04311 ld hl,10240   ;
+ 04314 ccf           ;
+ 04315 ret z         ;
+ 04316 call 4354     ;
+ 04319 ret c         ;
+ 04320 push de       ;
+ 04321 push bc       ;
+ 04322 push hl       ;
+ 04323 call 4482     ;
+ 04326 push hl       ;
+ 04327 call 4261     ;
+ 04330 pop hl        ;
+ 04331 call c,4292   ;
+ 04334 pop hl        ;
+ 04335 pop bc        ;
+ 04336 pop de        ;
+ 04337 push af       ;
+ 04338 ld a,(iy+1)   ;
+ 04341 ld (15397),a  ;
+ 04344 ld (15377),de ;
+ 04348 ld (15379),bc ;
+ 04352 pop af        ;
+ 04353 ret           ;
+
+; Routine at 4354
+;
+; Used by the routines at #R4297 and #R6202.
+c04354 ld a,(15403)  ;
+ 04357 or a          ;
+ 04358 ret z         ;
+ 04359 push bc       ;
+ 04360 push de       ;
+ 04361 push hl       ;
+ 04362 ld de,(15377) ;
+ 04366 ld bc,(15379) ;
+ 04370 call 4384     ;
+ 04373 pop hl        ;
+ 04374 pop de        ;
+ 04375 pop bc        ;
+ 04376 ret           ;
+
+; Routine at 4377
+;
+; Used by the routine at #R4979.
+c04377 ld a,255      ;
+ 04379 ld (15403),a  ;
+ 04382 or a          ;
+ 04383 ret           ;
+
+; Routine at 4384
+;
+; Used by the routine at #R4354.
+c04384 xor a         ;
+ 04385 ld (15403),a  ;
+ 04388 ld hl,10240   ;
+ 04391 push de       ;
+ 04392 push bc       ;
+ 04393 push hl       ;
+ 04394 call 4482     ;
+ 04397 push hl       ;
+ 04398 call 4277     ;
+ 04401 pop hl        ;
+ 04402 jr c,4408     ;
+ 04404 call 4287     ;
+ 04407 or a          ;
+*04408 call c,4287   ;
+ 04411 jr c,4416     ;
+ 04413 call 4588     ;
+*04416 pop hl        ;
+ 04417 pop bc        ;
+ 04418 pop de        ;
+ 04419 ret           ;
+
+; Routine at 4420
+;
+; Used by the routines at #R4796, #R4808, #R5403 and #R6144.
+c04420 ld (ix+20),e  ;
+ 04423 ld (ix+21),d  ;
+ 04426 ld (ix+22),c  ;
+ 04429 ld (ix+23),b  ;
+ 04432 ret           ;
+
+; Routine at 4433
+;
+; Used by the routines at #R4808, #R5186, #R5208 and #R5342.
+c04433 ld e,(ix+20)  ;
+ 04436 ld d,(ix+21)  ;
+ 04439 ld c,(ix+22)  ;
+ 04442 ld b,(ix+23)  ;
+ 04445 ret           ;
+
+; Routine at 4446
+;
+; Used by the routines at #R4710, #R4796, #R5403, #R5862 and #R6032.
+c04446 ld (ix+24),e  ;
+ 04449 ld (ix+25),d  ;
+ 04452 ld (ix+26),c  ;
+ 04455 ld (ix+27),b  ;
+ 04458 ret           ;
+
+; Routine at 4459
+;
+; Used by the routines at #R4625, #R4632, #R4683, #R4710, #R4952, #R5342,
+; #R6032, #R6082 and #R6255.
+c04459 ld e,(ix+24)  ;
+ 04462 ld d,(ix+25)  ;
+ 04465 ld c,(ix+26)  ;
+ 04468 ld b,(ix+27)  ;
+ 04471 ret           ;
+
+; Routine at 4472
+;
+; Used by the routines at #R4210, #R4234, #R5239, #R5434, #R5630, #R5716 and
+; #R5749.
+c04472 push hl       ;
+ 04473 push iy       ;
+ 04475 pop hl        ;
+ 04476 ld l,38       ;
+ 04478 rst 48        ;
+ 04479 ld bc,51681   ;
+; This entry point is used by the routines at #R3909, #R4297 and #R4384.
+*04482 push hl       ;
+ 04483 ld l,(iy+29)  ;
+ 04486 ld h,(iy+30)  ;
+ 04489 call 2114     ;
+ 04492 pop hl        ;
+ 04493 ret           ;
+
+; Routine at 4494
+;
+; Used by the routines at #R4287 and #R4292.
+c04494 push hl       ;
+ 04495 push bc       ;
+ 04496 push de       ;
+ 04497 call 4510     ;
+ 04500 pop hl        ;
+ 04501 add hl,de     ;
+ 04502 ex de,hl      ;
+ 04503 pop hl        ;
+ 04504 adc hl,bc     ;
+ 04506 ld b,h        ;
+ 04507 ld c,l        ;
+ 04508 pop hl        ;
+ 04509 ret           ;
+
+; Routine at 4510
+;
+; Used by the routine at #R4494.
+c04510 ld e,(iy+31)  ;
+ 04513 ld d,(iy+32)  ;
+ 04516 ld c,(iy+33)  ;
+ 04519 ld b,(iy+34)  ;
+ 04522 ret           ;
+
+; Routine at 4523
+;
+; Used by the routines at #R5254 and #R5434.
+c04523 ld b,(iy+49)  ;
+ 04526 ld c,(iy+48)  ;
+ 04529 ld d,(iy+47)  ;
+ 04532 ld e,(iy+46)  ;
+ 04535 ret           ;
+
+; Routine at 4536
+;
+; Used by the routines at #R4588 and #R4979.
+c04536 ld e,(iy+53)  ;
+ 04539 ld d,(iy+54)  ;
+ 04542 ld c,(iy+55)  ;
+ 04545 ld b,(iy+56)  ;
+ 04548 ret           ;
+
+; Routine at 4549
+;
+; Used by the routines at #R4037 and #R4126.
+c04549 ld (iy+53),e  ;
+ 04552 ld (iy+54),d  ;
+ 04555 ld (iy+55),c  ;
+ 04558 ld (iy+56),b  ;
+ 04561 ret           ;
+
+; Routine at 4562
+;
+; Used by the routines at #R4588, #R4919 and #R4938.
+c04562 ld e,(iy+57)  ;
+ 04565 ld d,(iy+58)  ;
+ 04568 ld c,(iy+59)  ;
+ 04571 ld b,(iy+60)  ;
+ 04574 ret           ;
+
+; Routine at 4575
+;
+; Used by the routines at #R4037, #R4126 and #R4919.
+c04575 ld (iy+57),e  ;
+ 04578 ld (iy+58),d  ;
+ 04581 ld (iy+59),c  ;
+ 04584 ld (iy+60),b  ;
+ 04587 ret           ;
+
+; Routine at 4588
+;
+; Used by the routine at #R4384.
+c04588 ld a,(iy+61)  ;
+ 04591 or a          ;
+ 04592 ret z         ;
+ 04593 ld hl,16360   ;
+ 04596 call 4562     ;
+ 04599 rst 48        ;
+ 04600 nop           ;
+ 04601 call 4536     ;
+ 04604 rst 48        ;
+ 04605 nop           ;
+ 04606 ld hl,15872   ;
+ 04609 ld bc,0       ;
+ 04612 ld de,1       ;
+ 04615 jp 4271       ;
+
+; Routine at 4618
+;
+; Used by the routine at #R6082.
+c04618 ld de,0       ;
+ 04621 ld bc,1175    ;
+ 04624 ret           ;
+
+; Routine at 4625
+;
+; Used by the routines at #R4632, #R5254, #R6169 and #R6506.
+c04625 call 4459     ;
+ 04628 call 4261     ;
+ 04631 ret           ;
+
+; Routine at 4632
+;
+; Used by the routine at #R6529.
+c04632 call 4459     ;
+ 04635 ld a,(15398)  ;
+ 04638 cp (iy+1)     ;
+ 04641 jr nz,4649    ;
+ 04643 ld hl,15402   ;
+ 04646 call 1702     ;
+*04649 ld hl,10752   ;
+ 04652 ccf           ;
+ 04653 ret z         ;
+ 04654 ld a,(iy+1)   ;
+ 04657 ld (15398),a  ;
+ 04660 ld (15399),de ;
+ 04664 ld (15401),bc ;
+ 04668 push hl       ;
+ 04669 call 4625     ;
+ 04672 pop hl        ;
+ 04673 ret           ;
+
+; Routine at 4674
+;
+; Used by the routine at #R6568.
+c04674 push hl       ;
+ 04675 ld hl,10752   ;
+ 04678 call 12600    ;
+ 04681 pop hl        ;
+ 04682 ret           ;
+
+; Routine at 4683
+;
+; Used by the routine at #R6506.
+c04683 call 4459     ;
+ 04686 ld a,(iy+1)   ;
+ 04689 exx           ;
+ 04690 push bc       ;
+ 04691 push de       ;
+ 04692 ld c,227      ;
+ 04694 ld de,(15864) ;
+ 04698 out (c),e     ;
+ 04700 exx           ;
+ 04701 rst 8         ;
+ 04702 add a,c       ;
+ 04703 exx           ;
+ 04704 out (c),d     ;
+ 04706 pop de        ;
+ 04707 pop bc        ;
+ 04708 exx           ;
+ 04709 ret           ;
+
+; Routine at 4710
+;
+; Used by the routines at #R5254, #R6032 and #R6489.
+c04710 dec (ix+19)   ;
+ 04713 jr z,4724     ;
+ 04715 call 4459     ;
+ 04718 call 2093     ;
+ 04721 jp 4446       ;
+
+; Routine at 4724
+;
+; Used by the routine at #R4710.
+c04724 call 4808     ;
+ 04727 ret c         ;
+ 04728 jp 4799       ;
+
+; Routine at 4731
+;
+; Used by the routine at #R4796.
+c04731 ld a,(iy+28)  ;
+ 04734 cp 1          ;
+ 04736 jr z,4755     ;
+ 04738 ld a,e        ;
+ 04739 or d          ;
+ 04740 jr nz,4755    ;
+ 04742 ld bc,0       ;
+ 04745 ld d,(iy+36)  ;
+ 04748 ld e,(iy+35)  ;
+ 04751 ld a,(iy+66)  ;
+ 04754 ret           ;
+
+; Routine at 4755
+;
+; Used by the routine at #R4731.
+c04755 ld a,(iy+37)  ;
+*04758 srl a         ;
+ 04760 jr c,4772     ;
+ 04762 sla e         ;
+ 04764 rl d          ;
+ 04766 rl c          ;
+ 04768 rl b          ;
+ 04770 jr 4758       ;
+
+; Routine at 4772
+;
+; Used by the routine at #R4755.
+c04772 ld a,(iy+42)  ;
+ 04775 add a,e       ;
+ 04776 ld e,a        ;
+ 04777 ld a,(iy+43)  ;
+ 04780 adc a,d       ;
+ 04781 ld d,a        ;
+ 04782 ld a,(iy+44)  ;
+ 04785 adc a,c       ;
+ 04786 ld c,a        ;
+ 04787 ld a,(iy+45)  ;
+ 04790 adc a,b       ;
+ 04791 ld b,a        ;
+ 04792 ld a,(iy+37)  ;
+ 04795 ret           ;
+
+; Routine at 4796
+;
+; Used by the routines at #R5254, #R5434 and #R6389.
+c04796 call 4420     ;
+; This entry point is used by the routine at #R4724.
+*04799 call 4731     ;
+ 04802 ld (ix+19),a  ;
+ 04805 jp 4446       ;
+
+; Routine at 4808
+;
+; Used by the routine at #R4724.
+c04808 call 4433     ;
+ 04811 call 4829     ;
+ 04814 jp nc,4420    ;
+ 04817 cp 128        ;
+ 04819 scf           ;
+ 04820 ret nz        ;
+ 04821 bit 2,(ix+1)  ;
+ 04825 ret z         ;
+ 04826 jp 12288      ;
+
+; Routine at 4829
+;
+; Used by the routines at #R4808 and #R4979.
+c04829 ld a,(iy+28)  ;
+ 04832 cp 1          ;
+ 04834 jr z,4874     ;
+ 04836 push de       ;
+ 04837 ld e,d        ;
+ 04838 ld d,c        ;
+ 04839 ld c,b        ;
+ 04840 ld b,0        ;
+ 04842 call 4297     ;
+ 04845 pop de        ;
+ 04846 ret c         ;
+ 04847 xor a         ;
+ 04848 sla e         ;
+ 04850 ld l,e        ;
+ 04851 adc a,h       ;
+ 04852 ld h,a        ;
+ 04853 ld e,(hl)     ;
+ 04854 inc hl        ;
+ 04855 ld d,(hl)     ;
+ 04856 dec hl        ;
+ 04857 ld bc,0       ;
+ 04860 ld a,d        ;
+; This entry point is used by the routine at #R4874.
+*04861 cp 255        ;
+ 04863 ccf           ;
+ 04864 ret nz        ;
+ 04865 ld a,e        ;
+ 04866 and 240       ;
+ 04868 cp 240        ;
+ 04870 ccf           ;
+ 04871 ld a,128      ;
+ 04873 ret           ;
+
+; Routine at 4874
+;
+; Used by the routine at #R4829.
+c04874 push de       ;
+ 04875 ld a,e        ;
+ 04876 ld e,d        ;
+ 04877 ld d,c        ;
+ 04878 ld c,b        ;
+ 04879 ld b,0        ;
+ 04881 sla a         ;
+ 04883 rl e          ;
+ 04885 rl d          ;
+ 04887 rl c          ;
+ 04889 rl b          ;
+ 04891 call 4297     ;
+ 04894 pop de        ;
+ 04895 ret c         ;
+ 04896 xor a         ;
+ 04897 sla e         ;
+ 04899 sla e         ;
+ 04901 ld l,e        ;
+ 04902 adc a,h       ;
+ 04903 ld h,a        ;
+ 04904 push hl       ;
+ 04905 rst 48        ;
+ 04906 ld bc,30945   ;
+ 04909 cp 15         ;
+ 04911 jr nz,4861    ;
+ 04913 ld a,255      ;
+ 04915 and c         ;
+ 04916 and d         ;
+ 04917 jr 4861       ;
+
+; Routine at 4919
+c04919 push de       ;
+ 04920 call 4562     ;
+ 04923 inc b         ;
+ 04924 jr z,4936     ;
+ 04926 dec b         ;
+ 04927 call c,2093   ;
+ 04930 call nc,2101  ;
+ 04933 call 4575     ;
+*04936 pop de        ;
+ 04937 ret           ;
+
+; Routine at 4938
+;
+; Used by the routine at #R5928.
+c04938 push bc       ;
+ 04939 push de       ;
+ 04940 call 4562     ;
+ 04943 rst 48        ;
+ 04944 dec c         ;
+ 04945 pop de        ;
+ 04946 pop bc        ;
+ 04947 ret nz        ;
+ 04948 ld a,9        ;
+ 04950 scf           ;
+ 04951 ret           ;
+
+; Routine at 4952
+;
+; Used by the routine at #R6506.
+c04952 call 4459     ;
+ 04955 ld a,(iy+1)   ;
+ 04958 exx           ;
+ 04959 push bc       ;
+ 04960 push de       ;
+ 04961 ld c,227      ;
+ 04963 ld de,(15864) ;
+ 04967 out (c),e     ;
+ 04969 exx           ;
+ 04970 rst 8         ;
+ 04971 add a,d       ;
+ 04972 exx           ;
+ 04973 out (c),d     ;
+ 04975 pop de        ;
+ 04976 pop bc        ;
+ 04977 exx           ;
+ 04978 ret           ;
+
+; Routine at 4979
+c04979 call 4536     ;
+ 04982 call 4829     ;
+ 04985 call 12382    ;
+ 04988 ret c         ;
+ 04989 ld h,d        ;
+ 04990 ld l,e        ;
+ 04991 ld a,255      ;
+ 04993 call 12510    ;
+ 04996 push de       ;
+ 04997 ld de,(15377) ;
+ 05001 ld bc,(15379) ;
+ 05005 push bc       ;
+ 05006 push de       ;
+ 05007 call 4377     ;
+ 05010 pop de        ;
+ 05011 pop bc        ;
+ 05012 pop hl        ;
+ 05013 ret c         ;
+ 05014 rr h          ;
+ 05016 rr l          ;
+ 05018 ld a,(iy+28)  ;
+ 05021 cp 1          ;
+ 05023 jr nz,5035    ;
+ 05025 srl b         ;
+ 05027 rr c          ;
+ 05029 rr d          ;
+ 05031 rr e          ;
+ 05033 rr l          ;
+*05035 ld b,c        ;
+ 05036 ld c,d        ;
+ 05037 ld d,e        ;
+ 05038 ld e,l        ;
+ 05039 or a          ;
+ 05040 ret           ;
+
+; Routine at 5041
+;
+; Used by the routine at #R5434.
+c05041 ld b,8        ;
+ 05043 call 5112     ;
+ 05046 call 5057     ;
+ 05049 ld a,(hl)     ;
+ 05050 cp 46         ;
+ 05052 jr nz,5055    ;
+ 05054 inc hl        ;
+*05055 ld b,3        ;
+; This entry point is used by the routine at #R5080.
+*05057 ld a,(hl)     ;
+ 05058 ld c,32       ;
+ 05060 cp 46         ;
+ 05062 jr z,5105     ;
+ 05064 and a         ;
+ 05065 jr z,5105     ;
+ 05067 cp 47         ;
+ 05069 jr z,5105     ;
+ 05071 call 5134     ;
+ 05074 jr nc,5080    ;
+; This entry point is used by the routine at #R5080.
+*05076 scf           ;
+ 05077 ld a,7        ;
+ 05079 ret           ;
+
+; Routine at 5080
+;
+; Used by the routine at #R5041.
+c05080 cp 97         ;
+ 05082 jr c,5090     ;
+ 05084 cp 123        ;
+ 05086 jr nc,5090    ;
+ 05088 and 223       ;
+*05090 ld (de),a     ;
+ 05091 inc de        ;
+ 05092 inc hl        ;
+ 05093 djnz 5057     ;
+ 05095 ld a,(hl)     ;
+ 05096 and a         ;
+ 05097 jr z,5103     ;
+ 05099 cp 47         ;
+ 05101 jr nz,5076    ;
+*05103 or a          ;
+ 05104 ret           ;
+
+; Routine at 5105
+;
+; Used by the routines at #R5041 and #R5112.
+c05105 ld a,c        ;
+*05106 ld (de),a     ;
+ 05107 inc de        ;
+ 05108 djnz 5106     ;
+ 05110 or a          ;
+ 05111 ret           ;
+
+; Routine at 5112
+;
+; Used by the routine at #R5041.
+c05112 ld a,(hl)     ;
+ 05113 cp 46         ;
+ 05115 ret nz        ;
+ 05116 ld bc,2816    ;
+ 05119 ldi           ;
+ 05121 cp (hl)       ;
+ 05122 jr nz,5127    ;
+ 05124 ldi           ;
+ 05126 dec b         ;
+*05127 ld c,32       ;
+ 05129 call 5105     ;
+ 05132 pop bc        ;
+ 05133 ret           ;
+
+; Routine at 5134
+;
+; Used by the routine at #R5041.
+c05134 cp 33         ;
+ 05136 ret c         ;
+ 05137 push bc       ;
+ 05138 push hl       ;
+ 05139 ld hl,5153    ;
+ 05142 ld bc,12      ;
+ 05145 scf           ;
+ 05146 cpir          ;
+ 05148 pop hl        ;
+ 05149 pop bc        ;
+ 05150 ret z         ;
+ 05151 ccf           ;
+ 05152 ret           ;
+
+; Message at 5153
+t05153 defm "?\"/:;,<>"
+
+; Data block at 5161
+b05161 defb 92,124
+
+; Routine at 5163
+c05163 ld l,42       ;
+; This entry point is used by the routine at #R5376.
+*05165 push de       ;
+ 05166 push hl       ;
+ 05167 push bc       ;
+ 05168 ld b,11       ;
+*05170 ld a,(de)     ;
+ 05171 cp 42         ;
+ 05173 jr z,5182     ;
+ 05175 cp (hl)       ;
+ 05176 jr nz,5182    ;
+ 05178 inc de        ;
+ 05179 inc hl        ;
+ 05180 djnz 5170     ;
+*05182 pop bc        ;
+ 05183 pop hl        ;
+ 05184 pop de        ;
+ 05185 ret           ;
+
+; Routine at 5186
+;
+; Used by the routine at #R5254.
+c05186 ld b,a        ;
+ 05187 push bc       ;
+ 05188 push hl       ;
+ 05189 call 4433     ;
+ 05192 ld hl,15394   ;
+ 05195 call 1702     ;
+ 05198 pop hl        ;
+ 05199 pop bc        ;
+ 05200 ld a,b        ;
+ 05201 jr z,5205     ;
+ 05203 or a          ;
+ 05204 ret           ;
+
+; Routine at 5205
+;
+; Used by the routine at #R5186.
+c05205 ld a,19       ;
+ 05207 ret           ;
+
+; Routine at 5208
+;
+; Used by the routine at #R5254.
+c05208 ld b,a        ;
+ 05209 push bc       ;
+ 05210 push hl       ;
+ 05211 call 4433     ;
+ 05214 push iy       ;
+ 05216 pop hl        ;
+ 05217 ld l,41       ;
+ 05219 call 1702     ;
+ 05222 jr nz,5235    ;
+ 05224 pop hl        ;
+ 05225 push hl       ;
+ 05226 ld a,(hl)     ;
+ 05227 cp 46         ;
+ 05229 jr nz,5235    ;
+ 05231 inc l         ;
+ 05232 ld a,(hl)     ;
+ 05233 cp 32         ;
+*05235 pop hl        ;
+ 05236 pop bc        ;
+ 05237 ld a,b        ;
+ 05238 ret           ;
+
+; Routine at 5239
+;
+; Used by the routine at #R5254.
+c05239 ld de,12032   ;
+ 05242 push de       ;
+ 05243 exx           ;
+ 05244 call 4472     ;
+ 05247 exx           ;
+ 05248 call 13183    ;
+ 05251 pop hl        ;
+ 05252 or a          ;
+ 05253 ret           ;
+
+; Routine at 5254
+;
+; Used by the routine at #R4144.
+c05254 push af       ;
+ 05255 call 4523     ;
+ 05258 call 6674     ;
+ 05261 call 4796     ;
+ 05264 pop af        ;
+; This entry point is used by the routine at #R5434.
+*05265 call 5208     ;
+ 05268 jr z,5239     ;
+ 05270 call 5186     ;
+ 05273 ret c         ;
+ 05274 res 2,(ix+1)  ;
+ 05278 ld (iy+51),a  ;
+ 05281 res 1,(iy+52) ;
+ 05285 ld (15364),hl ;
+*05288 ld a,17       ;
+ 05290 ld (ix+6),a   ;
+ 05293 ld hl,9728    ;
+ 05296 push hl       ;
+ 05297 call 4625     ;
+ 05300 pop hl        ;
+ 05301 ret c         ;
+; This entry point is used by the routine at #R5312.
+*05302 dec (ix+6)    ;
+ 05305 jr nz,5312    ;
+ 05307 call 4710     ;
+ 05310 jr 5288       ;
+
+; Routine at 5312
+;
+; Used by the routine at #R5254.
+c05312 ld a,(hl)     ;
+ 05313 and a         ;
+ 05314 jr z,5403     ;
+ 05316 cp 229        ;
+ 05318 jr z,5337     ;
+ 05320 ld c,l        ;
+ 05321 ld a,l        ;
+ 05322 add a,11      ;
+ 05324 ld l,a        ;
+ 05325 ld a,(hl)     ;
+ 05326 ld l,c        ;
+ 05327 cp 15         ;
+ 05329 jr nz,5376    ;
+; This entry point is used by the routines at #R5337 and #R5376.
+*05331 ld bc,32      ;
+ 05334 add hl,bc     ;
+ 05335 jr 5302       ;
+
+; Routine at 5337
+;
+; Used by the routine at #R5312.
+c05337 call 5342     ;
+ 05340 jr 5331       ;
+
+; Routine at 5342
+;
+; Used by the routines at #R5337 and #R5403.
+c05342 bit 1,(iy+52) ;
+ 05346 ret nz        ;
+ 05347 set 1,(iy+52) ;
+ 05351 ld a,(ix+6)   ;
+ 05354 ld (ix+30),a  ;
+ 05357 ld a,(ix+19)  ;
+ 05360 ld (ix+31),a  ;
+ 05363 call 4459     ;
+ 05366 call 6648     ;
+ 05369 call 4433     ;
+ 05372 call 6622     ;
+ 05375 ret           ;
+
+; Routine at 5376
+;
+; Used by the routine at #R5312.
+c05376 ld e,a        ;
+ 05377 ld a,(iy+51)  ;
+ 05380 and a         ;
+ 05381 jr z,5386     ;
+ 05383 and e         ;
+ 05384 jr z,5331     ;
+*05386 ld de,(15364) ;
+ 05390 call 5165     ;
+ 05393 jr nz,5331    ;
+ 05395 ld (ix+28),l  ;
+ 05398 ld (ix+29),h  ;
+ 05401 or a          ;
+ 05402 ret           ;
+
+; Routine at 5403
+;
+; Used by the routine at #R5312.
+c05403 call 5342     ;
+ 05406 ld a,(ix+30)  ;
+ 05409 ld (ix+6),a   ;
+ 05412 ld a,(ix+31)  ;
+ 05415 ld (ix+19),a  ;
+ 05418 call 6661     ;
+ 05421 call 4446     ;
+ 05424 call 6635     ;
+ 05427 call 4420     ;
+ 05430 ld a,5        ;
+ 05432 scf           ;
+ 05433 ret           ;
+
+; Routine at 5434
+;
+; Used by the routine at #R5876.
+c05434 ld bc,65535   ;
+ 05437 ld (15391),bc ;
+ 05441 ld (15392),bc ;
+ 05445 ld de,11264   ;
+ 05448 push de       ;
+ 05449 rst 48        ;
+ 05450 dec b         ;
+ 05451 pop hl        ;
+ 05452 ld (iy+52),a  ;
+ 05455 rra           ;
+ 05456 jr nc,5483    ;
+ 05458 push hl       ;
+ 05459 push iy       ;
+ 05461 pop hl        ;
+ 05462 ld l,128      ;
+ 05464 ld de,11392   ;
+ 05467 push de       ;
+ 05468 ld a,(iy+127) ;
+ 05471 push af       ;
+ 05472 sub 128       ;
+ 05474 ld b,0        ;
+ 05476 ld c,a        ;
+ 05477 ldir          ;
+ 05479 pop af        ;
+ 05480 pop de        ;
+ 05481 ld e,a        ;
+ 05482 pop hl        ;
+*05483 xor a         ;
+ 05484 ld (ix+29),a  ;
+ 05487 ld a,(hl)     ;
+ 05488 and a         ;
+ 05489 jp z,5663     ;
+ 05492 cp 47         ;
+ 05494 jr nz,5508    ;
+ 05496 bit 0,(iy+52) ;
+ 05500 jr z,5507     ;
+ 05502 cp a          ;
+ 05503 ld e,128      ;
+ 05505 ld (de),a     ;
+ 05506 inc de        ;
+*05507 inc hl        ;
+*05508 ld (15850),de ;
+ 05512 call z,4472   ;
+ 05515 call nz,4523  ;
+; This entry point is used by the routine at #R5630.
+*05518 ld (15852),hl ;
+ 05521 ld a,(hl)     ;
+ 05522 and a         ;
+ 05523 jp z,5667     ;
+ 05526 call 6674     ;
+ 05529 call 4796     ;
+ 05532 ld de,15366   ;
+ 05535 push de       ;
+ 05536 call 5041     ;
+ 05539 pop de        ;
+ 05540 ret c         ;
+ 05541 push hl       ;
+ 05542 ex de,hl      ;
+ 05543 xor a         ;
+ 05544 call 5265     ;
+ 05547 pop de        ;
+ 05548 jp c,5700     ;
+ 05551 ld c,l        ;
+ 05552 ld a,l        ;
+ 05553 add a,11      ;
+ 05555 ld l,a        ;
+ 05556 bit 4,(hl)    ;
+ 05558 ld l,c        ;
+ 05559 ex de,hl      ;
+ 05560 jr nz,5579    ;
+ 05562 ld a,(hl)     ;
+ 05563 and a         ;
+ 05564 jr z,5570     ;
+ 05566 ld a,19       ;
+ 05568 scf           ;
+ 05569 ret           ;
+
+; Routine at 5570
+;
+; Used by the routine at #R5434.
+c05570 ld a,(iy+52)  ;
+ 05573 rla           ;
+ 05574 ld a,17       ;
+ 05576 ret c         ;
+ 05577 jr 5675       ;
+
+; Routine at 5579
+;
+; Used by the routine at #R5434.
+c05579 bit 0,(iy+52) ;
+ 05583 jr z,5650     ;
+ 05585 push hl       ;
+ 05586 ld hl,(15852) ;
+ 05589 ld de,(15850) ;
+ 05593 ld a,(hl)     ;
+ 05594 cp 46         ;
+ 05596 jr z,5611     ;
+*05598 ld a,(hl)     ;
+ 05599 inc hl        ;
+ 05600 and a         ;
+ 05601 jr z,5630     ;
+ 05603 cp 47         ;
+ 05605 jr z,5630     ;
+ 05607 ld (de),a     ;
+ 05608 inc de        ;
+ 05609 jr 5598       ;
+
+; Routine at 5611
+;
+; Used by the routine at #R5579.
+c05611 inc hl        ;
+ 05612 ld a,(hl)     ;
+ 05613 cp 46         ;
+ 05615 jr nz,5634    ;
+ 05617 dec de        ;
+ 05618 dec de        ;
+*05619 ld a,(de)     ;
+ 05620 cp 47         ;
+ 05622 jr z,5627     ;
+ 05624 dec de        ;
+ 05625 jr 5619       ;
+
+; Routine at 5627
+;
+; Used by the routine at #R5611.
+c05627 inc de        ;
+ 05628 jr 5634       ;
+
+; Routine at 5630
+;
+; Used by the routine at #R5579.
+c05630 ld a,47       ;
+ 05632 ld (de),a     ;
+ 05633 inc de        ;
+; This entry point is used by the routines at #R5611 and #R5627.
+*05634 ld (15850),de ;
+ 05638 pop hl        ;
+ 05639 ld a,e        ;
+ 05640 cp 129        ;
+ 05642 ld a,21       ;
+ 05644 ret c         ;
+ 05645 call z,4472   ;
+ 05648 jr z,5653     ;
+; This entry point is used by the routine at #R5579.
+*05650 call 5716     ;
+*05653 ld a,(hl)     ;
+ 05654 and a         ;
+ 05655 jr z,5667     ;
+ 05657 cp 47         ;
+ 05659 inc hl        ;
+ 05660 jp z,5518     ;
+; This entry point is used by the routine at #R5434.
+*05663 scf           ;
+ 05664 ld a,19       ;
+ 05666 ret           ;
+
+; Routine at 5667
+;
+; Used by the routines at #R5434 and #R5630.
+c05667 ld a,(iy+52)  ;
+ 05670 rla           ;
+ 05671 ccf           ;
+ 05672 ld a,16       ;
+ 05674 ret c         ;
+; This entry point is used by the routine at #R5570.
+*05675 call 5680     ;
+ 05678 or a          ;
+ 05679 ret           ;
+
+; Routine at 5680
+;
+; Used by the routines at #R5667 and #R5709.
+c05680 bit 0,(iy+52) ;
+ 05684 ret z         ;
+ 05685 ld hl,(15852) ;
+ 05688 ld de,(15850) ;
+*05692 ld a,(hl)     ;
+ 05693 ld (de),a     ;
+ 05694 inc hl        ;
+ 05695 inc de        ;
+ 05696 or a          ;
+ 05697 ret z         ;
+ 05698 jr 5692       ;
+
+; Routine at 5700
+;
+; Used by the routine at #R5434.
+c05700 ex de,hl      ;
+ 05701 ld a,(hl)     ;
+ 05702 and a         ;
+ 05703 jr z,5709     ;
+ 05705 scf           ;
+ 05706 ld a,19       ;
+ 05708 ret           ;
+
+; Routine at 5709
+;
+; Used by the routine at #R5700.
+c05709 call 5680     ;
+ 05712 scf           ;
+ 05713 ld a,5        ;
+ 05715 ret           ;
+
+; Routine at 5716
+;
+; Used by the routines at #R5630, #R6202 and #R6255.
+c05716 push hl       ;
+ 05717 ld a,(ix+29)  ;
+ 05720 and a         ;
+ 05721 jr nz,5728    ;
+ 05723 call 4472     ;
+ 05726 jr 5738       ;
+
+; Routine at 5728
+;
+; Used by the routine at #R5716.
+c05728 ld h,a        ;
+ 05729 ld a,(ix+28)  ;
+ 05732 add a,20      ;
+ 05734 ld l,a        ;
+ 05735 call 5749     ;
+; This entry point is used by the routine at #R5716.
+*05738 pop hl        ;
+; This entry point is used by the routine at #R5749.
+*05739 ld a,(iy+28)  ;
+ 05742 cp 1          ;
+ 05744 ret z         ;
+ 05745 ld bc,0       ;
+ 05748 ret           ;
+
+; Routine at 5749
+;
+; Used by the routine at #R5728.
+c05749 call 5761     ;
+ 05752 ld a,b        ;
+ 05753 or c          ;
+ 05754 or d          ;
+ 05755 or e          ;
+ 05756 call z,4472   ;
+ 05759 jr 5739       ;
+
+; Routine at 5761
+;
+; Used by the routine at #R5749.
+c05761 ld c,(hl)     ;
+ 05762 inc l         ;
+ 05763 ld b,(hl)     ;
+ 05764 ld a,l        ;
+ 05765 add a,5       ;
+ 05767 ld l,a        ;
+ 05768 ld e,(hl)     ;
+ 05769 inc l         ;
+ 05770 ld d,(hl)     ;
+ 05771 inc l         ;
+ 05772 ret           ;
+
+; Routine at 5773
+c05773 ex de,hl      ;
+ 05774 push iy       ;
+ 05776 pop hl        ;
+ 05777 ld l,128      ;
+ 05779 rst 48        ;
+ 05780 inc b         ;
+ 05781 or a          ;
+ 05782 ret           ;
+
+; Routine at 5783
+;
+; Used by the routine at #R6255.
+c05783 push hl       ;
+ 05784 set 5,(ix+1)  ;
+ 05788 call 6419     ;
+ 05791 res 5,(ix+1)  ;
+ 05795 pop hl        ;
+ 05796 ret           ;
+
+; Routine at 5797
+c05797 call 5805     ;
+ 05800 ld (ix+0),0   ;
+ 05804 ret           ;
+
+; Data block at 5805
+;
+; Used by the routines at #R5797 and #R5928.
+b05805 defb 183,221,203,1,94,202,2,17
+ 05813 defb 205,225,22,216,17,20,0,25
+ 05821 defb 205,31,26,113,35,112,35,35
+ 05829 defb 35,35,35,115,35,114,35,205
+ 05837 defb 5,26,247,0,205,12,24,245
+ 05845 defb 33,27,60,247,1,205,94,17
+ 05853 defb 241,195,2,17,205,107,17,33
+ 05861 defb 27
+
+; Routine at 5862
+c05862 inc a         ;
+ 05863 rst 48        ;
+ 05864 nop           ;
+ 05865 call 6713     ;
+ 05868 call 4446     ;
+ 05871 call 6169     ;
+ 05874 ex de,hl      ;
+ 05875 ret           ;
+
+; Routine at 5876
+c05876 ld a,b        ;
+ 05877 ld (15361),a  ;
+ 05880 ld (15395),de ;
+ 05884 ld a,1        ;
+ 05886 call 5434     ;
+ 05889 jr nc,5907    ;
+ 05891 cp 5          ;
+ 05893 scf           ;
+ 05894 ret nz        ;
+ 05895 ld a,(15361)  ;
+ 05898 and 12        ;
+ 05900 scf           ;
+ 05901 ld a,5        ;
+ 05903 ret z         ;
+ 05904 jp 5928       ;
+
+; Routine at 5907
+;
+; Used by the routine at #R5876.
+c05907 ld a,(15361)  ;
+ 05910 and 12        ;
+ 05912 cp 4          ;
+ 05914 jr nz,5920    ;
+ 05916 scf           ;
+ 05917 ld a,18       ;
+ 05919 ret           ;
+
+; Routine at 5920
+;
+; Used by the routine at #R5907.
+c05920 cp 12         ;
+ 05922 jp z,6202     ;
+ 05925 jp 6255       ;
+
+; Routine at 5928
+;
+; Used by the routine at #R5876.
+c05928 call 4938     ;
+ 05931 ret c         ;
+ 05932 call 6169     ;
+ 05935 ret c         ;
+ 05936 ld a,(de)     ;
+ 05937 push af       ;
+ 05938 call 6082     ;
+ 05941 pop de        ;
+ 05942 ret c         ;
+ 05943 ld a,d        ;
+ 05944 cp 229        ;
+ 05946 jr z,5952     ;
+ 05948 call 6032     ;
+ 05951 ret c         ;
+; This entry point is used by the routine at #R6202.
+*05952 ld hl,15387   ;
+ 05955 rst 48        ;
+ 05956 ld bc,11469   ;
+ 05959 ld a,(de)     ;
+ 05960 call 6144     ;
+ 05963 call 6622     ;
+ 05966 ld a,(15361)  ;
+ 05969 push af       ;
+ 05970 and 3         ;
+ 05972 or 2          ;
+ 05974 ld (ix+1),a   ;
+ 05977 pop af        ;
+ 05978 or a          ;
+ 05979 bit 6,a       ;
+ 05981 jr z,6013     ;
+ 05983 call 13535    ;
+ 05986 call 12686    ;
+ 05989 ret c         ;
+ 05990 ld hl,11520   ;
+ 05993 call 12600    ;
+ 05996 ret c         ;
+ 05997 set 3,(ix+1)  ;
+ 06001 ld a,128      ;
+ 06003 ld (ix+11),a  ;
+ 06006 ld (ix+15),a  ;
+ 06009 call 5805     ;
+ 06012 ret c         ;
+*06013 call 6025     ;
+ 06016 ld hl,11392   ;
+ 06019 ld a,(15865)  ;
+ 06022 ld b,a        ;
+ 06023 or a          ;
+ 06024 ret           ;
+
+; Routine at 6025
+;
+; Used by the routines at #R5928 and #R6202.
+c06025 ld a,(iy+0)   ;
+ 06028 ld (ix+0),a   ;
+ 06031 ret           ;
+
+; Routine at 6032
+;
+; Used by the routine at #R5928.
+c06032 ld a,h        ;
+ 06033 and 1         ;
+ 06035 add a,l       ;
+ 06036 ld bc,31      ;
+ 06039 jr nz,6072    ;
+ 06041 call 4459     ;
+ 06044 push bc       ;
+ 06045 push de       ;
+ 06046 set 2,(ix+1)  ;
+ 06050 call 4710     ;
+ 06053 res 2,(ix+1)  ;
+ 06057 ld a,(ix+19)  ;
+ 06060 cp (iy+37)    ;
+ 06063 call z,14003  ;
+ 06066 pop de        ;
+ 06067 pop bc        ;
+ 06068 or a          ;
+ 06069 jp 4446       ;
+
+; Routine at 6072
+;
+; Used by the routine at #R6032.
+c06072 ld d,h        ;
+ 06073 ld e,l        ;
+ 06074 inc de        ;
+ 06075 ld (hl),0     ;
+ 06077 ldir          ;
+ 06079 jp 6156       ;
+
+; Routine at 6082
+;
+; Used by the routine at #R5928.
+c06082 ld hl,15366   ;
+ 06085 ld bc,11      ;
+ 06088 ldir          ;
+ 06090 xor a         ;
+ 06091 ld (de),a     ;
+ 06092 ex de,hl      ;
+ 06093 inc hl        ;
+; This entry point is used by the routine at #R6202.
+*06094 ld (hl),a     ;
+ 06095 inc hl        ;
+ 06096 ld (hl),a     ;
+ 06097 inc hl        ;
+ 06098 rst 8         ;
+ 06099 adc a,(hl)    ;
+ 06100 call c,4618   ;
+ 06103 rst 48        ;
+ 06104 nop           ;
+ 06105 xor a         ;
+ 06106 ld (hl),a     ;
+ 06107 inc l         ;
+ 06108 ld (hl),a     ;
+ 06109 inc l         ;
+ 06110 ld (hl),a     ;
+ 06111 inc l         ;
+ 06112 ld (hl),a     ;
+ 06113 inc l         ;
+ 06114 rst 48        ;
+ 06115 nop           ;
+ 06116 ld (hl),a     ;
+ 06117 inc l         ;
+ 06118 ld (hl),a     ;
+ 06119 inc l         ;
+ 06120 ld b,a        ;
+ 06121 ld c,b        ;
+ 06122 ld d,c        ;
+ 06123 ld e,d        ;
+ 06124 rst 48        ;
+ 06125 nop           ;
+ 06126 push hl       ;
+ 06127 call 6156     ;
+ 06130 pop hl        ;
+ 06131 ret c         ;
+ 06132 push hl       ;
+ 06133 call 4459     ;
+ 06136 ld hl,15387   ;
+ 06139 rst 48        ;
+ 06140 nop           ;
+ 06141 pop hl        ;
+ 06142 or a          ;
+ 06143 ret           ;
+
+; Routine at 6144
+;
+; Used by the routines at #R5928 and #R6202.
+c06144 ld b,0        ;
+ 06146 ld c,b        ;
+ 06147 ld d,c        ;
+ 06148 ld e,d        ;
+ 06149 call 4420     ;
+ 06152 call 6648     ;
+ 06155 ret           ;
+
+; Routine at 6156
+;
+; Used by the routines at #R6072 and #R6082.
+c06156 ld hl,9728    ;
+ 06159 call 12600    ;
+ 06162 push af       ;
+ 06163 xor a         ;
+ 06164 ld (15398),a  ;
+ 06167 pop af        ;
+ 06168 ret           ;
+
+; Routine at 6169
+;
+; Used by the routines at #R5862 and #R5928.
+c06169 ld hl,9728    ;
+ 06172 push hl       ;
+ 06173 call 4625     ;
+ 06176 pop hl        ;
+ 06177 ret c         ;
+ 06178 ld a,16       ;
+ 06180 sub (ix+6)    ;
+ 06183 sla a         ;
+ 06185 sla a         ;
+ 06187 sla a         ;
+ 06189 sla a         ;
+ 06191 sla a         ;
+ 06193 ld e,a        ;
+ 06194 ld d,0        ;
+ 06196 rl d          ;
+ 06198 add hl,de     ;
+ 06199 ex de,hl      ;
+ 06200 or a          ;
+ 06201 ret           ;
+
+; Routine at 6202
+;
+; Used by the routine at #R5920.
+c06202 call 5716     ;
+ 06205 push bc       ;
+ 06206 push de       ;
+ 06207 ld l,(ix+28)  ;
+ 06210 ld h,(ix+29)  ;
+ 06213 ld de,12      ;
+ 06216 add hl,de     ;
+ 06217 call 6094     ;
+ 06220 pop de        ;
+ 06221 pop bc        ;
+ 06222 ret c         ;
+ 06223 call 12548    ;
+ 06226 call nc,4354  ;
+ 06229 ret c         ;
+ 06230 call 6144     ;
+ 06233 call 6622     ;
+ 06236 call 6025     ;
+ 06239 ld hl,6817    ;
+ 06242 ld (15854),hl ;
+ 06245 call 6726     ;
+ 06248 ld (ix+0),0   ;
+ 06252 jp 5952       ;
+
+; Routine at 6255
+;
+; Used by the routine at #R5920.
+c06255 ld a,(15361)  ;
+ 06258 push af       ;
+ 06259 and 3         ;
+ 06261 ld (ix+1),a   ;
+ 06264 call 4459     ;
+ 06267 call 6700     ;
+ 06270 call 5716     ;
+ 06273 call 6389     ;
+ 06276 ld l,(ix+28)  ;
+ 06279 ld h,(ix+29)  ;
+ 06282 ld de,28      ;
+ 06285 add hl,de     ;
+ 06286 call 6332     ;
+ 06289 pop af        ;
+ 06290 bit 6,a       ;
+ 06292 jr z,6329     ;
+ 06294 ld hl,11520   ;
+ 06297 ld bc,128     ;
+ 06300 call 5783     ;
+ 06303 ret c         ;
+ 06304 call 6360     ;
+ 06307 ld l,15       ;
+ 06309 jr z,6320     ;
+ 06311 ld (ix+15),0  ;
+ 06315 push hl       ;
+ 06316 call 6339     ;
+ 06319 pop hl        ;
+*06320 ld de,(15395) ;
+ 06324 ld bc,8       ;
+ 06327 rst 48        ;
+ 06328 ld b,195      ;
+ 06330 ld a,l        ;
+ 06331 rla           ;
+*06332 rst 48        ;
+ 06333 ld bc,63693   ;
+ 06336 add hl,de     ;
+ 06337 or a          ;
+ 06338 ret           ;
+
+; Routine at 6339
+;
+; Used by the routine at #R6255.
+c06339 push af       ;
+ 06340 ld a,255      ;
+ 06342 ld (hl),a     ;
+ 06343 inc l         ;
+ 06344 call 6661     ;
+ 06347 ld (hl),e     ;
+ 06348 inc l         ;
+ 06349 ld (hl),d     ;
+ 06350 inc l         ;
+ 06351 ld b,5        ;
+ 06353 xor a         ;
+*06354 ld (hl),a     ;
+ 06355 inc l         ;
+ 06356 djnz 6354     ;
+ 06358 pop af        ;
+ 06359 ret           ;
+
+; Routine at 6360
+;
+; Used by the routine at #R6255.
+c06360 push hl       ;
+ 06361 ld de,64      ;
+ 06364 ld bc,9       ;
+*06367 ld a,(de)     ;
+ 06368 cpi           ;
+ 06370 jr nz,6376    ;
+ 06372 inc de        ;
+ 06373 jp pe,6367    ;
+*06376 pop hl        ;
+ 06377 ret nz        ;
+ 06378 ld c,127      ;
+ 06380 xor a         ;
+*06381 add a,(hl)    ;
+ 06382 cpi           ;
+ 06384 jp pe,6381    ;
+ 06387 cp (hl)       ;
+ 06388 ret           ;
+
+; Routine at 6389
+;
+; Used by the routine at #R6255.
+c06389 call 6674     ;
+ 06392 call 4796     ;
+ 06395 ld b,0        ;
+ 06397 ld c,b        ;
+ 06398 ld d,c        ;
+ 06399 ld e,d        ;
+ 06400 jp 6622       ;
+
+; Routine at 6403
+c06403 bit 0,(ix+1)  ;
+ 06407 ld a,8        ;
+ 06409 scf           ;
+ 06410 ret z         ;
+ 06411 push hl       ;
+ 06412 call 6574     ;
+ 06415 pop hl        ;
+ 06416 ld a,b        ;
+ 06417 or c          ;
+ 06418 ret z         ;
+; This entry point is used by the routine at #R5783.
+*06419 res 2,(ix+1)  ;
+ 06423 push bc       ;
+*06424 ld e,(ix+15)  ;
+ 06427 ld a,(ix+16)  ;
+ 06430 and 1         ;
+ 06432 ld d,a        ;
+ 06433 call 6489     ;
+ 06436 jr c,6478     ;
+ 06438 push bc       ;
+ 06439 push hl       ;
+ 06440 ld hl,512     ;
+ 06443 sbc hl,de     ;
+ 06445 ex de,hl      ;
+ 06446 ld h,b        ;
+ 06447 ld l,c        ;
+ 06448 sbc hl,de     ;
+ 06450 jr c,6454     ;
+ 06452 ld b,d        ;
+ 06453 ld c,e        ;
+*06454 pop hl        ;
+ 06455 push bc       ;
+ 06456 call 6506     ;
+ 06459 pop de        ;
+ 06460 pop bc        ;
+ 06461 jr c,6478     ;
+ 06463 ld a,c        ;
+ 06464 sub e         ;
+ 06465 ld c,a        ;
+ 06466 ld a,b        ;
+ 06467 sbc a,d       ;
+ 06468 ld b,a        ;
+ 06469 or c          ;
+ 06470 ex de,hl      ;
+ 06471 call 6608     ;
+ 06474 ex de,hl      ;
+ 06475 jr nz,6424    ;
+ 06477 or a          ;
+*06478 pop de        ;
+ 06479 push af       ;
+ 06480 ex de,hl      ;
+ 06481 or a          ;
+ 06482 sbc hl,bc     ;
+ 06484 ld b,h        ;
+ 06485 ld c,l        ;
+ 06486 ex de,hl      ;
+ 06487 pop af        ;
+ 06488 ret           ;
+
+; Routine at 6489
+;
+; Used by the routine at #R6403.
+c06489 or e          ;
+ 06490 ret nz        ;
+ 06491 push de       ;
+ 06492 push bc       ;
+ 06493 push hl       ;
+ 06494 call 6635     ;
+ 06497 rst 48        ;
+ 06498 dec c         ;
+ 06499 call nz,4710  ;
+ 06502 pop hl        ;
+ 06503 pop bc        ;
+ 06504 pop de        ;
+ 06505 ret           ;
+
+; Routine at 6506
+;
+; Used by the routine at #R6403.
+c06506 ld a,b        ;
+ 06507 sub 2         ;
+ 06509 or c          ;
+ 06510 jr nz,6529    ;
+ 06512 bit 2,(ix+1)  ;
+ 06516 jp nz,4952    ;
+ 06519 bit 5,(ix+1)  ;
+ 06523 jp nz,4625    ;
+ 06526 jp 4683       ;
+
+; Routine at 6529
+;
+; Used by the routine at #R6506.
+c06529 push bc       ;
+ 06530 push hl       ;
+ 06531 call 4632     ;
+ 06534 pop de        ;
+ 06535 pop bc        ;
+ 06536 ret c         ;
+ 06537 ld l,(ix+15)  ;
+ 06540 ld a,(ix+16)  ;
+ 06543 and 1         ;
+ 06545 add a,h       ;
+ 06546 ld h,a        ;
+ 06547 bit 2,(ix+1)  ;
+ 06551 jr nz,6568    ;
+ 06553 bit 5,(ix+1)  ;
+ 06557 jr z,6564     ;
+ 06559 ldir          ;
+ 06561 ex de,hl      ;
+ 06562 or a          ;
+ 06563 ret           ;
+
+; Routine at 6564
+;
+; Used by the routine at #R6529.
+c06564 rst 48        ;
+ 06565 ld b,235      ;
+ 06567 ret           ;
+
+; Routine at 6568
+;
+; Used by the routine at #R6529.
+c06568 ex de,hl      ;
+ 06569 rst 48        ;
+ 06570 rlca          ;
+ 06571 jp 4674       ;
+
+; Routine at 6574
+;
+; Used by the routine at #R6403.
+c06574 push bc       ;
+ 06575 call 6635     ;
+ 06578 ld h,(ix+12)  ;
+ 06581 ld l,(ix+11)  ;
+ 06584 or a          ;
+ 06585 sbc hl,de     ;
+ 06587 ex de,hl      ;
+ 06588 ld h,(ix+14)  ;
+ 06591 ld l,(ix+13)  ;
+ 06594 sbc hl,bc     ;
+ 06596 pop bc        ;
+ 06597 ld a,h        ;
+ 06598 or l          ;
+ 06599 ret nz        ;
+ 06600 ld h,d        ;
+ 06601 ld l,e        ;
+ 06602 sbc hl,bc     ;
+ 06604 ret nc        ;
+ 06605 ld b,d        ;
+ 06606 ld c,e        ;
+ 06607 ret           ;
+
+; Routine at 6608
+;
+; Used by the routine at #R6403.
+c06608 push de       ;
+ 06609 push bc       ;
+ 06610 call 6635     ;
+ 06613 call 2114     ;
+ 06616 call 6622     ;
+ 06619 pop bc        ;
+ 06620 pop de        ;
+ 06621 ret           ;
+
+; Routine at 6622
+;
+; Used by the routines at #R5342, #R5928, #R6202, #R6389 and #R6608.
+c06622 ld (ix+15),e  ;
+ 06625 ld (ix+16),d  ;
+ 06628 ld (ix+17),c  ;
+ 06631 ld (ix+18),b  ;
+ 06634 ret           ;
+
+; Routine at 6635
+;
+; Used by the routines at #R5403, #R6489, #R6574 and #R6608.
+c06635 ld e,(ix+15)  ;
+ 06638 ld d,(ix+16)  ;
+ 06641 ld c,(ix+17)  ;
+ 06644 ld b,(ix+18)  ;
+ 06647 ret           ;
+
+; Routine at 6648
+;
+; Used by the routines at #R5342 and #R6144.
+c06648 ld (ix+11),e  ;
+ 06651 ld (ix+12),d  ;
+ 06654 ld (ix+13),c  ;
+ 06657 ld (ix+14),b  ;
+ 06660 ret           ;
+
+; Routine at 6661
+;
+; Used by the routines at #R5403, #R6339 and #R6802.
+c06661 ld e,(ix+11)  ;
+ 06664 ld d,(ix+12)  ;
+ 06667 ld c,(ix+13)  ;
+ 06670 ld b,(ix+14)  ;
+ 06673 ret           ;
+
+; Routine at 6674
+;
+; Used by the routines at #R5254, #R5434 and #R6389.
+c06674 ld (ix+7),e   ;
+ 06677 ld (ix+8),d   ;
+ 06680 ld (ix+9),c   ;
+ 06683 ld (ix+10),b  ;
+ 06686 ret           ;
+
+; Routine at 6687
+c06687 ld e,(ix+7)   ;
+ 06690 ld d,(ix+8)   ;
+ 06693 ld c,(ix+9)   ;
+ 06696 ld b,(ix+10)  ;
+ 06699 ret           ;
+
+; Routine at 6700
+;
+; Used by the routine at #R6255.
+c06700 ld (ix+2),e   ;
+ 06703 ld (ix+3),d   ;
+ 06706 ld (ix+4),c   ;
+ 06709 ld (ix+5),b   ;
+ 06712 ret           ;
+
+; Routine at 6713
+;
+; Used by the routines at #R5862 and #R6760.
+c06713 ld e,(ix+2)   ;
+ 06716 ld d,(ix+3)   ;
+ 06719 ld c,(ix+4)   ;
+ 06722 ld b,(ix+5)   ;
+ 06725 ret           ;
+
+; Routine at 6726
+;
+; Used by the routine at #R6202.
+c06726 push bc       ;
+ 06727 push de       ;
+ 06728 ld hl,9248    ;
+ 06731 ld b,15       ;
+*06733 ld a,(hl)     ;
+ 06734 and a         ;
+ 06735 jr z,6750     ;
+ 06737 ld a,ixh      ;
+ 06739 cp h          ;
+ 06740 jr nz,6747    ;
+ 06742 ld a,ixl      ;
+ 06744 cp l          ;
+ 06745 jr z,6750     ;
+*06747 call 6760     ;
+*06750 ld de,32      ;
+ 06753 add hl,de     ;
+ 06754 djnz 6733     ;
+ 06756 pop de        ;
+ 06757 pop bc        ;
+ 06758 or a          ;
+ 06759 ret           ;
+
+; Routine at 6760
+;
+; Used by the routine at #R6726.
+c06760 ld a,(hl)     ;
+ 06761 cp (ix+0)     ;
+ 06764 ret nz        ;
+ 06765 push hl       ;
+ 06766 ld a,6        ;
+ 06768 add a,l       ;
+ 06769 ld l,a        ;
+ 06770 ld a,(hl)     ;
+ 06771 cp (ix+6)     ;
+ 06774 pop hl        ;
+ 06775 ret nz        ;
+ 06776 push bc       ;
+ 06777 push hl       ;
+ 06778 ld a,5        ;
+ 06780 add a,l       ;
+ 06781 ld l,a        ;
+ 06782 call 6713     ;
+ 06785 call 1702     ;
+ 06788 call z,40     ;
+ 06791 pop hl        ;
+ 06792 pop bc        ;
+ 06793 ret           ;
+
+; Routine at 6794
+c06794 pop hl        ;
+ 06795 pop hl        ;
+ 06796 pop hl        ;
+ 06797 pop hl        ;
+ 06798 pop de        ;
+ 06799 pop bc        ;
+ 06800 scf           ;
+ 06801 ret           ;
+
+; Routine at 6802
+c06802 dec l         ;
+ 06803 dec l         ;
+ 06804 dec l         ;
+ 06805 res 4,(hl)    ;
+ 06807 ld a,10       ;
+ 06809 add a,l       ;
+ 06810 ld l,a        ;
+ 06811 call 6661     ;
+ 06814 jp 1723       ;
+
+; Routine at 6817
+c06817 dec l         ;
+ 06818 dec l         ;
+ 06819 dec l         ;
+ 06820 set 4,(hl)    ;
+ 06822 res 3,(hl)    ;
+ 06824 ld a,6        ;
+ 06826 add a,l       ;
+ 06827 ld l,a        ;
+ 06828 ex de,hl      ;
+ 06829 push ix       ;
+ 06831 pop hl        ;
+ 06832 ld a,7        ;
+ 06834 add a,l       ;
+ 06835 ld l,a        ;
+ 06836 ld bc,21      ;
+ 06839 ldir          ;
+ 06841 ret           ;
+
+; Routine at 6842
+c06842 rla           ;
+ 06843 ld h,238      ;
+ 06845 ld a,(de)     ;
+ 06846 ret z         ;
+ 06847 ld a,(de)     ;
+ 06848 add a,26      ;
+ 06850 nop           ;
+ 06851 nop           ;
+ 06852 ld de,46886   ;
+ 06855 ret           ;
+
+; Routine at 6856
+c06856 call 9810     ;
+ 06859 ld a,ixl      ;
+ 06861 out (227),a   ;
+ 06863 ld a,(15864)  ;
+ 06866 ld ixh,a      ;
+ 06868 xor a         ;
+ 06869 out (227),a   ;
+ 06871 call 9757     ;
+ 06874 ret c         ;
+ 06875 ld e,(iy+8)   ;
+ 06878 ld a,ixl      ;
+ 06880 out (227),a   ;
+ 06882 ld a,e        ;
+ 06883 push de       ;
+ 06884 rst 8         ;
+ 06885 sbc a,(hl)    ;
+ 06886 pop de        ;
+ 06887 push af       ;
+ 06888 ld a,e        ;
+ 06889 rst 8         ;
+ 06890 sbc a,h       ;
+ 06891 pop af        ;
+ 06892 jr 6979       ;
+
+; Routine at 6894
+c06894 bit 6,(iy+1)  ;
+ 06898 call z,9810   ;
+ 06901 ld a,ixl      ;
+ 06903 out (227),a   ;
+ 06905 ld a,(15864)  ;
+ 06908 ld ixh,a      ;
+ 06910 xor a         ;
+ 06911 out (227),a   ;
+ 06913 push hl       ;
+ 06914 bit 6,(iy+1)  ;
+ 06918 jr z,6948     ;
+ 06920 ld a,b        ;
+ 06921 or c          ;
+ 06922 jr nz,6933    ;
+ 06924 ld hl,15      ;
+ 06927 or a          ;
+ 06928 sbc hl,de     ;
+ 06930 jp nc,9714    ;
+*06933 ld hl,16      ;
+ 06936 call 2119     ;
+ 06939 call 9810     ;
+ 06942 ld a,(iy+9)   ;
+ 06945 call 9795     ;
+*06948 pop hl        ;
+ 06949 call 9765     ;
+ 06952 ret c         ;
+ 06953 ld e,(iy+8)   ;
+ 06956 ld a,ixl      ;
+ 06958 out (227),a   ;
+ 06960 ld a,e        ;
+ 06961 push bc       ;
+ 06962 rst 8         ;
+ 06963 sbc a,l       ;
+ 06964 ex (sp),hl    ;
+ 06965 sbc hl,bc     ;
+ 06967 ex (sp),hl    ;
+ 06968 pop bc        ;
+ 06969 jr z,6979     ;
+ 06971 ld d,h        ;
+ 06972 ld e,l        ;
+ 06973 inc de        ;
+ 06974 ld (hl),0     ;
+ 06976 dec bc        ;
+ 06977 ldir          ;
+; This entry point is used by the routine at #R6856.
+*06979 ld iyl,a      ;
+ 06981 ld a,ixh      ;
+ 06983 ld (15864),a  ;
+ 06986 ld a,0        ;
+ 06988 out (227),a   ;
+ 06990 ld a,iyl      ;
+ 06992 ret           ;
+
+; Routine at 6993
+;
+; Used by the routine at #R1107.
+c06993 call 2127     ;
+ 06996 inc hl        ;
+ 06997 ld a,44       ;
+ 06999 rst 16        ;
+ 07000 ld a,32       ;
+ 07002 rst 16        ;
+ 07003 ret           ;
+
+; Message at 7004
+t07004 defm "Detecting Devices..."
+
+; Data block at 7024
+b07024 defb 13,0
+
+; Message at 7026
+t07026 defm "/SYS/CONFIG/ESXDOS.CFG"
+
+; Data block at 7048
+b07048 defb 0
+
+; Routine at 7049
+;
+; Used by the routine at #R257.
+c07049 ex de,hl      ;
+ 07050 ld hl,8188    ;
+ 07053 ldi           ;
+ 07055 ldi           ;
+ 07057 ldi           ;
+ 07059 ldi           ;
+ 07061 ret           ;
+
+; Routine at 7062
+;
+; Used by the routine at #R7852.
+c07062 push ix       ;
+ 07064 ld a,(15865)  ;
+ 07067 ld ixh,a      ;
+ 07069 ld a,0        ;
+ 07071 out (227),a   ;
+ 07073 ld a,235      ;
+ 07075 call 9888     ;
+ 07078 jr 7096       ;
+
+; Routine at 7080
+;
+; Used by the routine at #R7942.
+c07080 push ix       ;
+ 07082 ld a,(15865)  ;
+ 07085 ld ixh,a      ;
+ 07087 ld a,0        ;
+ 07089 out (227),a   ;
+ 07091 ld a,235      ;
+ 07093 call 9904     ;
+; This entry point is used by the routine at #R7062.
+*07096 ld a,ixh      ;
+ 07098 out (227),a   ;
+ 07100 pop ix        ;
+ 07102 ld a,135      ;
+ 07104 out (11),a    ;
+ 07106 ret           ;
+
+; Data block at 7107
+b07107 defb 164,3,192,162,48,171,31,225
+ 07115 defb 192,161,120,169,3,224,127
+
+; Routine at 7122
+c07122 ret po        ;
+ 07123 ld a,b        ;
+ 07124 and c         ;
+ 07125 ld a,(hl)     ;
+ 07126 xor c         ;
+ 07127 rra           ;
+ 07128 ret m         ;
+ 07129 ret po        ;
+ 07130 ret nz        ;
+ 07131 ld e,161      ;
+ 07133 rst 40        ;
+ 07134 ret nz        ;
+ 07135 and e         ;
+ 07136 ccf           ;
+ 07137 ret nz        ;
+ 07138 and e         ;
+ 07139 ld a,b        ;
+ 07140 defb 253      ;
+ 07141 add a,b       ;
+ 07142 ld bc,49663   ;
+ 07145 call 41456    ;
+ 07148 rlca          ;
+ 07149 add a,b       ;
+ 07150 pop af        ;
+ 07151 ret po        ;
+ 07152 and e         ;
+ 07153 ret po        ;
+ 07154 dec a         ;
+ 07155 ret nz        ;
+ 07156 ccf           ;
+ 07157 cp 241        ;
+ 07159 adc a,h       ;
+ 07160 ld a,(hl)     ;
+ 07161 and c         ;
+ 07162 rra           ;
+ 07163 pop hl        ;
+ 07164 ret nz        ;
+ 07165 jp 41456      ;
+
+; Data block at 7168
+b07168 defb 1,192,31,255,254,30,59,6
+ 07176 defb 15,192,56,113,192,31,252,161
+ 07184 defb 3,128,31,63,128,28,14,6
+ 07192 defb 1,240,48,57,255,248,30,161
+ 07200 defb 243,128,15,162,60,15,135,161
+ 07208 defb 120,112,28,127
+
+; Routine at 7212
+c07212 add a,b       ;
+ 07213 ld c,7        ;
+ 07215 rst 56        ;
+ 07216 add a,b       ;
+ 07217 rrca          ;
+ 07218 ld a,b        ;
+ 07219 and c         ;
+ 07220 jr c,7249     ;
+ 07222 jp 7841       ;
+
+; Data block at 7225
+b07225 defb 112,12,162,14,28,31,192,62
+ 07233 defb 252,8,112,48,227,161,7,240
+ 07241 defb 14,24,161,28,48,15,255,248
+*07249 defb 252,16,224,224,113,128,1,248
+ 07257 defb 6,60,161,28,96,14,255,192
+ 07265 defb 248,17,195,192,25,128,161,120
+ 07273 defb 6,124,161,56,224,14,161,1
+ 07281 defb 240,51,15,161,12,192,161,60
+ 07289 defb 6,120,161,112,224,38,1,1
+ 07297 defb 224,62,124,161,6,192,161,60
+ 07305 defb 6,240,161,224,240,199,6,1
+ 07313 defb 192,31,224,161,2,64,161,127
+ 07321 defb 15,240,1,192,255,131,252,3
+ 07329 defb 192,28,162,3,33,255,255,255
+ 07337 defb 224,3,128,126,161,240,3,128
+ 07345 defb 48,162,1,35,255,249,253,224
+ 07353 defb 7,164,3,128,240,163,147,255
+ 07361 defb 224,121,224,14,164,3,199,192
+ 07369 defb 163,1,254,161,1,192,60,164
+ 07377 defb 1,255,167,1,192,248
+
+; Routine at 7383
+c07383 and l         ;
+ 07384 ld a,h        ;
+ 07385 and a         ;
+ 07386 ld bc,57575   ;
+ 07389 xor (hl)      ;
+ 07390 rst 56        ;
+ 07391 add a,b       ;
+ 07392 xor (hl)      ;
+ 07393 inc a         ;
+ 07394 and d         ;
+ 07395 and b         ;
+ 07396 ret p         ;
+ 07397 inc e         ;
+ 07398 call nc,27934 ;
+ 07401 ld e,240      ;
+ 07403 inc e         ;
+ 07404 nop           ;
+ 07405 nop           ;
+ 07406 ret p         ;
+ 07407 inc e         ;
+ 07408 ld l,a        ;
+ 07409 and 224       ;
+ 07411 cp 128        ;
+ 07413 scf           ;
+ 07414 ret nz        ;
+ 07415 ld a,l        ;
+ 07416 call 7438     ;
+ 07419 ret c         ;
+ 07420 call 8076     ;
+ 07423 ld a,(iy+0)   ;
+ 07426 ret           ;
+
+; Routine at 7427
+;
+; Used by the routines at #R7438 and #R7892.
+c07427 and 8         ;
+ 07429 ld a,246      ;
+ 07431 jr z,7434     ;
+ 07433 dec a         ;
+*07434 ld (15870),a  ;
+ 07437 ret           ;
+
+; Routine at 7438
+;
+; Used by the routine at #R7383.
+c07438 ld (15858),de ;
+ 07442 ld (15866),a  ;
+ 07445 call 7427     ;
+ 07448 call 7619     ;
+ 07451 ret c         ;
+ 07452 call 7555     ;
+ 07455 ret c         ;
+ 07456 ld hl,15872   ;
+ 07459 ld a,73       ;
+ 07461 call 7602     ;
+ 07464 ret c         ;
+ 07465 ld hl,15904   ;
+ 07468 ld a,74       ;
+ 07470 call 7602     ;
+ 07473 ret c         ;
+ 07474 ld a,(15866)  ;
+ 07477 call 7954     ;
+ 07480 ld a,122      ;
+ 07482 ld de,0       ;
+ 07485 call 7684     ;
+ 07488 ret c         ;
+ 07489 ld a,b        ;
+ 07490 and 64        ;
+ 07492 or 3          ;
+ 07494 ld (iy+1),a   ;
+ 07497 and 64        ;
+ 07499 call z,7546   ;
+ 07502 ld hl,15877   ;
+ 07505 call 7979     ;
+ 07508 push iy       ;
+ 07510 pop hl        ;
+ 07511 inc hl        ;
+ 07512 inc hl        ;
+ 07513 inc hl        ;
+ 07514 inc hl        ;
+ 07515 rst 48        ;
+ 07516 nop           ;
+ 07517 ld hl,15905   ;
+ 07520 ld de,15904   ;
+ 07523 push de       ;
+ 07524 ldi           ;
+ 07526 ldi           ;
+ 07528 ld a,32       ;
+ 07530 ld (de),a     ;
+ 07531 pop hl        ;
+ 07532 ld de,(15858) ;
+ 07536 ld bc,8       ;
+ 07539 rst 48        ;
+ 07540 ld b,253      ;
+ 07542 ld a,(hl)     ;
+ 07543 nop           ;
+ 07544 or a          ;
+ 07545 ret           ;
+
+; Routine at 7546
+;
+; Used by the routine at #R7438.
+c07546 ld a,80       ;
+ 07548 ld de,512     ;
+ 07551 ld b,e        ;
+ 07552 ld c,e        ;
+ 07553 jr 7663       ;
+
+; Routine at 7555
+;
+; Used by the routine at #R7438.
+c07555 ld a,72       ;
+ 07557 ld de,426     ;
+ 07560 call 7684     ;
+ 07563 ld hl,7656    ;
+ 07566 jr c,7571     ;
+ 07568 ld hl,7587    ;
+*07571 ld bc,120     ;
+*07574 push bc       ;
+ 07575 call 7601     ;
+ 07578 pop bc        ;
+ 07579 ret nc        ;
+ 07580 djnz 7574     ;
+ 07582 dec c         ;
+ 07583 jr nz,7574    ;
+ 07585 scf           ;
+ 07586 ret           ;
+
+; Routine at 7587
+c07587 ld a,119      ;
+ 07589 call 7658     ;
+ 07592 ld a,105      ;
+ 07594 ld bc,16384   ;
+ 07597 ld d,c        ;
+ 07598 ld e,c        ;
+ 07599 jr 7663       ;
+
+; Routine at 7601
+;
+; Used by the routine at #R7555.
+c07601 jp (hl)       ;
+
+; Routine at 7602
+;
+; Used by the routine at #R7438.
+c07602 call 7658     ;
+ 07605 ret c         ;
+ 07606 call 7751     ;
+ 07609 ret c         ;
+ 07610 ld b,18       ;
+ 07612 ld c,235      ;
+ 07614 inir          ;
+ 07616 or a          ;
+ 07617 jr 7649       ;
+
+; Routine at 7619
+;
+; Used by the routine at #R7438.
+c07619 call 7649     ;
+ 07622 ld b,10       ;
+*07624 ld a,255      ;
+ 07626 out (235),a   ;
+ 07628 djnz 7624     ;
+ 07630 call 7779     ;
+ 07633 ld b,8        ;
+*07635 ld a,64       ;
+ 07637 ld de,0       ;
+ 07640 push bc       ;
+ 07641 call 7671     ;
+ 07644 pop bc        ;
+ 07645 ret nc        ;
+ 07646 djnz 7635     ;
+ 07648 scf           ;
+; This entry point is used by the routines at #R7602, #R7656 and #R7852.
+*07649 push af       ;
+ 07650 ld a,255      ;
+ 07652 out (231),a   ;
+ 07654 pop af        ;
+ 07655 ret           ;
+
+; Routine at 7656
+c07656 ld a,65       ;
+; This entry point is used by the routines at #R7587 and #R7602.
+*07658 ld bc,0       ;
+ 07661 ld d,b        ;
+ 07662 ld e,c        ;
+; This entry point is used by the routines at #R7546, #R7587 and #R7892.
+*07663 call 7709     ;
+ 07666 or a          ;
+ 07667 ret z         ;
+; This entry point is used by the routine at #R7671.
+*07668 scf           ;
+ 07669 jr 7649       ;
+
+; Routine at 7671
+;
+; Used by the routines at #R7619 and #R7684.
+c07671 ld bc,0       ;
+ 07674 call 7709     ;
+ 07677 ld b,a        ;
+ 07678 and 254       ;
+ 07680 ld a,b        ;
+ 07681 jr nz,7668    ;
+ 07683 ret           ;
+
+; Routine at 7684
+;
+; Used by the routines at #R7438 and #R7555.
+c07684 call 7671     ;
+ 07687 ret c         ;
+ 07688 push af       ;
+ 07689 call 7765     ;
+ 07692 ld h,a        ;
+ 07693 call 7765     ;
+ 07696 ld l,a        ;
+ 07697 call 7765     ;
+ 07700 ld d,a        ;
+ 07701 call 7765     ;
+ 07704 ld e,a        ;
+ 07705 ld b,h        ;
+ 07706 ld c,l        ;
+ 07707 pop af        ;
+ 07708 ret           ;
+
+; Routine at 7709
+;
+; Used by the routines at #R7656 and #R7671.
+c07709 call 7779     ;
+ 07712 out (235),a   ;
+ 07714 push af       ;
+ 07715 ld a,b        ;
+ 07716 nop           ;
+ 07717 out (235),a   ;
+ 07719 ld a,c        ;
+ 07720 nop           ;
+ 07721 out (235),a   ;
+ 07723 ld a,d        ;
+ 07724 nop           ;
+ 07725 out (235),a   ;
+ 07727 ld a,e        ;
+ 07728 nop           ;
+ 07729 out (235),a   ;
+ 07731 pop af        ;
+ 07732 cp 64         ;
+ 07734 ld b,149      ;
+ 07736 jr z,7746     ;
+ 07738 cp 72         ;
+ 07740 ld b,135      ;
+ 07742 jr z,7746     ;
+ 07744 ld b,255      ;
+*07746 ld a,b        ;
+ 07747 out (235),a   ;
+ 07749 jr 7765       ;
+
+; Routine at 7751
+;
+; Used by the routine at #R7602.
+c07751 ld b,10       ;
+*07753 push bc       ;
+ 07754 call 7765     ;
+ 07757 pop bc        ;
+ 07758 cp 254        ;
+ 07760 ret z         ;
+ 07761 djnz 7753     ;
+ 07763 scf           ;
+ 07764 ret           ;
+
+; Routine at 7765
+;
+; Used by the routines at #R7684, #R7709, #R7751 and #R7852.
+c07765 ld bc,50      ;
+*07768 in a,(235)    ;
+ 07770 cp 255        ;
+ 07772 ret nz        ;
+ 07773 djnz 7768     ;
+ 07775 dec c         ;
+ 07776 jr nz,7768    ;
+ 07778 ret           ;
+
+; Routine at 7779
+;
+; Used by the routines at #R7619 and #R7709.
+c07779 push af       ;
+ 07780 in a,(235)    ;
+ 07782 ld a,(15870)  ;
+ 07785 out (231),a   ;
+ 07787 pop af        ;
+ 07788 ret           ;
+
+; Data block at 7789
+b07789 defb 253,126,1,230,64,204,31,31
+ 07797 defb 253,126,0,221,103,221,125,211
+ 07805 defb 227,221,124,205,3,29,62,88
+ 07813 defb 205,239,29,62,6
+
+; Message at 7818
+t07818 defm "8<>"
+
+; Data block at 7821
+b07821 defb 254,211,235,1,235,0,124,254
+ 07829 defb 61,32,11,6,0,120,237,121
+ 07837 defb 237,121
+
+; Routine at 7839
+c07839 djnz 7835     ;
+; This entry point is used by the routine at #R7212.
+*07841 jr 7855       ;
+
+; Data block at 7843
+b07843 defb 205,199,31,32,4,237,179,237
+ 07851 defb 179
+
+; Routine at 7852
+c07852 call nz,7062  ;
+; This entry point is used by the routine at #R7839.
+*07855 ld a,255      ;
+ 07857 out (235),a   ;
+ 07859 nop           ;
+ 07860 out (235),a   ;
+ 07862 call 7765     ;
+ 07865 and 31        ;
+ 07867 cp 5          ;
+ 07869 ld a,6        ;
+ 07871 scf           ;
+ 07872 jr nz,7880    ;
+*07874 call 7765     ;
+ 07877 or a          ;
+ 07878 jr z,7874     ;
+; This entry point is used by the routines at #R7892 and #R7942.
+*07880 call 7649     ;
+ 07883 ld ixl,a      ;
+ 07885 ld a,0        ;
+ 07887 out (227),a   ;
+ 07889 ld a,ixl      ;
+ 07891 ret           ;
+
+; Routine at 7892
+c07892 ld a,(iy+1)   ;
+ 07895 and 64        ;
+ 07897 call z,7967   ;
+ 07900 ld a,(iy+0)   ;
+ 07903 ld ixh,a      ;
+ 07905 ld a,ixl      ;
+ 07907 out (227),a   ;
+ 07909 ld a,ixh      ;
+ 07911 call 7427     ;
+ 07914 ld a,81       ;
+ 07916 call 7663     ;
+ 07919 jr nc,7925    ;
+ 07921 ld a,6        ;
+ 07923 jr 7880       ;
+
+; Data block at 7925
+;
+; Used by the routine at #R7892.
+b07925 defb 205,71,30,56,247,205,199,31
+ 07933 defb 32,7,1,235,0,237,178,237
+ 07941 defb 178
+
+; Routine at 7942
+c07942 call nz,7080  ;
+ 07945 nop           ;
+ 07946 in a,(235)    ;
+ 07948 nop           ;
+ 07949 in a,(235)    ;
+ 07951 or a          ;
+ 07952 jr 7880       ;
+
+; Routine at 7954
+;
+; Used by the routine at #R7438.
+c07954 call 833      ;
+ 07957 ld hl,7396    ;
+ 07960 ld (iy+2),l   ;
+ 07963 ld (iy+3),h   ;
+ 07966 ret           ;
+
+; Routine at 7967
+;
+; Used by the routines at #R7892 and #R7979.
+c07967 ld b,c        ;
+ 07968 ld c,d        ;
+ 07969 ld d,e        ;
+ 07970 ld e,0        ;
+; This entry point is used by the routine at #R7979.
+*07972 sla d         ;
+ 07974 rl c          ;
+ 07976 rl b          ;
+ 07978 ret           ;
+
+; Routine at 7979
+;
+; Used by the routine at #R7438.
+c07979 ld a,(iy+1)   ;
+ 07982 and 64        ;
+ 07984 jr z,8004     ;
+ 07986 inc hl        ;
+ 07987 inc hl        ;
+ 07988 ld a,(hl)     ;
+ 07989 and 63        ;
+ 07991 ld c,a        ;
+ 07992 inc hl        ;
+ 07993 ld d,(hl)     ;
+ 07994 inc hl        ;
+ 07995 ld e,(hl)     ;
+ 07996 call 2093     ;
+ 07999 call 7967     ;
+ 08002 jr 7972       ;
+
+; Routine at 8004
+;
+; Used by the routine at #R7979.
+c08004 ld a,(hl)     ;
+ 08005 and 15        ;
+ 08007 push af       ;
+ 08008 inc hl        ;
+ 08009 ld a,(hl)     ;
+ 08010 and 3         ;
+ 08012 ld d,a        ;
+ 08013 inc hl        ;
+ 08014 ld e,(hl)     ;
+ 08015 inc hl        ;
+ 08016 ld a,(hl)     ;
+ 08017 and 192       ;
+ 08019 add a,a       ;
+ 08020 rl e          ;
+ 08022 rl d          ;
+ 08024 add a,a       ;
+ 08025 rl e          ;
+ 08027 rl d          ;
+ 08029 inc de        ;
+ 08030 inc hl        ;
+ 08031 ld a,(hl)     ;
+ 08032 and 3         ;
+ 08034 ld b,a        ;
+ 08035 inc hl        ;
+ 08036 ld a,(hl)     ;
+ 08037 and 128       ;
+ 08039 add a,a       ;
+ 08040 rl b          ;
+ 08042 inc b         ;
+ 08043 inc b         ;
+ 08044 pop af        ;
+ 08045 add a,b       ;
+ 08046 ld bc,0       ;
+ 08049 call 8064     ;
+ 08052 ld e,d        ;
+ 08053 ld d,c        ;
+ 08054 ld c,b        ;
+ 08055 ld b,0        ;
+ 08057 srl c         ;
+ 08059 rr d          ;
+ 08061 rr e          ;
+ 08063 ret           ;
+
+; Routine at 8064
+;
+; Used by the routine at #R8004.
+c08064 sla e         ;
+ 08066 rl d          ;
+ 08068 rl c          ;
+ 08070 rl b          ;
+ 08072 dec a         ;
+ 08073 jr nz,8064    ;
+ 08075 ret           ;
+
+; Routine at 8076
+;
+; Used by the routine at #R7383.
+c08076 ld bc,0       ;
+ 08079 ld d,b        ;
+ 08080 ld e,c        ;
+ 08081 ld hl,15872   ;
+ 08084 rst 8         ;
+ 08085 add a,c       ;
+ 08086 ret c         ;
+ 08087 ld hl,(16382) ;
+ 08090 ld a,h        ;
+ 08091 and l         ;
+ 08092 scf           ;
+ 08093 ret nz        ;
+ 08094 push iy       ;
+ 08096 pop hl        ;
+ 08097 ld de,8       ;
+ 08100 add hl,de     ;
+ 08101 ex de,hl      ;
+ 08102 ld b,4        ;
+ 08104 ld hl,16318   ;
+*08107 ld a,(hl)     ;
+ 08108 and 127       ;
+ 08110 inc hl        ;
+ 08111 inc hl        ;
+ 08112 inc hl        ;
+ 08113 inc hl        ;
+ 08114 jr nz,8122    ;
+ 08116 or (hl)       ;
+ 08117 jr z,8122     ;
+ 08119 inc (iy+0)    ;
+*08122 ld a,b        ;
+ 08123 ld bc,4       ;
+ 08126 add hl,bc     ;
+ 08127 ld c,8        ;
+ 08129 ldir          ;
+ 08131 ld b,a        ;
+ 08132 djnz 8107     ;
+ 08134 ret           ;
+
+; Routine at 8135
+c08135 push ix       ;
+ 08137 ld a,(15865)  ;
+ 08140 ld ixl,a      ;
+ 08142 xor a         ;
+ 08143 out (227),a   ;
+ 08145 ld a,(11918)  ;
+ 08148 and a         ;
+ 08149 ld a,ixl      ;
+ 08151 out (227),a   ;
+ 08153 pop ix        ;
+ 08155 ret           ;
+
+; Unused
+s08156 defs 24
+
+; Routine at 8180
+;
+; Used by the routines at #R58, #R1222 and #R1378.
+c08180 ex (sp),hl    ;
+ 08181 jr 8186       ;
+
+; Routine at 8183
+c08183 ei            ;
+ 08184 ret           ;
+
+; Routine at 8185
+c08185 ei            ;
+; This entry point is used by the routines at #R91, #R3348 and #R8180.
+*08186 ret           ;
+
+; Routine at 8187
+;
+; Used by the routines at #R610, #R3101, #R3208, #R3300 and #R3429.
+c08187 jp (hl)       ;
+
+; Routine at 8188
+c08188 ld a,20       ;
+ 08190 scf           ;
+ 08191 ret           ;
+
