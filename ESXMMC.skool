@@ -180,9 +180,9 @@ t00161 defb 19,1,23,19,1,19,0    ; BRIGHT 1; TAB 256 + 19; BRIGHT 0
  00189 defb 127                  ; (C) + end of message
 
 ; Copyright date
-t00190 defm " 2005-2021"
+t00190 defm " IrataHack"
  00200 defb 13,19,1,23,19,1,19,0 ; <CR>; BRIGHT 1; TAB 256 + 19; BRIGHT 0
- 00208 defm "Papaya Dezign"
+ 00208 defm "             "
  00221 defb 13,141               ; <CR>; <CR> + end of message
 
 ; Map 48K ROM
@@ -322,8 +322,9 @@ c00257 ld bc,10800   ; Delay counter
  00419 call 1131     ; Unpack logo to screen???
  00422 call 815      ; ???
  00425 call 954      ;
- 00428 ld hl,8199    ;
- 00431 call 7049     ;
+ 00428 ld hl,8199    ; Destination address for the code copy performed by the
+                     ; next call.
+ 00431 call 7049     ; Do the copy.
  00434 ld (8212),a   ;
  00437 ld hl,2083    ;
  00440 ld (8215),hl  ;
@@ -404,18 +405,29 @@ c00610 call 9862     ; Call into ESXDOS.SYS to see if Caps Shift is pressed. If
                      ; the auto load operation (ESXDOS_SYS_AUTOLOAD). The auto-
                      ; load filename is /SYS/AUTOBOOT.BAS
 ; This entry point is used by the routine at #R257.
-*00618 call 627      ;
- 00621 ld hl,1       ;
- 00624 jp 8187       ;
+*00618 call 627      ; Wait for SPACE to be released. If SPACE is held down it
+                     ; holds the startup sequence here so the user can read the
+                     ; screen.
+ 00621 ld hl,1       ; Now continue the 48K ROM reset sequence. The 1st
+                     ; instruction (DI) of the ROM has already been executed.
+                     ; This caused the DivMMC memory mapper to kick-in and map
+                     ; the DivMMC ROM at address $0. The next instruction fetch
+                     ; came from address $1 of the DivMMC ROM which we are
+                     ; still executing from. hl contains the address we wich to
+                     ; continue executing from.
+ 00624 jp 8187       ; $1ffb is a special address. Executing an instruction at
+                     ; this address causes the DivMMC mapper to be reset so
+                     ; that the original 48K ROM is mapped in.
 
-; Routine at 627
+; Wait for the SPACE key to be released
 ;
 ; Used by the routines at #R257 and #R610.
-c00627 ld a,127      ;
- 00629 in a,(254)    ;
- 00631 rra           ;
- 00632 ret c         ;
- 00633 jr 627        ;
+c00627 ld a,127      ; Read the keyboard half row
+ 00629 in a,(254)    ; containing the SPACE key.
+ 00631 rra           ; Move the bit (bit-0) representing the SPACE key to the
+                     ; carry flag.
+ 00632 ret c         ; Return if SPACE is not pressed
+ 00633 jr 627        ; else, keep looping.
 
 ; Routine at 635
 ;
@@ -4978,12 +4990,16 @@ t07004 defm "Detecting Devices...",13,0
 ; ESXDOS config file name
 t07026 defm "/SYS/CONFIG/ESXDOS.CFG",0
 
-; Routine at 7049
+; Copy code
+;
+; Copy 4 bytes of code from $1ffc to the address passed in hl.
+;
+; .
 ;
 ; Used by the routine at #R257.
-c07049 ex de,hl      ;
- 07050 ld hl,8188    ;
- 07053 ldi           ;
+c07049 ex de,hl      ; Move the destination address to de.
+ 07050 ld hl,8188    ; Load hl with the source address.
+ 07053 ldi           ; Copy 4 bytes.
  07055 ldi           ;
  07057 ldi           ;
  07059 ldi           ;
@@ -5638,18 +5654,24 @@ c08180 ex (sp),hl    ;
 c08183 ei            ;
  08184 ret           ;
 
-; Routine at 8185
+; Enable interrupts, return and reset DivMMC mapper
 c08185 ei            ;
 ; This entry point is used by the routines at #R91, #R3348 and #R8180.
-*08186 ret           ;
+*08186 ret           ; Executing an instruction at this address causes the
+                     ; DivMMC mapper to be reset meaning the 48K is now
+                     ; mapped-in.
 
-; Routine at 8187
+; Jump to the address in hl and reset DivMMC mapper
 ;
 ; Used by the routines at #R610, #R3101, #R3208, #R3300 and #R3429.
-c08187 jp (hl)       ;
+c08187 jp (hl)       ; Jump to the address held in hl. Executing an instruction
+                     ; at this address also causes the DivMMC mapper to be
+                     ; reset meaning the 48K is now mapped-in.
 
-; Routine at 8188
-c08188 ld a,20       ;
- 08190 scf           ;
+; No SYS error return
+;
+; Accessed by the routine at #R7049
+c08188 ld a,20       ; Error code (No SYS)
+ 08190 scf           ; Set the carry flag to signal an error.
  08191 ret           ;
 

@@ -1,7 +1,7 @@
 @ 00000 start
-@ 00000 org $0000
 c 00000 DivMMC RST $00 entry point
 D 00000 Execution resumes here after reset
+@ 00000 org $0000
 @ 00000 label=start
 C 00000,1 Disable interrupts
 c 00001 Entry point for RST $00 when called from the 48K ROM
@@ -21,6 +21,7 @@ D 00024 Used by the routines at #R1541, #R1719, #R2134, #R3101, #R3300, #R3367 a
 c 00027 Routine at 27
 D 00027 Used by the routine at #R35.
 c 00030 Routine at 30
+N 00031 This entry point is used by the routine at #R55.
 b 00033 Data block at 33
 B 00033,2,2
 c 00035 Routine at 35
@@ -35,12 +36,13 @@ c 00055 Routine at 55
 N 00056 This entry point is used by the routines at #R7, #R19, #R30, #R46, #R7212 and #R7383.
 c 00058 Routine at 58
 t 00064 PLUS3DOS message
-T 00064,11,11
+T 00064,11,8:n3
 c 00075 Routine at 75
+D 00075 Used by the routine at #R30.
 t 00077 /SYS message
-T 00077,5,5
+T 00077,5,4:n1
 c 00082 Routine at 83
-D 00083 Used by the routines at #R770 and #R792.
+N 00083 This entry point is used by the routines at #R770 and #R792.
 c 00091 Routine at 91
 c 00102 Routine at 102
 s 00103 Unused
@@ -143,6 +145,8 @@ C 00413,3 Date string
 C 00416,3 Display string
 C 00419,3 Unpack logo to screen???
 C 00422,3 ???
+C 00428,3 Destination address for the code copy performed by the next call.
+C 00431,3 Do the copy.
 C 00474,3 Detecting devices... message
 C 00477,3 Display null terminated string pointed to by hl.
 C 00480,2 <CR>
@@ -156,8 +160,16 @@ D 00610 Used by the routine at #R257.
 C 00610,3 Call into ESXDOS.SYS to see if Caps Shift is pressed. If not pressed, carry flag is set and a = ($2e8d). If pressed a = ($2e8d) ^ 3 and carry is clear.
 C 00615,3 If zero flag is not set, call into ESXDOS.SYS to perform the auto load operation (ESXDOS_SYS_AUTOLOAD). The auto- load filename is /SYS/AUTOBOOT.BAS
 N 00618 This entry point is used by the routine at #R257.
-c 00627 Routine at 627
+C 00618,3 Wait for SPACE to be released. If SPACE is held down it holds the startup sequence here so the user can read the screen.
+C 00621,3 Now continue the 48K ROM reset sequence. The 1st instruction (DI) of the ROM has already been executed. This caused the DivMMC memory mapper to kick-in and map the DivMMC ROM at address $0. The next instruction fetch came from address $1 of the DivMMC ROM which we are still executing from. hl contains the address we wich to continue executing from.
+C 00624,3 $1ffb is a special address. Executing an instruction at this address causes the DivMMC mapper to be reset so that the original 48K ROM is mapped in.
+c 00627 Wait for the SPACE key to be released
 D 00627 Used by the routines at #R257 and #R610.
+C 00627,2 Read the keyboard half row
+C 00629,2 containing the SPACE key.
+C 00631,1 Move the bit (bit-0) representing the SPACE key to the carry flag.
+C 00632,1 Return if SPACE is not pressed
+C 00633,2 else, keep looping.
 c 00635 Routine at 635
 D 00635 Used by the routine at #R257.
 C 00639,3 Display null terminated string pointed to by hl.
@@ -355,7 +367,7 @@ B 02082,1,1 M + end of message
 b 02083 Data block at 2083
 B 02083,1,1
 t 02084 No SYSTEM
-T 02084,9,9
+T 02084,9,8:n1
 c 02093 Routine at 2093
 D 02093 Used by the routines at #R4710, #R4919 and #R7979.
 c 02101 Routine at 2101
@@ -805,8 +817,12 @@ D 07004 Used by #R257
 T 07004,22,20:n2
 t 07026 ESXDOS config file name
 T 07026,23,22:n1
-c 07049 Routine at 7049
-D 07049 Used by the routine at #R257.
+c 07049 Copy code
+D 07049 Copy 4 bytes of code from $1ffc to the address passed in hl.
+N 07049 Used by the routine at #R257.
+C 07049,1 Move the destination address to de.
+C 07050,3 Load hl with the source address.
+C 07053,2 Copy 4 bytes.
 c 07062 Routine at 7062
 D 07062 Used by the routine at #R7852.
 c 07080 Routine at 7080
@@ -892,9 +908,12 @@ S 08156,24,24
 c 08180 Routine at 8180
 D 08180 Used by the routines at #R58, #R1222 and #R1378.
 c 08183 Routine at 8183
-c 08185 Routine at 8185
+c 08185 Enable interrupts, return and reset DivMMC mapper
 N 08186 This entry point is used by the routines at #R91, #R3348 and #R8180.
-c 08187 Routine at 8187
+C 08186,1 Executing an instruction at this address causes the DivMMC mapper to be reset meaning the 48K is now mapped-in.
+c 08187 Jump to the address in hl and reset DivMMC mapper
 D 08187 Used by the routines at #R610, #R3101, #R3208, #R3300 and #R3429.
+C 08187,1 Jump to the address held in hl. Executing an instruction at this address also causes the DivMMC mapper to be reset meaning the 48K is now mapped-in.
 c 08188 Routine at 8188
+D 08188 Accessed by the routine at #R7049
 i 08192
