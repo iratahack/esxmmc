@@ -1,15 +1,19 @@
 @ 00000 start
-c 00000 Entry point for RST $00
+c 00000 DivMMC RST $00 entry point
+D 00000 Execution resumes here after reset
 @ 00000 org $0000
 @ 00000 label=start
 C 00000,1 Disable interrupts
+c 00001 Entry point for RST $00 when called from the 48K ROM
 C 00001,3 Setup the stack pointer
 C 00004,3 Continue initialization
 c 00007 Routine at 7
-N 00008 This entry point is used by the routines at #R237, #R673, #R717, #R735, #R1073, #R1519, #R1777, #R1860, #R2806, #R3540, #R4261, #R4271, #R4277, #R4683, #R4952, #R6082, #R6856, #R6894 and #R8076.
-c 00011 Entry point for RST $08
-c 00016 Routine at 16
-D 00016 Used by the routines at #R257, #R673, #R1107, #R1162, #R1329, #R2127, #R2160, #R2213, #R2238, #R2276, #R2283, #R3232 and #R6993.
+c 00008 DivMMC RST $08 entry point
+D 00008 This entry point is used by the routines at #R237, #R673, #R717, #R735, #R1073, #R1519, #R1777, #R1860, #R2806, #R3540, #R4261, #R4271, #R4277, #R4683, #R4952, #R6082, #R6856, #R6894 and #R8076.
+c 00011 Entry point for RST $08 when called from the 48K ROM
+c 00016 DivMMC RST $10 entry point
+D 00016 Display the character in the 'a' register.
+N 00016 Used by the routines at #R257, #R673, #R1107, #R1162, #R1329, #R2127, #R2160, #R2213, #R2238, #R2276, #R2283, #R3232 and #R6993.
 c 00019 Routine at 19
 N 00021 This entry point is used by the routine at #R11.
 c 00024 Routine at 24
@@ -24,7 +28,8 @@ c 00035 Routine at 35
 c 00040 Routine at 40
 D 00040 Used by the routines at #R1477, #R6760 and #R7122.
 c 00046 Routine at 46
-N 00048 This entry point is used by the routines at #R673, #R3018, #R3429, #R3607, #R3667, #R3719, #R3909, #R4037, #R4472, #R4588, #R4874, #R4938, #R5434, #R5773, #R5862, #R5928, #R6082, #R6255, #R6489, #R6564, #R6568 and #R7438.
+c 00048 Entry point for RST $30
+D 00048 Used by the routines at #R673, #R3018, #R3429, #R3607, #R3667, #R3719, #R3909, #R4037, #R4472, #R4588, #R4874, #R4938, #R5434, #R5773, #R5862, #R5928, #R6082, #R6255, #R6489, #R6564, #R6568 and #R7438.
 t 00050 Message at 50
 T 00050,3,3
 c 00053 Routine at 53
@@ -67,6 +72,7 @@ C 00230,2 ZX Spectrum 128 page control register
 C 00232,2 Lower bit of ROM selection
 c 00237 Routine at 237
 D 00237 Used by the routines at #R699, #R717, #R735 and #R1410.
+C 00241,1 ESXDOS_SYS_CALL
 c 00244 Routine at 244
 D 00244 Used by the routine at #R257.
 b 00254 Data at 254
@@ -87,17 +93,32 @@ C 00269,1 and continue to loop if
 C 00270,2 its not.
 C 00272,3 Map the Spectrum 48K ROM
 C 00275,3 Initialize the AY sound chip
+C 00278,2 Write $f to offset $1f in
+C 00280,3 DivMMC RAM bank 0.
+C 00283,3 Read initFlag
+C 00286,2 Is it equal to $aa?
+C 00288,2 If not, jump to full init
 C 00290,2 Check if the break key is being pressed
 C 00292,2 Read the port
 C 00294,1 Break key is in bit 0, move it to the carry flag
-C 00295,3 Carry flag is set if break key is not pressed
-N 00298 Set the border to black
+C 00295,3 If break not pressed jump to normalInit
+@ 00298 label=fullInit
+C 00298,1 Set the border to black
 N 00301 Clear the screen (backwards)
+C 00301,3 Source address
+C 00304,3 Destination address
+C 00307,3 Length
+C 00310,1 Set the source data
+C 00311,2 Fill the screen with 0's
 N 00313 Setup the DivMMC memory banks
 C 00313,2 Start with bank 4
 @ 00315 label=nextBank
 C 00315,2 Select the bank
-N 00317 Write the entire bank with 0's
+C 00317,3 Source address = start of DivMMC RAM bank
+C 00320,3 Destination address = start address + 1
+C 00323,3 Length
+C 00326,1 Write 0 to the source address
+C 00327,2 Fill the memory with 0's
 C 00329,3 Save the last bank selected
 C 00332,3 Write op-code $c9 (ret) to $3dfd
 C 00337,3 and $3d30
@@ -110,34 +131,64 @@ C 00353,1 Read the value from $3d00
 C 00354,1 Now increment the value at $3d00
 C 00355,1 Compare the 2 values
 C 00356,2 If they are not equal, jump forward
-C 00358,2 l = $1c
+C 00358,2 otherwise l = $1c
 C 00360,1 Select DivMMC bank 0
 C 00363,1 Save the value from l
-C 00367,2 a = $aa
-C 00369,3 Save it
+C 00367,2 Set the initFlag to $aa so as
+C 00369,3 not to go through the full init on the next reset.
+C 00389,3 Screen address ?
 C 00407,3 Version string
-C 00410,3 Display message
+C 00410,3 Display string
 C 00413,3 Date string
-C 00416,3 Display message
-c 00610 Routine at 610
+C 00416,3 Display string
+C 00419,3 Unpack logo to screen???
+C 00422,3 ???
+C 00474,3 Detecting devices... message
+C 00477,3 Display null terminated string pointed to by hl.
+C 00480,2 <CR>
+C 00482,1 Display character
+C 00496,3 Display null terminated string pointed to by hl.
+C 00516,1 Display character
+c 00610 Normal Initialization
 D 00610 Used by the routine at #R257.
+@ 00610 label=normalInit
+C 00610,3 Call into ESXDOS.SYS to see if Caps Shift is pressed. If not pressed, carry flag is set and a = ($2e8d). If pressed a = ($2e8d) ^ 3 and carry is clear.
+C 00615,3 If zero flag is not set, call into ESXDOS.SYS to perform the auto load operation (ESXDOS_SYS_AUTOLOAD). The auto- load filename is /SYS/AUTOBOOT.BAS
 N 00618 This entry point is used by the routine at #R257.
+> 00627 ; This entry point is used by the routine at #R257.
+> 00627 *00618 call 627      ;
+> 00627  00621 ld hl,1       ;
+> 00627  00624 jp 8187       ;
 c 00627 Routine at 627
 D 00627 Used by the routines at #R257 and #R610.
 c 00635 Routine at 635
 D 00635 Used by the routine at #R257.
+C 00639,3 Display null terminated string pointed to by hl.
+C 00651,3 Display null terminated string pointed to by hl.
+C 00657,3 Display null terminated string pointed to by hl.
 c 00662 Routine at 662
 D 00662 Used by the routine at #R257.
 c 00673 Routine at 673
 D 00673 Used by the routine at #R257.
+@ 00673 label=getDiskStatus
+C 00673,3 Pointer to buffer to receive data from RST $08
+C 00676,1 ESXDOS_SYS_CALL
+B 00677,1,1 RST $08 op-code (ESXDOS_SYS_DISK_STATUS)
+C 00678,1 Carry set if an error occurred.
+C 00692,3 Display null terminated string pointed to by hl.
+C 00697,1 Display character
 c 00699 Routine at 699
 D 00699 Used by the routine at #R257.
 c 00717 Routine at 717
 D 00717 Used by the routine at #R257.
 N 00727 This entry point is used by the routines at #R699 and #R1410.
+C 00729,1 ESXDOS_SYS_CALL
 c 00735 Routine at 735
 D 00735 Used by the routine at #R257.
+C 00746,1 ESXDOS_SYS_CALL
+C 00760,1 ESXDOS_SYS_CALL
 N 00763 This entry point is used by the routine at #R717.
+C 00763,1 ESXDOS_SYS_CALL
 c 00770 Routine at 770
 D 00770 Used by the routine at #R635.
 N 00776 This entry point is used by the routine at #R784.
@@ -163,6 +214,8 @@ D 00913 Used by the routines at #R1058 and #R2840.
 c 00919 Routine at 919
 c 00954 Routine at 954
 D 00954 Used by the routine at #R257.
+C 00973,2 Select DivMMC RAM bank 1
+C 00980,2 Select DivMMC RAM bank 0
 s 00983 Unused
 D 00983 Used by the routine at #R257.
 S 00983,5,5
@@ -179,13 +232,19 @@ c 01058 Routine at 1058
 D 01058 Used by the routine at #R1021.
 c 01073 Routine at 1073
 D 01073 Used by the routine at #R257.
+C 01077,1 ESXDOS_SYS_CALL
 b 01091 Data block at 1091
 D 01091 Used by the routine at #R1073.
 B 01091,16,8
 c 01107 Routine at 1107
+C 01128,1 Display character
 c 01131 Routine at 1131
 D 01131 Used by the routine at #R257.
 c 01162 Routine at 1162
+C 01191,1 Display character
+C 01194,1 Display character
+C 01202,1 Display character
+C 01209,1 Display character
 s 01211 Unused
 S 01211,11,11
 c 01222 Routine at 1222
@@ -203,6 +262,10 @@ C 01290,2 Disable all tone and noise channels
 c 01293 Routine at 1293
 N 01322 This entry point is used by the routine at #R1629.
 c 01329 Routine at 1329
+C 01361,1 Display character
+C 01364,1 Display character
+C 01371,1 Display character
+C 01374,1 Display character
 c 01378 Routine at 1378
 N 01390 This entry point is used by the routine at #R1399.
 c 01399 Routine at 1399
@@ -224,7 +287,9 @@ D 01498 Used by the routines at #R1477 and #R1493.
 c 01512 Routine at 1512
 D 01512 Used by the routines at #R1498 and #R1519.
 c 01519 Routine at 1519
+C 01532,1 ESXDOS_SYS_CALL
 c 01541 Routine at 1541
+C 01541,1 ESXDOS_ROM_CALL
 c 01545 Routine at 1545
 D 01545 Used by the routine at #R1579.
 c 01579 Routine at 1579
@@ -243,6 +308,7 @@ c 01697 Routine at 1697
 c 01702 Routine at 1702
 D 01702 Used by the routines at #R2697, #R2710, #R4297, #R4632, #R5186, #R5208 and #R6760.
 c 01719 Routine at 1719
+C 01719,1 ESXDOS_ROM_CALL
 c 01723 Routine at 1723
 D 01723 Used by the routine at #R6802.
 c 01732 Routine at 1732
@@ -268,6 +334,8 @@ b 01776 Data block at 1776
 B 01776,1,1
 c 01777 Routine at 1777
 D 01777 Used by the routine at #R257.
+C 01781,1 ESXDOS_SYS_CALL
+C 01791,1 ESXDOS_SYS_CALL
 c 01800 Routine at 1800
 c 01828 Routine at 1828
 D 01828 Used by the routine at #R1800.
@@ -276,6 +344,7 @@ D 01842 Used by the routine at #R1860.
 c 01856 Routine at 1856
 D 01856 Used by the routine at #R1842.
 c 01860 Routine at 1860
+C 01887,1 ESXDOS_SYS_CALL
 c 01894 Routine at 1894
 D 01894 Used by the routine at #R1860.
 c 01935 Routine at 1935
@@ -305,10 +374,14 @@ c 02114 Routine at 2114
 D 02114 Used by the routines at #R3719, #R4472 and #R6608.
 c 02119 Routine at 2119
 D 02119 Used by the routines at #R3909 and #R6894.
-c 02127 Routine at 2127
-D 02127 Used by the routines at #R257, #R635, #R662, #R673 and #R6993.
+c 02127 Display null terminated string
+D 02127 Display the null terminated string pointed to by hl.
+R 02127 Used by the routines at #R257, #R635, #R662, #R673 and #R6993.
+@ 02127 label=displayCString
+C 02130,1 Display character
 c 02134 Routine at 2134
 D 02134 Used by the routine at #R16.
+C 02144,1 ESXDOS_ROM_CALL
 c 02154 Routine at 2154
 D 02154 Used by the routine at #R3191.
 c 02160 Routine at 2160
@@ -317,15 +390,21 @@ N 02180 This entry point is used by the routine at #R2154.
 c 02213 Routine at 2213
 D 02213 Used by the routine at #R2160.
 N 02215 This entry point is used by the routine at #R2160.
+C 02217,1 Display character
 c 02219 Routine at 2219
 D 02219 Used by the routine at #R1107.
 c 02238 Routine at 2238
 D 02238 Used by the routine at #R2219.
+C 02267,1 Display character
 N 02268 This entry point is used by the routine at #R2219.
+C 02274,1 Display character
 c 02276 Routine at 2276
 D 02276 Used by the routine at #R2219.
+C 02281,1 Display character
 c 02283 Routine at 2283
 D 02283 Used by the routines at #R2238 and #R2276.
+C 02317,1 Display character
+C 02321,1 Display character
 c 02323 Routine at 2323
 D 02323 Used by the routine at #R2283.
 b 02350 Data block at 2350
@@ -364,6 +443,7 @@ c 02786 Routine at 2786
 D 02786 Used by the routine at #R2764.
 N 02803 This entry point is used by the routine at #R2840.
 c 02806 Routine at 2806
+C 02826,1 ESXDOS_SYS_CALL
 c 02840 Routine at 2840
 N 02859 This entry point is used by the routines at #R1800 and #R2740.
 N 02864 This entry point is used by the routine at #R2786.
@@ -382,6 +462,9 @@ N 03088 This entry point is used by the routine at #R2977.
 c 03096 Routine at 3096
 c 03101 Routine at 3101
 D 03101 Used by the routine at #R27.
+C 03112,1 ESXDOS_ROM_CALL
+C 03137,1 ESXDOS_ROM_CALL
+C 03144,1 ESXDOS_ROM_CALL
 c 03191 Routine at 3191
 D 03191 Used by the routine at #R3101.
 C 03196,3 ESXDOS error # message
@@ -399,7 +482,7 @@ C 03232,1 Get a character from the string
 C 03233,2 and compare it with $7f.
 C 03235,1 Save the flags and
 C 03236,2 remove bit 7.
-C 03238,1 Display the character.
+C 03238,1 Display character
 C 03239,1 Restore the flags.
 C 03240,1 If no carry, end of string.
 C 03241,1 Move the string pointer to the next character
@@ -414,19 +497,26 @@ c 03277 Routine at 3277
 D 03277 Used by the routine at #R24.
 c 03300 Routine at 3300
 D 03300 Used by the routine at #R19.
+C 03317,1 ESXDOS_ROM_CALL
 c 03348 Routine at 3348
 D 03348 Used by the routine at #R3300.
 N 03351 This entry point is used by the routine at #R3300.
 c 03367 Routine at 3367
 D 03367 Used by the routines at #R3300 and #R3348.
+C 03420,1 ESXDOS_ROM_CALL
 c 03429 Routine at 3429
 D 03429 Used by the routine at #R3367.
+C 03432,1 ESXDOS_ROM_CALL
 N 03438 This entry point is used by the routine at #R3367.
+C 03448,1 ESXDOS_ROM_CALL
+C 03455,1 ESXDOS_ROM_CALL
 N 03466 This entry point is used by the routine at #R3367.
 c 03481 Routine at 3481
 c 03513 Routine at 3513
 c 03540 Routine at 3540
 D 03540 Used by the routines at #R3481 and #R3513.
+C 03553,1 ESXDOS_SYS_CALL
+C 03558,1 ESXDOS_SYS_CALL
 b 03568 Data block at 3568
 D 03568 Used by the routine at #R3481.
 B 03568,39,8*4,7
@@ -468,10 +558,13 @@ D 04234 Used by the routine at #R4210.
 N 04244 This entry point is used by the routine at #R4210.
 c 04261 Routine at 4261
 D 04261 Used by the routines at #R3719, #R4037, #R4292, #R4297 and #R4625.
+C 04266,1 ESXDOS_SYS_CALL
 c 04271 Routine at 4271
 D 04271 Used by the routine at #R4588.
+C 04274,1 ESXDOS_SYS_CALL
 c 04277 Routine at 4277
 D 04277 Used by the routines at #R4287 and #R4384.
+C 04282,1 ESXDOS_SYS_CALL
 c 04287 Routine at 4287
 D 04287 Used by the routine at #R4384.
 c 04292 Routine at 4292
@@ -521,6 +614,7 @@ c 04674 Routine at 4674
 D 04674 Used by the routine at #R6568.
 c 04683 Routine at 4683
 D 04683 Used by the routine at #R6506.
+C 04701,1 ESXDOS_SYS_CALL
 c 04710 Routine at 4710
 D 04710 Used by the routines at #R5254, #R6032 and #R6489.
 c 04724 Routine at 4724
@@ -546,6 +640,7 @@ c 04938 Routine at 4938
 D 04938 Used by the routine at #R5928.
 c 04952 Routine at 4952
 D 04952 Used by the routine at #R6506.
+C 04970,1 ESXDOS_SYS_CALL
 c 04979 Routine at 4979
 c 05041 Routine at 5041
 D 05041 Used by the routine at #R5434.
@@ -648,6 +743,7 @@ D 06072 Used by the routine at #R6032.
 c 06082 Routine at 6082
 D 06082 Used by the routine at #R5928.
 N 06094 This entry point is used by the routine at #R6202.
+C 06098,1 ESXDOS_SYS_CALL
 c 06144 Routine at 6144
 D 06144 Used by the routines at #R5928 and #R6202.
 c 06156 Routine at 6156
@@ -704,14 +800,20 @@ c 06802 Routine at 6802
 c 06817 Routine at 6817
 c 06842 Routine at 6842
 c 06856 Routine at 6856
+C 06884,1 ESXDOS_SYS_CALL
+C 06889,1 ESXDOS_SYS_CALL
 c 06894 Routine at 6894
+C 06962,1 ESXDOS_SYS_CALL
 N 06979 This entry point is used by the routine at #R6856.
 c 06993 Routine at 6993
 D 06993 Used by the routine at #R1107.
-t 07004 Message at 7004
-T 07004,20,20
-b 07024 Data block at 7024
-B 07024,2,2
+C 06993,3 Display null terminated string pointed to by hl.
+C 06999,1 Display character
+C 07002,1 Display character
+t 07004 Detecting devices
+D 07004 Used by #R257
+@ 07004 label=detectDev
+T 07004,22,20:n2
 t 07026 Message at 7026
 T 07026,22,22
 b 07048 Data block at 7048
@@ -796,6 +898,7 @@ c 08064 Routine at 8064
 D 08064 Used by the routine at #R8004.
 c 08076 Routine at 8076
 D 08076 Used by the routine at #R7383.
+C 08084,1 ESXDOS_SYS_CALL
 c 08135 Routine at 8135
 s 08156 Unused
 S 08156,24,24
@@ -807,4 +910,25 @@ N 08186 This entry point is used by the routines at #R91, #R3348 and #R8180.
 c 08187 Routine at 8187
 D 08187 Used by the routines at #R610, #R3101, #R3208, #R3300 and #R3429.
 c 08188 Routine at 8188
-i 08192
+N 08192 This entry point is used by the routines at #R988, #R3481 and #R3513.
+N 08206 This entry point is used by the routine at #R1399.
+N 08209 This entry point is used by the routine at #R1222.
+N 08212 This entry point is used by the routine at #R3429.
+N 08222 This entry point is used by the routine at #R104.
+N 09254 This entry point is used by the routine at #R3101.
+N 09369 This entry point is used by the routines at #R1222 and #R1399.
+N 09649 This entry point is used by the routine at #R3481.
+N 09714 This entry point is used by the routine at #R6894.
+N 09757 This entry point is used by the routine at #R6856.
+N 09765 This entry point is used by the routine at #R6894.
+N 09795 This entry point is used by the routine at #R6894.
+N 09810 This entry point is used by the routines at #R6856 and #R6894.
+N 09836 This entry point is used by the routines at #R257 and #R610.
+N 09862 This entry point is used by the routines at #R257 and #R610.
+N 09888 This entry point is used by the routine at #R7062.
+N 09904 This entry point is used by the routine at #R7080.
+N 09961 This entry point is used by the routine at #R257.
+@ 11586 equ=initFlag=11586
+b 11586 Data block at 11586
+B 11586,1,1 Initialization flag.
+i 11587
