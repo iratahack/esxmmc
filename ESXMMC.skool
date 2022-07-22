@@ -1,17 +1,24 @@
 @start
+@equ=INIT_FLAG=11586
+@equ=TAPEIN=11595
+@equ=TAPEOUT=11596
+@equ=DE_SAVE=15858
+@equ=HL_SAVE=15860
+@equ=BC_SAVE=15862
+@equ=CURRENT_BANK=15865
+@equ=A_SAVE=15866
 ; DivMMC RST $00 entry point
 ;
 ; Execution resumes here after reset
 @org $0000
 @label=start
 c00000 di            ; Disable interrupts
-
 ; Entry point for RST $00 when called from the 48K ROM
-c00001 ld sp,24064   ; Setup the stack pointer
+ 00001 ld sp,24064   ; Setup the stack pointer
  00004 jp 257        ; Continue initialization
 
-; Routine at 7
-c00007 rst 56        ;
+; Unused
+u00007 defb 255
 
 ; DivMMC RST $08 entry point
 ;
@@ -19,9 +26,9 @@ c00007 rst 56        ;
 ; #R1073, #R1519, #R1777, #R1860, #R2806, #R3540, #R4261, #R4271, #R4277,
 ; #R4683, #R4952, #R6082, #R6856, #R6894 and #R8076.
 c00008 jp 2456       ;
-
 ; Entry point for RST $08 when called from the 48K ROM
-c00011 ld hl,(23645) ;
+ 00011 ld hl,(23645) ; Get CH-ADD - Address of the next character to be
+                     ; interpreted.
  00014 jr 21         ;
 
 ; DivMMC RST $10 entry point
@@ -34,36 +41,45 @@ c00011 ld hl,(23645) ;
 ; #R2213, #R2238, #R2276, #R2283, #R3232 and #R6993.
 c00016 jp 2134       ;
 
-; Routine at 19
-c00019 rst 56        ;
- 00020 rst 56        ;
-; This entry point is used by the routine at #R11.
-*00021 jp 3300       ;
+; Unused
+u00019 defb 255,255
 
-; Routine at 24
+; Spring-board to $0ce4
+;
+; This entry point is used by the routine at #R11.
+c00021 jp 3300       ;
+
+; DivMMC RST $18 entry point
+;
+; RST $18; DEFW address. Call any routine in the standard 48K BASIC ROM.
+;
+; .
 ;
 ; Used by the routines at #R1541, #R1719, #R2134, #R3101, #R3300, #R3367 and
 ; #R3429.
 c00024 jp 3277       ;
 
-; Routine at 27
+; Spring-board to $0c1d
 ;
 ; Used by the routine at #R35.
 c00027 jp 3101       ;
 
-; Routine at 30
-c00030 rst 56        ;
-; This entry point is used by the routine at #R55.
-*00031 jr 75         ;
+; Unused
+u00030 defb 255
 
-; Data block at 33
-b00033 defb 93,92
+; Spring-board to $004b
+c00031 defb 24       ; This op-code (jr) when combined with the byte from the
+                     ; next address will form the instruction jr $004b.
 
-; Routine at 35
-c00035 ld (23647),hl ;
+; DivMMC RST $20 entry point
+;
+; Used by the routines at #R3348 and #R3481.
+c00032 ld hl,(23645) ; Get CH-ADD - Address of the next character to be
+                     ; interpreted
+ 00035 ld (23647),hl ;
  00038 jr 27         ;
 
-; Routine at 40
+; DivMMC RST $28 entry point
 ;
 ; Used by the routines at #R1477, and #R6760.
 c00040 push hl       ;
@@ -71,11 +87,10 @@ c00040 push hl       ;
  00044 ex (sp),hl    ;
  00045 ret           ;
 
-; Routine at 46
-c00046 rst 56        ;
- 00047 rst 56        ;
+; Unused
+u00046 defb 255,255
 
-; Entry point for RST $30
+; DivMMC RST $30 entry point
 ;
 ; Used by the routines at #R673, #R3018, #R3429, #R3607, #R3667, #R3719,
 ; #R3909, #R4037, #R4472, #R4588, #R4874, #R4938, #R5434, #R5773, #R5862,
@@ -85,39 +100,51 @@ c00048 jr 134        ;
 ; /BIN/ message
 t00050 defm "/BIN/"
 
-; Routine at 55
-c00055 rst 56        ;
-; This entry point is used by the routines at #R7, #R19, #R30 and #R46.
-*00056 jr 31         ;
+; Unused
+u00055 defb 255
 
-; Routine at 58
-c00058 ld hl,57      ;
- 00061 jp 8180       ;
+; DivMMC RST $38 entry point
+c00056 defb 24       ; This op-code (jr) when combined with the byte from the
+                     ; next address will form the instruction jr $001f.
+; Entry point for RST $38 when called from the 48K ROM
+ 00057 push hl       ; Save hl, same instruction as the 48K ROM at this
+                     ; address. It will be discarded from the stack later. When
+                     ; this op-code ($e5) is combined with the op-code at
+                     ; address $38 ($18) you end up with a jr $001f
+                     ; instruction. This will be executed when an RST $38 is
+                     ; executed from the DivMMC ROM. The instruction at $1f
+                     ; jumps to $4b which performs an ei; ret. A confusing way
+                     ; to support both entry points for RST $38.
+ 00058 ld hl,57      ; Address to return to in 48K ROM.
+ 00061 jp 8180       ; Handle the transfer from DivMMC to 48K ROM.
 
 ; PLUS3DOS message
 t00064 defm "PLUS3DOS",26,1,0
 
-; Routine at 75
-;
-; Used by the routine at #R30.
+; Return from RST
 c00075 ei            ;
  00076 ret           ;
 
 ; /SYS message
 t00077 defm "/SYS",0
 
-; Routine at 83
+; Copy non-zero Data
+;
+; Copy data from hl to de while the data is non-zero.
+;
+; hl Source address
+; de Destination address
 c00082 ret           ;
 ; This entry point is used by the routines at #R770 and #R792.
-*00083 ld a,(hl)     ;
+*00083 ld a,(hl)     ; Read data from hl and check if it is zero.
  00084 and a         ;
- 00085 ret z         ;
- 00086 ld (de),a     ;
- 00087 inc hl        ;
+ 00085 ret z         ; If it is zero, we are done.
+ 00086 ld (de),a     ; If not zero, store it and
+ 00087 inc hl        ; increment the pointers
  00088 inc de        ;
- 00089 jr 83         ;
+ 00089 jr 83         ; Loop to the next byte.
 
-; Routine at 91
+; Return from DivMMC
 c00091 ei            ;
  00092 push af       ;
  00093 ld a,(11899)  ;
@@ -125,36 +152,34 @@ c00091 ei            ;
  00098 pop af        ;
  00099 jp 8186       ;
 
-; Routine at 102
-c00102 ret           ;
-
-; Unused
-s00103 defs 1
-
-; Routine at 104
-c00104 ld (15860),hl ;
- 00107 ld hl,(15865) ;
- 00110 ld h,a        ;
- 00111 ld a,0        ;
+; DivMMC NMI entry point
+c00102 ret           ; NMI does nothing in DivMMC
+; NMI entry point from 48K ROM
+ 00103 nop           ;
+ 00104 ld (15860),hl ; Save hl.
+ 00107 ld hl,(15865) ; Get the currently selected DivMMC RAM bank into l.
+ 00110 ld h,a        ; Save a in h
+ 00111 ld a,0        ; Map in RAM bank 0.
  00113 out (227),a   ;
- 00115 ld (11899),hl ;
- 00118 ld a,l        ;
- 00119 out (227),a   ;
- 00121 ld hl,(15860) ;
- 00124 ld a,0        ;
+ 00115 ld (11899),hl ; Save currently selected RAM bank and the original value
+                     ; in a.
+ 00118 ld a,l        ; Switch back to the RAM bank we started with.
+ 00119 out (227),a   ; Map in the bank.
+ 00121 ld hl,(15860) ; Restore hl.
+ 00124 ld a,0        ; Map in RAM bank 0.
  00126 out (227),a   ;
- 00128 ld a,(11900)  ;
- 00131 jp 8222       ;
+ 00128 ld a,(11900)  ; ???
+ 00131 jp 8222       ; Spring-board into the NMI handler in RAM.
 
 ; Routine at 134
 ;
 ; Used by the routine at #R46.
-c00134 ld (15860),hl ;
+c00134 ld (15860),hl ; Save hl
  00137 pop hl        ;
  00138 inc hl        ;
  00139 push hl       ;
  00140 dec hl        ;
- 00141 push de       ;
+ 00141 push de       ; Save de
  00142 ld d,0        ;
  00144 ld e,(hl)     ;
  00145 ld hl,1458    ;
@@ -164,9 +189,9 @@ c00134 ld (15860),hl ;
  00151 inc hl        ;
  00152 ld h,(hl)     ;
  00153 ld l,e        ;
- 00154 pop de        ;
+ 00154 pop de        ; Restore de
  00155 push hl       ;
- 00156 ld hl,(15860) ;
+ 00156 ld hl,(15860) ; Restore hl
  00159 ret           ;
 
 ; Unused
@@ -280,7 +305,7 @@ c00257 ld bc,10800   ; Delay counter
  00323 ld bc,8191    ; Length
  00326 ld (hl),l     ; Write 0 to the source address
  00327 ldir          ; Fill the memory with 0's
- 00329 ld (15865),a  ; Save the last bank selected
+ 00329 ld (15865),a  ; Save the current bank selected
  00332 ld hl,15869   ; Write op-code $c9 (ret) to $3dfd
  00335 ld (hl),201   ;
  00337 ld hl,15664   ; and $3d30
@@ -327,11 +352,11 @@ c00257 ld bc,10800   ; Delay counter
  00434 ld (8212),a   ;
  00437 ld hl,2083    ;
  00440 ld (8215),hl  ;
- 00443 ld a,24       ;
- 00445 ld (8222),a   ;
+ 00443 ld a,24       ; Op-code for jr
+ 00445 ld (8222),a   ; 8222 is the address jumped to after a 48K ROM NMI
  00448 ld hl,50161   ;
  00451 ld (8238),hl  ;
- 00454 ld hl,91      ;
+ 00454 ld hl,91      ; Address of return from DivMMC
  00457 ld (8240),hl  ;
  00460 ld a,201      ;
  00462 ld (12032),a  ;
@@ -886,7 +911,7 @@ c01162 ld l,a        ;
 ; Unused
 s01211 defs 11
 
-; Routine at 1222
+; SA_BYTES entry point from 48K ROM
 c01222 ld hl,8064    ;
  01225 push hl       ;
  01226 ld b,a        ;
@@ -999,7 +1024,7 @@ c01329 push bc       ;
  01376 pop bc        ;
  01377 ret           ;
 
-; Routine at 1378
+; LD_BYTES entry point from 48K ROM
 c01378 in a,(254)    ;
  01380 ld a,0        ;
  01382 out (227),a   ;

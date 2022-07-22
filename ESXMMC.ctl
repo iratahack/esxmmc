@@ -1,55 +1,97 @@
 @ 00000 start
+@ 00000 equ=INIT_FLAG=11586
+@ 00000 equ=TAPEIN=11595
+@ 00000 equ=TAPEOUT=11596
+@ 00000 equ=DE_SAVE=15858
+@ 00000 equ=HL_SAVE=15860
+@ 00000 equ=BC_SAVE=15862
+@ 00000 equ=CURRENT_BANK=15865
+@ 00000 equ=A_SAVE=15866
 c 00000 DivMMC RST $00 entry point
 D 00000 Execution resumes here after reset
 @ 00000 org $0000
 @ 00000 label=start
 C 00000,1 Disable interrupts
-c 00001 Entry point for RST $00 when called from the 48K ROM
+N 00001 Entry point for RST $00 when called from the 48K ROM
 C 00001,3 Setup the stack pointer
 C 00004,3 Continue initialization
-c 00007 Routine at 7
+u 00007 Unused
+B 00007,1,1
 c 00008 DivMMC RST $08 entry point
 D 00008 This entry point is used by the routines at #R237, #R673, #R717, #R735, #R1073, #R1519, #R1777, #R1860, #R2806, #R3540, #R4261, #R4271, #R4277, #R4683, #R4952, #R6082, #R6856, #R6894 and #R8076.
-c 00011 Entry point for RST $08 when called from the 48K ROM
+N 00011 Entry point for RST $08 when called from the 48K ROM
+C 00011,3 Get CH-ADD - Address of the next character to be interpreted.
 c 00016 DivMMC RST $10 entry point
 D 00016 Display the character in the 'a' register.
 N 00016 Used by the routines at #R257, #R673, #R1107, #R1162, #R1329, #R2127, #R2160, #R2213, #R2238, #R2276, #R2283, #R3232 and #R6993.
-c 00019 Routine at 19
-N 00021 This entry point is used by the routine at #R11.
-c 00024 Routine at 24
-D 00024 Used by the routines at #R1541, #R1719, #R2134, #R3101, #R3300, #R3367 and #R3429.
-c 00027 Routine at 27
+u 00019 Unused
+B 00019,2,2
+c 00021 Spring-board to $0ce4
+D 00021 This entry point is used by the routine at #R11.
+c 00024 DivMMC RST $18 entry point
+D 00024 RST $18; DEFW address. Call any routine in the standard 48K BASIC ROM.
+N 00024 Used by the routines at #R1541, #R1719, #R2134, #R3101, #R3300, #R3367 and #R3429.
+c 00027 Spring-board to $0c1d
 D 00027 Used by the routine at #R35.
-c 00030 Routine at 30
-N 00031 This entry point is used by the routine at #R55.
-b 00033 Data block at 33
-B 00033,2,2
-c 00035 Routine at 35
-c 00040 Routine at 40
+u 00030 Unused
+B 00030,1,1
+c 00031 Spring-board to $004b
+B 00031,1,1 This op-code (jr) when combined with the byte from the next address will form the instruction jr $004b.
+c 00032 DivMMC RST $20 entry point
+D 00032 Used by the routines at #R3348 and #R3481.
+C 00032,3 Get CH-ADD - Address of the next character to be interpreted
+c 00040 DivMMC RST $28 entry point
 D 00040 Used by the routines at #R1477, and #R6760.
-c 00046 Routine at 46
-c 00048 Entry point for RST $30
+u 00046 Unused
+B 00046,2,2
+c 00048 DivMMC RST $30 entry point
 D 00048 Used by the routines at #R673, #R3018, #R3429, #R3607, #R3667, #R3719, #R3909, #R4037, #R4472, #R4588, #R4874, #R4938, #R5434, #R5773, #R5862, #R5928, #R6082, #R6255, #R6489, #R6564, #R6568 and #R7438.
 t 00050 /BIN/ message
 T 00050,5,5
-c 00055 Routine at 55
-N 00056 This entry point is used by the routines at #R7, #R19, #R30 and #R46.
-c 00058 Routine at 58
+u 00055 Unused
+B 00055,1,1
+c 00056 DivMMC RST $38 entry point
+B 00056,1,1 This op-code (jr) when combined with the byte from the next address will form the instruction jr $001f.
+N 00057 Entry point for RST $38 when called from the 48K ROM
+C 00057,1 Save hl, same instruction as the 48K ROM at this address. It will be discarded from the stack later. When this op-code ($e5) is combined with the op-code at address $38 ($18) you end up with a jr $001f instruction. This will be executed when an RST $38 is executed from the DivMMC ROM. The instruction at $1f jumps to $4b which performs an ei; ret. A confusing way to support both entry points for RST $38.
+C 00058,3 Address to return to in 48K ROM.
+C 00061,3 Handle the transfer from DivMMC to 48K ROM.
 t 00064 PLUS3DOS message
 T 00064,11,8:n3
-c 00075 Routine at 75
-D 00075 Used by the routine at #R30.
+c 00075 Return from RST
 t 00077 /SYS message
 T 00077,5,4:n1
-c 00082 Routine at 83
+c 00082 Copy non-zero Data
+D 00082 Copy data from hl to de while the data is non-zero.
+R 00082 hl Source address
+R 00082 de Destination address
 N 00083 This entry point is used by the routines at #R770 and #R792.
-c 00091 Routine at 91
-c 00102 Routine at 102
-s 00103 Unused
-S 00103,1,1
-c 00104 Routine at 104
+C 00083,1 Read data from hl and check if it is zero.
+C 00085,1 If it is zero, we are done.
+C 00086,1 If not zero, store it and
+C 00087,1 increment the pointers
+C 00089,2 Loop to the next byte.
+c 00091 Return from DivMMC
+c 00102 DivMMC NMI entry point
+C 00102,1 NMI does nothing in DivMMC
+N 00103 NMI entry point from 48K ROM
+C 00104,3 Save hl.
+C 00107,3 Get the currently selected DivMMC RAM bank into l.
+C 00110,1 Save a in h
+C 00111,2 Map in RAM bank 0.
+C 00115,3 Save currently selected RAM bank and the original value in a.
+C 00118,1 Switch back to the RAM bank we started with.
+C 00119,2 Map in the bank.
+C 00121,3 Restore hl.
+C 00124,2 Map in RAM bank 0.
+C 00128,3 ???
+C 00131,3 Spring-board into the NMI handler in RAM.
 c 00134 Routine at 134
 D 00134 Used by the routine at #R46.
+C 00134,3 Save hl
+C 00141,1 Save de
+C 00154,1 Restore de
+C 00156,3 Restore hl
 u 00160 Unused
 B 00160,1,1
 t 00161 Version string
@@ -121,7 +163,7 @@ C 00320,3 Destination address = start address + 1
 C 00323,3 Length
 C 00326,1 Write 0 to the source address
 C 00327,2 Fill the memory with 0's
-C 00329,3 Save the last bank selected
+C 00329,3 Save the current bank selected
 C 00332,3 Write op-code $c9 (ret) to $3dfd
 C 00337,3 and $3d30
 C 00342,1 On to the next bank
@@ -147,6 +189,9 @@ C 00419,3 Display the ESXDOS logo.
 C 00422,3 ???
 C 00428,3 Destination address for the code copy performed by the next call.
 C 00431,3 Do the copy.
+C 00443,2 Op-code for jr
+C 00445,3 8222 is the address jumped to after a 48K ROM NMI
+C 00454,3 Address of return from DivMMC
 C 00474,3 Detecting devices... message
 C 00477,3 Display null terminated string pointed to by hl.
 C 00480,2 <CR>
@@ -257,7 +302,7 @@ C 01202,1 Display character
 C 01209,1 Display character
 s 01211 Unused
 S 01211,11,11
-c 01222 Routine at 1222
+c 01222 SA_BYTES entry point from 48K ROM
 c 01255 Routine at 1255
 D 01255 Used by the routines at #R1021 and #R2840.
 c 01275 Routine at 1275
@@ -276,7 +321,7 @@ C 01361,1 Display character
 C 01364,1 Display character
 C 01371,1 Display character
 C 01374,1 Display character
-c 01378 Routine at 1378
+c 01378 LD_BYTES entry point from 48K ROM
 N 01390 This entry point is used by the routine at #R1399.
 c 01399 Routine at 1399
 D 01399 Used by the routine at #R1378.
@@ -829,11 +874,12 @@ c 07080 Routine at 7080
 D 07080 Used by the routine at #R7942.
 N 07096 This entry point is used by the routine at #R7062.
 b 07107 ESXDOS logo
-B 07107,289,16
+B 07107,289,16*18,1
 c 07396 Routine at 7396
 c 07427 Routine at 7427
 D 07427 Used by the routines at #R7438 and #R7892.
 c 07438 Routine at 7438
+D 07438 Used by the routine at #R7396.
 c 07546 Routine at 7546
 D 07546 Used by the routine at #R7438.
 c 07555 Routine at 7555
@@ -891,6 +937,7 @@ D 08004 Used by the routine at #R7979.
 c 08064 Routine at 8064
 D 08064 Used by the routine at #R8004.
 c 08076 Routine at 8076
+D 08076 Used by the routine at #R7396.
 C 08084,1 ESXDOS_SYS_CALL
 c 08135 Routine at 8135
 s 08156 Unused
