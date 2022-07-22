@@ -21,4 +21,3 @@ $(PROJ).asm: $(PROJ).skool
 
 $(PROJ).bin: $(PROJ).asm
 	z88dk-z80asm -mz80 -m -b -o$@ $<
-	diff $(PROJ).bin $(PROJ).BIN

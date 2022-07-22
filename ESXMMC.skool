@@ -65,7 +65,7 @@ c00035 ld (23647),hl ;
 
 ; Routine at 40
 ;
-; Used by the routines at #R1477, #R6760 and #R7122.
+; Used by the routines at #R1477, and #R6760.
 c00040 push hl       ;
  00041 ld hl,(15854) ;
  00044 ex (sp),hl    ;
@@ -87,8 +87,7 @@ t00050 defm "/BIN/"
 
 ; Routine at 55
 c00055 rst 56        ;
-; This entry point is used by the routines at #R7, #R19, #R30, #R46, #R7212 and
-; #R7383.
+; This entry point is used by the routines at #R7, #R19, #R30 and #R46.
 *00056 jr 31         ;
 
 ; Routine at 58
@@ -180,9 +179,9 @@ t00161 defb 19,1,23,19,1,19,0    ; BRIGHT 1; TAB 256 + 19; BRIGHT 0
  00189 defb 127                  ; (C) + end of message
 
 ; Copyright date
-t00190 defm " IrataHack"
+t00190 defm " 2005-2021"
  00200 defb 13,19,1,23,19,1,19,0 ; <CR>; BRIGHT 1; TAB 256 + 19; BRIGHT 0
- 00208 defm "             "
+ 00208 defm "Papaya Dezign"
  00221 defb 13,141               ; <CR>; <CR> + end of message
 
 ; Map 48K ROM
@@ -319,7 +318,7 @@ c00257 ld bc,10800   ; Delay counter
  00410 call 3232     ; Display string
  00413 ld hl,190     ; Date string
  00416 call 3232     ; Display string
- 00419 call 1131     ; Unpack logo to screen???
+ 00419 call 1131     ; Display the ESXDOS logo.
  00422 call 815      ; ???
  00425 call 954      ;
  00428 ld hl,8199    ; Destination address for the code copy performed by the
@@ -3016,7 +3015,7 @@ c04186 inc hl        ;
 ; Unnamed message
 t04203 defm "UNNAMED  "
 
-; This entry point is used by the routine at #R3909.
+; Routine at 4212.
 ;
 ; Used by the routine at #R3909.
 c04212 call 4472     ;
@@ -5035,104 +5034,29 @@ c07080 push ix       ;
  07104 out (11),a    ;
  07106 ret           ;
 
-; Data block at 7107
-b07107 defb 164,3,192,162,48,171,31,225
- 07115 defb 192,161,120,169,3,224,127
+; ESXDOS logo
+b07107 defb 164,3,192,162,48,171,31,225,192,161,120,169,3,224,127,224
+ 07123 defb 120,161,126,169,31,248,224,192,30,161,239,192,163,63,192,163
+ 07139 defb 120,253,128,1,255,193,205,240,161,7,128,241,224,163,224,61
+ 07155 defb 192,63,254,241,140,126,161,31,225,192,195,240,161,1,192,31
+ 07171 defb 255,254,30,59,6,15,192,56,113,192,31,252,161,3,128,31
+ 07187 defb 63,128,28,14,6,1,240,48,57,255,248,30,161,243,128,15
+ 07203 defb 162,60,15,135,161,120,112,28,127,128,14,7,255,128,15,120
+ 07219 defb 161,56,27,195,161,30,112,12,162,14,28,31,192,62,252,8
+ 07235 defb 112,48,227,161,7,240,14,24,161,28,48,15,255,248,252,16
+ 07251 defb 224,224,113,128,1,248,6,60,161,28,96,14,255,192,248,17
+ 07267 defb 195,192,25,128,161,120,6,124,161,56,224,14,161,1,240,51
+ 07283 defb 15,161,12,192,161,60,6,120,161,112,224,38,1,1,224,62
+ 07299 defb 124,161,6,192,161,60,6,240,161,224,240,199,6,1,192,31
+ 07315 defb 224,161,2,64,161,127,15,240,1,192,255,131,252,3,192,28
+ 07331 defb 162,3,33,255,255,255,224,3,128,126,161,240,3,128,48,162
+ 07347 defb 1,35,255,249,253,224,7,164,3,128,240,163,147,255,224,121
+ 07363 defb 224,14,164,3,199,192,163,1,254,161,1,192,60,164,1,255
+ 07379 defb 167,1,192,248,165,124,167,1,231,224,174,255,128,174,60,162
+ 07395 defb 160
 
-; Routine at 7122
-c07122 ret po        ;
- 07123 ld a,b        ;
- 07124 and c         ;
- 07125 ld a,(hl)     ;
- 07126 xor c         ;
- 07127 rra           ;
- 07128 ret m         ;
- 07129 ret po        ;
- 07130 ret nz        ;
- 07131 ld e,161      ;
- 07133 rst 40        ;
- 07134 ret nz        ;
- 07135 and e         ;
- 07136 ccf           ;
- 07137 ret nz        ;
- 07138 and e         ;
- 07139 ld a,b        ;
- 07140 defb 253      ;
- 07141 add a,b       ;
- 07142 ld bc,49663   ;
- 07145 call 41456    ;
- 07148 rlca          ;
- 07149 add a,b       ;
- 07150 pop af        ;
- 07151 ret po        ;
- 07152 and e         ;
- 07153 ret po        ;
- 07154 dec a         ;
- 07155 ret nz        ;
- 07156 ccf           ;
- 07157 cp 241        ;
- 07159 adc a,h       ;
- 07160 ld a,(hl)     ;
- 07161 and c         ;
- 07162 rra           ;
- 07163 pop hl        ;
- 07164 ret nz        ;
- 07165 jp 41456      ;
-
-; Data block at 7168
-b07168 defb 1,192,31,255,254,30,59,6
- 07176 defb 15,192,56,113,192,31,252,161
- 07184 defb 3,128,31,63,128,28,14,6
- 07192 defb 1,240,48,57,255,248,30,161
- 07200 defb 243,128,15,162,60,15,135,161
- 07208 defb 120,112,28,127
-
-; Routine at 7212
-c07212 add a,b       ;
- 07213 ld c,7        ;
- 07215 rst 56        ;
- 07216 add a,b       ;
- 07217 rrca          ;
- 07218 ld a,b        ;
- 07219 and c         ;
- 07220 jr c,7249     ;
- 07222 jp 7841       ;
-
-; Data block at 7225
-b07225 defb 112,12,162,14,28,31,192,62
- 07233 defb 252,8,112,48,227,161,7,240
- 07241 defb 14,24,161,28,48,15,255,248
-*07249 defb 252,16,224,224,113,128,1,248
- 07257 defb 6,60,161,28,96,14,255,192
- 07265 defb 248,17,195,192,25,128,161,120
- 07273 defb 6,124,161,56,224,14,161,1
- 07281 defb 240,51,15,161,12,192,161,60
- 07289 defb 6,120,161,112,224,38,1,1
- 07297 defb 224,62,124,161,6,192,161,60
- 07305 defb 6,240,161,224,240,199,6,1
- 07313 defb 192,31,224,161,2,64,161,127
- 07321 defb 15,240,1,192,255,131,252,3
- 07329 defb 192,28,162,3,33,255,255,255
- 07337 defb 224,3,128,126,161,240,3,128
- 07345 defb 48,162,1,35,255,249,253,224
- 07353 defb 7,164,3,128,240,163,147,255
- 07361 defb 224,121,224,14,164,3,199,192
- 07369 defb 163,1,254,161,1,192,60,164
- 07377 defb 1,255,167,1,192,248
-
-; Routine at 7383
-c07383 and l         ;
- 07384 ld a,h        ;
- 07385 and a         ;
- 07386 ld bc,57575   ;
- 07389 xor (hl)      ;
- 07390 rst 56        ;
- 07391 add a,b       ;
- 07392 xor (hl)      ;
- 07393 inc a         ;
- 07394 and d         ;
- 07395 and b         ;
- 07396 ret p         ;
+; Routine at 7396
+c07396 ret p         ;
  07397 inc e         ;
  07398 call nc,27934 ;
  07401 ld e,240      ;
@@ -5165,7 +5089,7 @@ c07427 and 8         ;
 
 ; Routine at 7438
 ;
-; Used by the routine at #R7383.
+; Used by the routine at #R7396.
 c07438 ld (15858),de ;
  07442 ld (15866),a  ;
  07445 call 7427     ;
@@ -5426,8 +5350,7 @@ b07821 defb 254,211,235,1,235,0,124,254
 
 ; Routine at 7839
 c07839 djnz 7835     ;
-; This entry point is used by the routine at #R7212.
-*07841 jr 7855       ;
+ 07841 jr 7855       ;
 
 ; Data block at 7843
 b07843 defb 205,199,31,32,4,237,179,237
@@ -5589,7 +5512,7 @@ c08064 sla e         ;
 
 ; Routine at 8076
 ;
-; Used by the routine at #R7383.
+; Used by the routine at #R7396.
 c08076 ld bc,0       ;
  08079 ld d,b        ;
  08080 ld e,c        ;
@@ -5668,10 +5591,10 @@ c08187 jp (hl)       ; Jump to the address held in hl. Executing an instruction
                      ; at this address also causes the DivMMC mapper to be
                      ; reset meaning the 48K is now mapped-in.
 
-; No SYS error return
+; Routine at 8188
 ;
 ; Accessed by the routine at #R7049
-c08188 ld a,20       ; Error code (No SYS)
- 08190 scf           ; Set the carry flag to signal an error.
+c08188 ld a,20       ;
+ 08190 scf           ;
  08191 ret           ;
 

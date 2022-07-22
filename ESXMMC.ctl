@@ -26,14 +26,14 @@ b 00033 Data block at 33
 B 00033,2,2
 c 00035 Routine at 35
 c 00040 Routine at 40
-D 00040 Used by the routines at #R1477, #R6760 and #R7122.
+D 00040 Used by the routines at #R1477, and #R6760.
 c 00046 Routine at 46
 c 00048 Entry point for RST $30
 D 00048 Used by the routines at #R673, #R3018, #R3429, #R3607, #R3667, #R3719, #R3909, #R4037, #R4472, #R4588, #R4874, #R4938, #R5434, #R5773, #R5862, #R5928, #R6082, #R6255, #R6489, #R6564, #R6568 and #R7438.
 t 00050 /BIN/ message
 T 00050,5,5
 c 00055 Routine at 55
-N 00056 This entry point is used by the routines at #R7, #R19, #R30, #R46, #R7212 and #R7383.
+N 00056 This entry point is used by the routines at #R7, #R19, #R30 and #R46.
 c 00058 Routine at 58
 t 00064 PLUS3DOS message
 T 00064,11,8:n3
@@ -143,7 +143,7 @@ C 00407,3 Version string
 C 00410,3 Display string
 C 00413,3 Date string
 C 00416,3 Display string
-C 00419,3 Unpack logo to screen???
+C 00419,3 Display the ESXDOS logo.
 C 00422,3 ???
 C 00428,3 Destination address for the code copy performed by the next call.
 C 00431,3 Do the copy.
@@ -553,7 +553,7 @@ c 04186 Routine at 4186
 D 04186 Used by the routine at #R4173.
 t 04203 Unnamed message
 T 04203,9,9
-c 04212 This entry point is used by the routine at #R3909.
+c 04212 Routine at 4212.
 D 04212 Used by the routine at #R3909.
 c 04234 Routine at 4234
 D 04234 Used by the routine at #R4212.
@@ -828,20 +828,12 @@ D 07062 Used by the routine at #R7852.
 c 07080 Routine at 7080
 D 07080 Used by the routine at #R7942.
 N 07096 This entry point is used by the routine at #R7062.
-b 07107 Data block at 7107
-B 07107,15,8,7
-c 07122 Routine at 7122
-B 07140,1,1
-b 07168 Data block at 7168
-B 07168,44,8*5,4
-c 07212 Routine at 7212
-b 07225 Data block at 7225
-B 07225,158,8*19,6
-c 07383 Routine at 7383
+b 07107 ESXDOS logo
+B 07107,289,16
+c 07396 Routine at 7396
 c 07427 Routine at 7427
 D 07427 Used by the routines at #R7438 and #R7892.
 c 07438 Routine at 7438
-D 07438 Used by the routine at #R7383.
 c 07546 Routine at 7546
 D 07546 Used by the routine at #R7438.
 c 07555 Routine at 7555
@@ -877,7 +869,6 @@ B 07818,3,3
 b 07821 Data block at 7821
 B 07821,18,8*2,2
 c 07839 Routine at 7839
-N 07841 This entry point is used by the routine at #R7212.
 b 07843 Data block at 7843
 B 07843,9,8,1
 c 07852 Routine at 7852
@@ -900,7 +891,6 @@ D 08004 Used by the routine at #R7979.
 c 08064 Routine at 8064
 D 08064 Used by the routine at #R8004.
 c 08076 Routine at 8076
-D 08076 Used by the routine at #R7383.
 C 08084,1 ESXDOS_SYS_CALL
 c 08135 Routine at 8135
 s 08156 Unused
