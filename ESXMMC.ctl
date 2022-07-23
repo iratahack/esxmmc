@@ -41,7 +41,7 @@ c 00032 DivMMC RST $20 entry point
 D 00032 Used by the routines at #R3348 and #R3481.
 C 00032,3 Get CH-ADD - Address of the next character to be interpreted
 c 00040 DivMMC RST $28 entry point
-D 00040 Used by the routines at #R1477, and #R6760.
+D 00040 Used by the routines at #R6760.
 u 00046 Unused
 B 00046,2,2
 c 00048 DivMMC RST $30 entry point
@@ -89,9 +89,23 @@ C 00131,3 Spring-board into the NMI handler in RAM.
 c 00134 Routine at 134
 D 00134 Used by the routine at #R46.
 C 00134,3 Save hl
+C 00137,1 Pop the return address and
+C 00138,1 increment it to skip over the op-code and
+C 00139,1 put it back on the stack.
+C 00140,1 Decrement it back to where it was.
 C 00141,1 Save de
+C 00144,1 Read the op-code
+C 00145,3 Get the jump table address
+C 00148,1 Add the op-code twice to
+C 00149,1 get a pointer to the word address.
+C 00150,1 Read the low order address byte from the table
+C 00151,1 Point to the next byte
+C 00152,1 Read the high order address byte from the table
+C 00153,1 Copy the low order address byte into l
 C 00154,1 Restore de
+C 00155,1 Save the address from the table onto the stack
 C 00156,3 Restore hl
+C 00159,1 Return to the address read from the table
 u 00160 Unused
 B 00160,1,1
 t 00161 Version string
@@ -222,14 +236,21 @@ C 00651,3 Display null terminated string pointed to by hl.
 C 00657,3 Display null terminated string pointed to by hl.
 c 00662 Routine at 662
 D 00662 Used by the routine at #R257.
-c 00673 Routine at 673
+c 00673 Display disk label
 D 00673 Used by the routine at #R257.
 @ 00673 label=getDiskStatus
 C 00673,3 Pointer to buffer to receive data from RST $08
 C 00676,1 ESXDOS_SYS_CALL
 B 00677,1,1 RST $08 op-code (ESXDOS_SYS_DISK_STATUS)
 C 00678,1 Carry set if an error occurred.
+B 00682,1,1 RST $30 op-code
+C 00683,2 ':'
+C 00685,1 Display character
+C 00686,2 ' '
+C 00688,1 Display character
+C 00689,3 Address of string returned from ESXDOS_SYS_DISK_STATUS
 C 00692,3 Display null terminated string pointed to by hl.
+C 00695,2 <CR>
 C 00697,1 Display character
 c 00699 Routine at 699
 D 00699 Used by the routine at #R257.
@@ -295,7 +316,8 @@ c 01107 Routine at 1107
 C 01128,1 Display character
 c 01131 Routine at 1131
 D 01131 Used by the routine at #R257.
-c 01162 Routine at 1162
+c 01162 Display drive device name
+D 01162 Display Unix style device name, e.g. sda, sda1, etc.
 C 01191,1 Display character
 C 01194,1 Display character
 C 01202,1 Display character
@@ -333,18 +355,33 @@ c 01426 Routine at 1426
 D 01426 Used by the routine at #R1131.
 t 01449 BETADISK message
 T 01449,9,8:n1
-b 01458 Data block at 1457
-B 01458,19,7,8,4
-c 01477 Routine at 1477
+b 01458 Lookup table for RST $30
+W 01458,2,2 Op-code $00
+W 01460,2,2 $01
+W 01462,2,2 $02
+W 01464,2,2 $03
+W 01466,2,2 $04
+W 01468,2,2 $05
+W 01470,2,2 $06
+W 01472,2,2 $07
+W 01474,2,2 $08
+W 01476,2,2 $09
+W 01478,2,2 $0a
+W 01480,2,2 $0b
+W 01482,2,2 $0c
+W 01484,2,2 $0d
+W 01486,2,2 $0e
+c 01488 Routine at 1488
 c 01493 Routine at 1493
 c 01498 Routine at 1498
-D 01498 Used by the routines at #R1477 and #R1493.
+D 01498 Used by the routines at #R1493.
 c 01512 Routine at 1512
 D 01512 Used by the routines at #R1498 and #R1519.
 c 01519 Routine at 1519
 C 01532,1 ESXDOS_SYS_CALL
-c 01541 Routine at 1541
+c 01541 48K ROM: COLLECT NEXT CHARACTER
 C 01541,1 ESXDOS_ROM_CALL
+W 01542,2,2 Address to call in 48K ROM
 c 01545 Routine at 1545
 D 01545 Used by the routine at #R1579.
 c 01579 Routine at 1579
@@ -356,14 +393,17 @@ b 01666 Data block at 1666
 B 01666,1,1
 t 01667 Mounting drives message
 T 01667,21,18:n1,n2
-c 01688 Routine at 1688
+c 01688 Get 32-bit value
+D 01688 Read a 32-bit value pointed to by hl into the register pairs bcde
 c 01697 Routine at 1697
 c 01702 Routine at 1702
 D 01702 Used by the routines at #R2697, #R2710, #R4297, #R4632, #R5186, #R5208 and #R6760.
-c 01719 Routine at 1719
+c 01719 48K ROM: SYNTAX-Z
 C 01719,1 ESXDOS_ROM_CALL
-c 01723 Routine at 1723
-D 01723 Used by the routine at #R6802.
+W 01720,2,2 Address to call in 48K ROM
+c 01723 Get 32-bit value
+D 01723 Read a 32-bit value pointed to by hl into the register pairs bcde
+N 01723 Used by the routine at #R6802.
 c 01732 Routine at 1732
 t 01742 [ERROR] message
 T 01742,9,7:n2
@@ -426,9 +466,10 @@ D 02127 Display the null terminated string pointed to by hl.
 R 02127 Used by the routines at #R257, #R635, #R662, #R673 and #R6993.
 @ 02127 label=displayCString
 C 02130,1 Display character
-c 02134 Routine at 2134
+c 02134 48K ROM:
 D 02134 Used by the routine at #R16.
 C 02144,1 ESXDOS_ROM_CALL
+W 02145,2,2 Address to call in 48K ROM
 c 02154 Routine at 2154
 D 02154 Used by the routine at #R3191.
 c 02160 Routine at 2160
@@ -510,8 +551,11 @@ c 03096 Routine at 3096
 c 03101 Routine at 3101
 D 03101 Used by the routine at #R27.
 C 03112,1 ESXDOS_ROM_CALL
+W 03113,2,2 Address to call in 48K ROM (SYNTAX-Z)
 C 03137,1 ESXDOS_ROM_CALL
+W 03138,2,2 Address to call in 48K ROM (SET-MIN)
 C 03144,1 ESXDOS_ROM_CALL
+W 03145,2,2 Address to call in 48K ROM (within TEMPORARY COLOUR ITEMS)
 c 03191 Routine at 3191
 D 03191 Used by the routine at #R3101.
 C 03196,3 ESXDOS error # message
