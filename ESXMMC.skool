@@ -81,7 +81,7 @@ c00032 ld hl,(23645) ; Get CH-ADD - Address of the next character to be
 
 ; DivMMC RST $28 entry point
 ;
-; Used by the routines at #R1477, and #R6760.
+; Used by the routines at #R6760.
 c00040 push hl       ;
  00041 ld hl,(15854) ;
  00044 ex (sp),hl    ;
@@ -175,24 +175,24 @@ c00102 ret           ; NMI does nothing in DivMMC
 ;
 ; Used by the routine at #R46.
 c00134 ld (15860),hl ; Save hl
- 00137 pop hl        ;
- 00138 inc hl        ;
- 00139 push hl       ;
- 00140 dec hl        ;
+ 00137 pop hl        ; Pop the return address and
+ 00138 inc hl        ; increment it to skip over the op-code and
+ 00139 push hl       ; put it back on the stack.
+ 00140 dec hl        ; Decrement it back to where it was.
  00141 push de       ; Save de
  00142 ld d,0        ;
- 00144 ld e,(hl)     ;
- 00145 ld hl,1458    ;
- 00148 add hl,de     ;
- 00149 add hl,de     ;
- 00150 ld e,(hl)     ;
- 00151 inc hl        ;
- 00152 ld h,(hl)     ;
- 00153 ld l,e        ;
+ 00144 ld e,(hl)     ; Read the op-code
+ 00145 ld hl,1458    ; Get the jump table address
+ 00148 add hl,de     ; Add the op-code twice to
+ 00149 add hl,de     ; get a pointer to the word address.
+ 00150 ld e,(hl)     ; Read the low order address byte from the table
+ 00151 inc hl        ; Point to the next byte
+ 00152 ld h,(hl)     ; Read the high order address byte from the table
+ 00153 ld l,e        ; Copy the low order address byte into l
  00154 pop de        ; Restore de
- 00155 push hl       ;
+ 00155 push hl       ; Save the address from the table onto the stack
  00156 ld hl,(15860) ; Restore hl
- 00159 ret           ;
+ 00159 ret           ; Return to the address read from the table
 
 ; Unused
 u00160 defb 255
@@ -478,7 +478,7 @@ c00662 ld hl,1751    ;
  00667 ld hl,1739    ;
 *00670 jp 2127       ;
 
-; Routine at 673
+; Display disk label
 ;
 ; Used by the routine at #R257.
 @label=getDiskStatus
@@ -488,12 +488,14 @@ c00673 ld de,11762   ; Pointer to buffer to receive data from RST $08
  00678 ret c         ; Carry set if an error occurred.
  00679 and 248       ;
  00681 rst 48        ;
- 00682 ld c,62       ;
- 00684 ld a,(16087)  ;
- 00687 jr nz,648     ;
- 00689 ld hl,11762   ;
+ 00682 defb 14       ; RST $30 op-code
+ 00683 ld a,58       ; ':'
+ 00685 rst 16        ; Display character
+ 00686 ld a,32       ; ' '
+ 00688 rst 16        ; Display character
+ 00689 ld hl,11762   ; Address of string returned from ESXDOS_SYS_DISK_STATUS
  00692 call 2127     ; Display null terminated string pointed to by hl.
- 00695 ld a,13       ;
+ 00695 ld a,13       ; <CR>
  00697 rst 16        ; Display character
  00698 ret           ;
 
@@ -874,7 +876,9 @@ c01131 ld hl,7107    ;
  01158 djnz 1153     ;
  01160 jr 1139       ;
 
-; Routine at 1162
+; Display drive device name
+;
+; Display Unix style device name, e.g. sda, sda1, etc.
 c01162 ld l,a        ;
  01163 and 224       ;
  01165 ret z         ;
@@ -1086,23 +1090,25 @@ c01426 inc e         ;
 ; BETADISK message
 t01449 defm "BETADISK",0
 
-; Data block at 1457
-b01458 defb 187,6,152,6,5,6,183
- 01465 defb 6,93,6,13,5,85,6,43
- 01473 defb 6,166,6,49
+; Lookup table for RST $30
+b01458 defw 1723     ; Op-code $00
+ 01460 defw 1688     ; $01
+ 01462 defw 1541     ; $02
+ 01464 defw 1719     ; $03
+ 01466 defw 1629     ; $04
+ 01468 defw 1293     ; $05
+ 01470 defw 1621     ; $06
+ 01472 defw 1579     ; $07
+ 01474 defw 1702     ; $08
+ 01476 defw 1329     ; $09
+ 01478 defw 1488     ; $0a
+ 01480 defw 1493     ; $0b
+ 01482 defw 1519     ; $0c
+ 01484 defw 1697     ; $0d
+ 01486 defw 1162     ; $0e
 
-; Routine at 1477
-c01477 dec b         ;
- 01478 ret nc        ;
- 01479 dec b         ;
- 01480 push de       ;
- 01481 dec b         ;
- 01482 rst 40        ;
- 01483 dec b         ;
- 01484 and c         ;
- 01485 ld b,138      ;
- 01487 inc b         ;
- 01488 ld de,8192    ;
+; Routine at 1488
+c01488 ld de,8192    ;
  01491 jr 1498       ;
 
 ; Routine at 1493
@@ -1111,7 +1117,7 @@ c01493 ld hl,8192    ;
 
 ; Routine at 1498
 ;
-; Used by the routines at #R1477 and #R1493.
+; Used by the routines at #R1493.
 c01498 call 1512     ;
  01501 ret z         ;
  01502 ld a,4        ;
@@ -1145,10 +1151,10 @@ c01519 ld e,a        ;
  01539 ld a,e        ;
  01540 ret           ;
 
-; Routine at 1541
+; 48K ROM: COLLECT NEXT CHARACTER
 c01541 rst 24        ; ESXDOS_ROM_CALL
- 01542 jr nz,1544    ;
-*01544 ret           ;
+ 01542 defw 32       ; Address to call in 48K ROM
+ 01544 ret           ;
 
 ; Routine at 1545
 ;
@@ -1244,7 +1250,9 @@ b01666 defb 13
 t01667 defm "Mounting drives...",13
  01686 defm 13,0
 
-; Routine at 1688
+; Get 32-bit value
+;
+; Read a 32-bit value pointed to by hl into the register pairs bcde
 c01688 ld e,(hl)     ;
  01689 inc hl        ;
  01690 ld d,(hl)     ;
@@ -1284,12 +1292,16 @@ c01702 ld a,(hl)     ;
  01717 scf           ;
  01718 ret           ;
 
-; Routine at 1719
+; 48K ROM: SYNTAX-Z
 c01719 rst 24        ; ESXDOS_ROM_CALL
- 01720 jr nc,1759    ;
+ 01720 defw 9520     ; Address to call in 48K ROM
  01722 ret           ;
 
-; Routine at 1723
+; Get 32-bit value
+;
+; Read a 32-bit value pointed to by hl into the register pairs bcde
+;
+; .
 ;
 ; Used by the routine at #R6802.
 c01723 ld (hl),e     ;
@@ -1656,7 +1668,7 @@ c02127 ld a,(hl)     ;
  02131 inc hl        ;
  02132 jr 2127       ;
 
-; Routine at 2134
+; 48K ROM:
 ;
 ; Used by the routine at #R16.
 c02134 push hl       ;
@@ -1666,8 +1678,8 @@ c02134 push hl       ;
  02138 push iy       ;
  02140 ld iy,23610   ;
  02144 rst 24        ; ESXDOS_ROM_CALL
- 02145 djnz 2147     ;
-*02147 pop iy        ;
+ 02145 defw 16       ; Address to call in 48K ROM
+ 02147 pop iy        ;
  02149 pop af        ;
  02150 pop bc        ;
  02151 pop de        ;
@@ -2375,7 +2387,7 @@ c03101 ld (23610),a  ;
  03104 res 5,(iy+1)  ;
  03108 ld sp,(23613) ;
  03112 rst 24        ; ESXDOS_ROM_CALL
- 03113 jr nc,3152    ;
+ 03113 defw 9520     ; Address to call in 48K ROM (SYNTAX-Z)
  03115 ld hl,5829    ;
  03118 jp z,8187     ;
  03121 ld hl,0       ;
@@ -2385,13 +2397,11 @@ c03101 ld (23610),a  ;
  03133 inc l         ;
  03134 ld (23574),hl ;
  03137 rst 24        ; ESXDOS_ROM_CALL
- 03138 or b          ;
- 03139 ld d,253      ;
- 03141 sll a         ;
- 03143 xor (hl)      ;
+ 03138 defw 5808     ; Address to call in 48K ROM (SET-MIN)
+ 03140 res 5,(iy+55) ;
  03144 rst 24        ; ESXDOS_ROM_CALL
- 03145 ld l,(hl)     ;
- 03146 dec c         ;
+ 03145 defw 3438     ; Address to call in 48K ROM (within TEMPORARY COLOUR
+                     ; ITEMS)
  03147 set 5,(iy+2)  ;
  03151 res 3,(iy+2)  ;
  03155 ld a,(23610)  ;

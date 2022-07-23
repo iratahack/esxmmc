@@ -11,6 +11,7 @@ html:
 	skool2html.py -a -C -l -H $(PROJ).skool
 
 ./taput/taput:
+	git clone https://github.com/Sivvus/taput.git
 	make -C taput
 
 tap: $(PROJ).bin ./taput/taput
