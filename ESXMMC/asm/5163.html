@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ESXMMC: Routine at 142b</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">ESXMMC</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="5161.html">1429</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#5163">Map</a></td>
+<td class="next">
+Next: <a href="5186.html">1442</a>
+</td>
+</tr>
+</table>
+<div class="description">142b: Routine at 5163</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">L142b</td>
+<td class="address-2"><span id="5163"></span>142b</td>
+<td class="instruction">ld l,$2a</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="5165"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="5376.html">L1500</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">L142b_0</td>
+<td class="address-2"><span id="5165"></span>142d</td>
+<td class="instruction">push de</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5166"></span>142e</td>
+<td class="instruction">push hl</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5167"></span>142f</td>
+<td class="instruction">push bc</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5168"></span>1430</td>
+<td class="instruction">ld b,$0b</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">L142b_1</td>
+<td class="address-2"><span id="5170"></span>1432</td>
+<td class="instruction">ld a,(de)</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5171"></span>1433</td>
+<td class="instruction">cp $2a</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5173"></span>1435</td>
+<td class="instruction">jr z,<a href="5163.html#5182">L142b_2</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5175"></span>1437</td>
+<td class="instruction">cp (hl)</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5176"></span>1438</td>
+<td class="instruction">jr nz,<a href="5163.html#5182">L142b_2</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5178"></span>143a</td>
+<td class="instruction">inc de</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5179"></span>143b</td>
+<td class="instruction">inc hl</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5180"></span>143c</td>
+<td class="instruction">djnz <a href="5163.html#5170">L142b_1</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">L142b_2</td>
+<td class="address-2"><span id="5182"></span>143e</td>
+<td class="instruction">pop bc</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5183"></span>143f</td>
+<td class="instruction">pop hl</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5184"></span>1440</td>
+<td class="instruction">pop de</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5185"></span>1441</td>
+<td class="instruction">ret</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="5161.html">1429</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#5163">Map</a></td>
+<td class="next">
+Next: <a href="5186.html">1442</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright"></div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+</footer>
+</body>
+</html>

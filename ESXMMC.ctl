@@ -109,15 +109,15 @@ C 00159,1 Return to the address read from the table
 u 00160 Unused
 B 00160,1,1
 t 00161 Version string
-B 00161,7,7 BRIGHT 1; TAB 256 + 19; BRIGHT 0
+T 00161,7 BRIGHT 1; TAB 256 + 19; BRIGHT 0
 T 00168,13,13
-B 00181,8,8 <CR>; BRIGHT 1; TAB 256 + 21; BRIGHT 0
-B 00189,1,1 (C) + end of message
+T 00181,8 <CR>; BRIGHT 1; TAB 256 + 21; BRIGHT 0
+T 00189,1 (C) and end of message
 t 00190 Copyright date
-T 00190,10,10
-B 00200,8,8 <CR>; BRIGHT 1; TAB 256 + 19; BRIGHT 0
-T 00208,13,13
-B 00221,2,2 <CR>; <CR> + end of message
+T 00190,10
+T 00200,8 <CR>; BRIGHT 1; TAB 256 + 19; BRIGHT 0
+T 00208,13
+T 00221,2 <CR>; <CR> + end of message
 c 00223 Map 48K ROM
 D 00223 The upper bit of the ROM selection is in bit 2 of the ZX Spectrum +2A/+3 page control register at $1ffd and the lower bit is in bit 4 of the ZX Spectrum 128 page control register at $7ffd.
 D 00223 This routine works on all Spectrums >= 128K
@@ -379,6 +379,7 @@ c 01512 Routine at 1512
 D 01512 Used by the routines at #R1498 and #R1519.
 c 01519 Routine at 1519
 C 01532,1 ESXDOS_SYS_CALL
+B 01533,1 RST $8 op-code ESXDOS_SYS_F_WRITE
 c 01541 48K ROM: COLLECT NEXT CHARACTER
 C 01541,1 ESXDOS_ROM_CALL
 W 01542,2,2 Address to call in 48K ROM

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ESXMMC: Routine at 03e7</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">ESXMMC</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="988.html">03dc</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#999">Map</a></td>
+<td class="next">
+Next: <a href="1018.html">03fa</a>
+</td>
+</tr>
+</table>
+<div class="description">03e7: Routine at 999</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="919.html">L0397</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">L03e7</td>
+<td class="address-2"><span id="999"></span>03e7</td>
+<td class="instruction">push bc</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1000"></span>03e8</td>
+<td class="instruction">ld iy,$2000</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1004"></span>03ec</td>
+<td class="instruction">ld b,$04</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">L03e7_0</td>
+<td class="address-2"><span id="1006"></span>03ee</td>
+<td class="instruction">cp (iy+$00)</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1009"></span>03f1</td>
+<td class="instruction">jr z,<a href="1018.html">L03fa</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1011"></span>03f3</td>
+<td class="instruction">inc iyh</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1013"></span>03f5</td>
+<td class="instruction">djnz <a href="999.html#1006">L03e7_0</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1015"></span>03f7</td>
+<td class="instruction">pop bc</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1016"></span>03f8</td>
+<td class="instruction">scf</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1017"></span>03f9</td>
+<td class="instruction">ret</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="988.html">03dc</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#999">Map</a></td>
+<td class="next">
+Next: <a href="1018.html">03fa</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright"></div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+</footer>
+</body>
+</html>

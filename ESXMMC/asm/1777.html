@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ESXMMC: Routine at 06f1</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">ESXMMC</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="1773.html">06ed</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#1777">Map</a></td>
+<td class="next">
+Next: <a href="1800.html">0708</a>
+</td>
+</tr>
+</table>
+<div class="description">06f1: Routine at 1777</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="257.html">init</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">L06f1</td>
+<td class="address-2"><span id="1777"></span>06f1</td>
+<td class="instruction">ld hl,$2df2</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1780"></span>06f4</td>
+<td class="instruction">push hl</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1781"></span>06f5</td>
+<td class="instruction">rst $08</td>
+<td class="comment-1" rowspan="1">ESXDOS_SYS_CALL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1782"></span>06f6</td>
+<td class="instruction">defb $84</td>
+<td class="comment-1" rowspan="1">RST $08 op-coode</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1783"></span>06f7</td>
+<td class="instruction">pop hl</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">L06f1_0</td>
+<td class="address-2"><span id="1784"></span>06f8</td>
+<td class="instruction">ld a,(hl)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1785"></span>06f9</td>
+<td class="instruction">and a</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1786"></span>06fa</td>
+<td class="instruction">ret z</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1787"></span>06fb</td>
+<td class="instruction">push hl</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1788"></span>06fc</td>
+<td class="instruction">ld bc,$0000</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1791"></span>06ff</td>
+<td class="instruction">rst $08</td>
+<td class="comment-1" rowspan="1">ESXDOS_SYS_CALL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1792"></span>0700</td>
+<td class="instruction">defb $98</td>
+<td class="comment-1" rowspan="1">RST $08 op-coode</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1793"></span>0701</td>
+<td class="instruction">pop hl</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1794"></span>0702</td>
+<td class="instruction">ld de,$0006</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1797"></span>0705</td>
+<td class="instruction">add hl,de</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1798"></span>0706</td>
+<td class="instruction">jr <a href="1777.html#1784">L06f1_0</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="1773.html">06ed</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#1777">Map</a></td>
+<td class="next">
+Next: <a href="1800.html">0708</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright"></div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+</footer>
+</body>
+</html>

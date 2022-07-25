@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ESXMMC: Routine at 046b</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">ESXMMC</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="1107.html">0453</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#1131">Map</a></td>
+<td class="next">
+Next: <a href="1162.html">048a</a>
+</td>
+</tr>
+</table>
+<div class="description">046b: Routine at 1131</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="257.html">init</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">L046b</td>
+<td class="address-2"><span id="1131"></span>046b</td>
+<td class="instruction">ld hl,$1bc3</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1134"></span>046e</td>
+<td class="instruction">ld de,$4000</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1137"></span>0471</td>
+<td class="instruction">ld c,$10</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">L046b_0</td>
+<td class="address-2"><span id="1139"></span>0473</td>
+<td class="instruction">ld a,(hl)</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1140"></span>0474</td>
+<td class="instruction">inc b</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1141"></span>0475</td>
+<td class="instruction">and $f0</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1143"></span>0477</td>
+<td class="instruction">cp $a0</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1145"></span>0479</td>
+<td class="instruction">ld a,(hl)</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1146"></span>047a</td>
+<td class="instruction">inc hl</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1147"></span>047b</td>
+<td class="instruction">jr nz,<a href="1131.html#1154">L046b_2</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1149"></span>047d</td>
+<td class="instruction">and $0f</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1151"></span>047f</td>
+<td class="instruction">ret z</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1152"></span>0480</td>
+<td class="instruction">ld b,a</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">L046b_1</td>
+<td class="address-2"><span id="1153"></span>0481</td>
+<td class="instruction">xor a</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">L046b_2</td>
+<td class="address-2"><span id="1154"></span>0482</td>
+<td class="instruction">ld (de),a</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1155"></span>0483</td>
+<td class="instruction">call <a href="1426.html">L0592</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1158"></span>0486</td>
+<td class="instruction">djnz <a href="1131.html#1153">L046b_1</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1160"></span>0488</td>
+<td class="instruction">jr <a href="1131.html#1139">L046b_0</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="1107.html">0453</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#1131">Map</a></td>
+<td class="next">
+Next: <a href="1162.html">048a</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright"></div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+</footer>
+</body>
+</html>
