@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ESXMMC: Routine at 0086</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">ESXMMC</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="102.html">0066</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#134">Map</a></td>
+<td class="next">
+Next: <a href="160.html">00a0</a>
+</td>
+</tr>
+</table>
+<div class="description">0086: Routine at 134</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="46.html">L002e</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">L0086</td>
+<td class="address-2"><span id="134"></span>0086</td>
+<td class="instruction">ld ($3df4),hl</td>
+<td class="comment-1" rowspan="1">Save hl</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="137"></span>0089</td>
+<td class="instruction">pop hl</td>
+<td class="comment-1" rowspan="1">Pop the return address and</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="138"></span>008a</td>
+<td class="instruction">inc hl</td>
+<td class="comment-1" rowspan="1">increment it to skip over the op-code and</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="139"></span>008b</td>
+<td class="instruction">push hl</td>
+<td class="comment-1" rowspan="1">put it back on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="140"></span>008c</td>
+<td class="instruction">dec hl</td>
+<td class="comment-1" rowspan="1">Decrement it back to where it was.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="141"></span>008d</td>
+<td class="instruction">push de</td>
+<td class="comment-1" rowspan="1">Save de</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="142"></span>008e</td>
+<td class="instruction">ld d,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="144"></span>0090</td>
+<td class="instruction">ld e,(hl)</td>
+<td class="comment-1" rowspan="1">Read the op-code</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="145"></span>0091</td>
+<td class="instruction">ld hl,$05b2</td>
+<td class="comment-1" rowspan="1">Get the jump table address</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="148"></span>0094</td>
+<td class="instruction">add hl,de</td>
+<td class="comment-1" rowspan="1">Add the op-code twice to</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="149"></span>0095</td>
+<td class="instruction">add hl,de</td>
+<td class="comment-1" rowspan="1">get a pointer to the word address.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="150"></span>0096</td>
+<td class="instruction">ld e,(hl)</td>
+<td class="comment-1" rowspan="1">Read the low order address byte from the table</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="151"></span>0097</td>
+<td class="instruction">inc hl</td>
+<td class="comment-1" rowspan="1">Point to the next byte</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="152"></span>0098</td>
+<td class="instruction">ld h,(hl)</td>
+<td class="comment-1" rowspan="1">Read the high order address byte from the table</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="153"></span>0099</td>
+<td class="instruction">ld l,e</td>
+<td class="comment-1" rowspan="1">Copy the low order address byte into l</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="154"></span>009a</td>
+<td class="instruction">pop de</td>
+<td class="comment-1" rowspan="1">Restore de</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="155"></span>009b</td>
+<td class="instruction">push hl</td>
+<td class="comment-1" rowspan="1">Save the address from the table onto the stack</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="156"></span>009c</td>
+<td class="instruction">ld hl,($3df4)</td>
+<td class="comment-1" rowspan="1">Restore hl</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="159"></span>009f</td>
+<td class="instruction">ret</td>
+<td class="comment-1" rowspan="1">Return to the address read from the table</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="102.html">0066</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#134">Map</a></td>
+<td class="next">
+Next: <a href="160.html">00a0</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright"></div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+</footer>
+</body>
+</html>

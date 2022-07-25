@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ESXMMC: Routine at 02a1</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">ESXMMC</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="662.html">0296</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#673">Map</a></td>
+<td class="next">
+Next: <a href="699.html">02bb</a>
+</td>
+</tr>
+</table>
+<div class="description">02a1: Display disk label</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="257.html">init</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">getDiskStatus</td>
+<td class="address-2"><span id="673"></span>02a1</td>
+<td class="instruction">ld de,$2df2</td>
+<td class="comment-1" rowspan="1">Pointer to buffer to receive data from RST $08</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="676"></span>02a4</td>
+<td class="instruction">rst $08</td>
+<td class="comment-1" rowspan="1">ESXDOS_SYS_CALL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="677"></span>02a5</td>
+<td class="instruction">defb $80</td>
+<td class="comment-1" rowspan="1">RST $08 op-code (ESXDOS_SYS_DISK_STATUS)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="678"></span>02a6</td>
+<td class="instruction">ret c</td>
+<td class="comment-1" rowspan="1">Carry set if an error occurred.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="679"></span>02a7</td>
+<td class="instruction">and $f8</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="681"></span>02a9</td>
+<td class="instruction">rst $30</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="682"></span>02aa</td>
+<td class="instruction">defb $0e</td>
+<td class="comment-1" rowspan="1">RST $30 op-code</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="683"></span>02ab</td>
+<td class="instruction">ld a,$3a</td>
+<td class="comment-1" rowspan="1">':'</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="685"></span>02ad</td>
+<td class="instruction">rst $10</td>
+<td class="comment-1" rowspan="1">Display character</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="686"></span>02ae</td>
+<td class="instruction">ld a,$20</td>
+<td class="comment-1" rowspan="1">' '</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="688"></span>02b0</td>
+<td class="instruction">rst $10</td>
+<td class="comment-1" rowspan="1">Display character</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="689"></span>02b1</td>
+<td class="instruction">ld hl,$2df2</td>
+<td class="comment-1" rowspan="1">Address of string returned from ESXDOS_SYS_DISK_STATUS</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="692"></span>02b4</td>
+<td class="instruction">call <a href="2127.html">displayCString</a></td>
+<td class="comment-1" rowspan="1">Display null terminated string pointed to by hl.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="695"></span>02b7</td>
+<td class="instruction">ld a,$0d</td>
+<td class="comment-1" rowspan="1">&lt;CR&gt;</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="697"></span>02b9</td>
+<td class="instruction">rst $10</td>
+<td class="comment-1" rowspan="1">Display character</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="698"></span>02ba</td>
+<td class="instruction">ret</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="662.html">0296</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#673">Map</a></td>
+<td class="next">
+Next: <a href="699.html">02bb</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright"></div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+</footer>
+</body>
+</html>

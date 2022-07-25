@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ESXMMC: Routine at 0562</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">ESXMMC</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="1329.html">0531</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#1378">Map</a></td>
+<td class="next">
+Next: <a href="1399.html">0577</a>
+</td>
+</tr>
+</table>
+<div class="description">0562: LD_BYTES entry point from 48K ROM</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">L0562</td>
+<td class="address-2"><span id="1378"></span>0562</td>
+<td class="instruction">in a,($fe)</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1380"></span>0564</td>
+<td class="instruction">ld a,$00</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1382"></span>0566</td>
+<td class="instruction">out ($e3),a</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1384"></span>0568</td>
+<td class="instruction">ld a,($2d4b)</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1387"></span>056b</td>
+<td class="instruction">and a</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1388"></span>056c</td>
+<td class="instruction">jr nz,<a href="1399.html">L0577</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="1390"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="1399.html">L0577</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">L0562_0</td>
+<td class="address-2"><span id="1390"></span>056e</td>
+<td class="instruction">push hl</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1391"></span>056f</td>
+<td class="instruction">ld hl,$0564</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1394"></span>0572</td>
+<td class="instruction">in a,($fe)</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="1396"></span>0574</td>
+<td class="instruction">jp <a href="8180.html">L1ff4</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="1329.html">0531</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#1378">Map</a></td>
+<td class="next">
+Next: <a href="1399.html">0577</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright"></div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+</footer>
+</body>
+</html>

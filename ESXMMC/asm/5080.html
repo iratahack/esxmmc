@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ESXMMC: Routine at 13d8</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">ESXMMC</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="5041.html">13b1</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#5080">Map</a></td>
+<td class="next">
+Next: <a href="5105.html">13f1</a>
+</td>
+</tr>
+</table>
+<div class="description">13d8: Routine at 5080</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="5041.html">L13b1</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">L13d8</td>
+<td class="address-2"><span id="5080"></span>13d8</td>
+<td class="instruction">cp $61</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5082"></span>13da</td>
+<td class="instruction">jr c,<a href="5080.html#5090">L13d8_0</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5084"></span>13dc</td>
+<td class="instruction">cp $7b</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5086"></span>13de</td>
+<td class="instruction">jr nc,<a href="5080.html#5090">L13d8_0</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5088"></span>13e0</td>
+<td class="instruction">and $df</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">L13d8_0</td>
+<td class="address-2"><span id="5090"></span>13e2</td>
+<td class="instruction">ld (de),a</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5091"></span>13e3</td>
+<td class="instruction">inc de</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5092"></span>13e4</td>
+<td class="instruction">inc hl</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5093"></span>13e5</td>
+<td class="instruction">djnz <a href="5041.html#5057">L13b1_1</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5095"></span>13e7</td>
+<td class="instruction">ld a,(hl)</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5096"></span>13e8</td>
+<td class="instruction">and a</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5097"></span>13e9</td>
+<td class="instruction">jr z,<a href="5080.html#5103">L13d8_1</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5099"></span>13eb</td>
+<td class="instruction">cp $2f</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5101"></span>13ed</td>
+<td class="instruction">jr nz,<a href="5041.html#5076">L13b1_2</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">L13d8_1</td>
+<td class="address-2"><span id="5103"></span>13ef</td>
+<td class="instruction">or a</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="5104"></span>13f0</td>
+<td class="instruction">ret</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="5041.html">13b1</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#5080">Map</a></td>
+<td class="next">
+Next: <a href="5105.html">13f1</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright"></div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ESXMMC: Routine at 0008</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">ESXMMC</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="7.html">0007</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#8">Map</a></td>
+<td class="next">
+Next: <a href="16.html">0010</a>
+</td>
+</tr>
+</table>
+<div class="description">0008: DivMMC RST $08 entry point</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+This entry point is used by the routines at <a href="237.html">L00ed</a>, <a href="673.html">getDiskStatus</a>, <a href="717.html">L02cd</a>, <a href="735.html">L02df</a>, <a href="1073.html">L0431</a>, <a href="1519.html">L05ef</a>, <a href="1777.html">L06f1</a>, <a href="1860.html">L0744</a>, <a href="2806.html">L0af6</a>, <a href="3540.html">L0dd4</a>, <a href="4261.html">L10a5</a>, <a href="4271.html">L10af</a>, <a href="4277.html">L10b5</a>, <a href="4683.html">L124b</a>, <a href="4952.html">L1358</a>, <a href="6082.html">L17c2</a>, <a href="6856.html">L1ac8</a>, <a href="6894.html">L1aee</a> and <a href="8076.html">L1f8c</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">L0008</td>
+<td class="address-2"><span id="8"></span>0008</td>
+<td class="instruction">jp <a href="2452.html#2456">L0994_0</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="11"></span>
+<div class="comments">
+<div class="paragraph">
+Entry point for RST $08 when called from the 48K ROM
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="11"></span>000b</td>
+<td class="instruction">ld hl,($5c5d)</td>
+<td class="comment-1" rowspan="1">Get CH-ADD - Address of the next character to be interpreted.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="14"></span>000e</td>
+<td class="instruction">jr <a href="21.html">L0015</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="7.html">0007</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#8">Map</a></td>
+<td class="next">
+Next: <a href="16.html">0010</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright"></div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+</footer>
+</body>
+</html>

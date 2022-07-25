@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ESXMMC: Routine at 1b89</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">ESXMMC</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="7026.html">1b72</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#7049">Map</a></td>
+<td class="next">
+Next: <a href="7062.html">1b96</a>
+</td>
+</tr>
+</table>
+<div class="description">1b89: Copy code</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Copy 4 bytes of code from $1ffc to the address passed in hl.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="7049"></span>
+<div class="comments">
+<div class="paragraph">
+Used by the routine at <a href="257.html">init</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">L1b89</td>
+<td class="address-2"><span id="7049"></span>1b89</td>
+<td class="instruction">ex de,hl</td>
+<td class="comment-1" rowspan="1">Move the destination address to de.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7050"></span>1b8a</td>
+<td class="instruction">ld hl,$1ffc</td>
+<td class="comment-1" rowspan="1">Load hl with the source address.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7053"></span>1b8d</td>
+<td class="instruction">ldi</td>
+<td class="comment-1" rowspan="1">Copy 4 bytes.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7055"></span>1b8f</td>
+<td class="instruction">ldi</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7057"></span>1b91</td>
+<td class="instruction">ldi</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7059"></span>1b93</td>
+<td class="instruction">ldi</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7061"></span>1b95</td>
+<td class="instruction">ret</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="7026.html">1b72</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#7049">Map</a></td>
+<td class="next">
+Next: <a href="7062.html">1b96</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright"></div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+</footer>
+</body>
+</html>

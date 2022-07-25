@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ESXMMC: Routine at 07d3</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">ESXMMC</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="1988.html">07c4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#2003">Map</a></td>
+<td class="next">
+Next: <a href="2030.html">07ee</a>
+</td>
+</tr>
+</table>
+<div class="description">07d3: Routine at 2003</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="1800.html">L0708</a>, <a href="1860.html">L0744</a>, <a href="2540.html">L09ec</a> and <a href="2840.html">L0b18</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">L07d3</td>
+<td class="address-2"><span id="2003"></span>07d3</td>
+<td class="instruction">push bc</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="2004"></span>07d4</td>
+<td class="instruction">call <a href="2062.html">L080e</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="2007"></span>07d7</td>
+<td class="instruction">jr c,<a href="2003.html#2025">L07d3_1</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="2009"></span>07d9</td>
+<td class="instruction">ld iy,$2d00</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="2013"></span>07dd</td>
+<td class="instruction">ld b,$0c</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">L07d3_0</td>
+<td class="address-2"><span id="2015"></span>07df</td>
+<td class="instruction">cp (iy+$01)</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="2018"></span>07e2</td>
+<td class="instruction">jr z,<a href="2030.html">L07ee</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="2020"></span>07e4</td>
+<td class="instruction">call <a href="2055.html">L0807</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="2023"></span>07e7</td>
+<td class="instruction">djnz <a href="2003.html#2015">L07d3_0</a></td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">L07d3_1</td>
+<td class="address-2"><span id="2025"></span>07e9</td>
+<td class="instruction">pop bc</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="2026"></span>07ea</td>
+<td class="instruction">ld a,$0b</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="2028"></span>07ec</td>
+<td class="instruction">scf</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="2029"></span>07ed</td>
+<td class="instruction">ret</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="1988.html">07c4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#2003">Map</a></td>
+<td class="next">
+Next: <a href="2030.html">07ee</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright"></div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+</footer>
+</body>
+</html>
