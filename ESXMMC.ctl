@@ -130,9 +130,12 @@ C 00223,3 ZX Spectrum +2A/+3 page control register
 C 00226,2 Upper bit of ROM selection
 C 00230,2 ZX Spectrum 128 page control register
 C 00232,2 Lower bit of ROM selection
-c 00237 Routine at 237
-D 00237 Used by the routines at #R699, #R717, #R735 and #R1410.
+c 00237 Open file
+D 00237 Used by the routines at #R699, #R717, #R735.
+C 00237,2 ESXDOS_SYSTEM_DRIVE
+C 00239,2 ESXDOS_MODE_READ
 C 00241,1 ESXDOS_SYS_CALL
+B 00242,1,1 RST $8 op-code (ESXDOS_SYS_F_OPEN)
 c 00244 Routine at 244
 D 00244 Used by the routine at #R257.
 b 00254 Data at 254
@@ -215,8 +218,22 @@ C 00482,1 Display character
 C 00496,3 Display null terminated string pointed to by hl.
 C 00514,2 <CR>
 C 00516,1 Display character
-C 00520,3 Display 'Loading <filename>.SYS...'
+C 00517,3 'ESXDOS' message
+C 00520,3 Display 'Loading ESXDOS.SYS...'
+C 00523,3 Load '/SYS/ESXDOS.SYS'
+C 00526,1 Save flags
+C 00527,3 Display '[ERROR]' or '[OK]'. Carry clear = OK
+C 00530,1 Restore flags
+C 00531,2 Jump if there was an error
+C 00542,3 'RTC' message
+C 00545,3 Display 'Loading RTC.SYS...'
+C 00551,3 Display '[ERROR]' or '[OK]'. Carry clear = OK
+C 00554,3 'NMI' message
+C 00557,3 Display 'Loading NMI.SYS...'
+C 00563,3 Display '[ERROR]' or '[OK]'. Carry clear = OK
 C 00574,3 'BETADISK' message
+C 00577,3 Display 'Loading BETADISK.SYS...'
+C 00588,3 Display '[ERROR]' or '[OK]'. Carry clear = OK
 c 00610 Normal Initialization
 D 00610 Used by the routine at #R257.
 @ 00610 label=normalInit
@@ -247,7 +264,8 @@ C 00657,3 Display null terminated string pointed to by hl.
 C 00660,1 hl points to the full file path
 c 00662 Routine at 662
 D 00662 Used by the routine at #R257.
-C 00667,3 [ERROR] message
+C 00662,3 '[OK]' message
+C 00667,3 '[ERROR]' message
 c 00673 Display disk label
 D 00673 Used by the routine at #R257.
 @ 00673 label=getDiskStatus
@@ -268,14 +286,31 @@ c 00699 Routine at 699
 D 00699 Used by the routine at #R257.
 c 00717 Routine at 717
 D 00717 Used by the routine at #R257.
-N 00727 This entry point is used by the routines at #R699 and #R1410.
+N 00727 This entry point is used by the routines at #R699.
 C 00729,1 ESXDOS_SYS_CALL
 c 00735 Routine at 735
 D 00735 Used by the routine at #R257.
+R 00735 Input:hl Pointer to full file path
+N 00735 Used by the routine at #R257.
+C 00735,3 Open file pointed to by hl
+C 00738,1 exit if an error ocurred.
+C 00739,1 Save the file handle
+C 00740,3 Load address
+C 00743,3 Bytes to read
 C 00746,1 ESXDOS_SYS_CALL
+B 00747,1,1 RST $08 op-code (ESXDOS_SYS_F_READ)
+C 00748,2 Map in DivMMC RAM bank 1
+C 00752,1 Restore file handle
+C 00753,1 and save it again.
+C 00754,3 Load address
+C 00757,3 Bytes to read
 C 00760,1 ESXDOS_SYS_CALL
+B 00761,1,1 RST $08 op-code (ESXDOS_SYS_F_READ)
+C 00762,1 Restore file handle
 N 00763 This entry point is used by the routine at #R717.
 C 00763,1 ESXDOS_SYS_CALL
+B 00764,1,1 RST $08 op-code (ESXDOS_SYS_F_CLOSE)
+C 00765,2 Map in DivMMC RAM bank 0
 c 00770 Build path name
 D 00770 Build a path to a file in the /SYS directory.
 R 00770 Input:hl Pointer to null terminated file name. e.g. 'BETADISK\000'
@@ -372,9 +407,10 @@ c 01378 LD_BYTES entry point from 48K ROM
 N 01390 This entry point is used by the routine at #R1399.
 c 01399 Routine at 1399
 D 01399 Used by the routine at #R1378.
-b 01409 Data block at 1409
-B 01409,1,1
-c 01410 Routine at 1410
+t 01409 'RTC' message
+T 01409,4,3:n1
+c 01413 Routine at 1413
+D 01413 Used by the routine at #R257.
 N 01413 This entry point is used by the routine at #R257.
 c 01426 Routine at 1426
 D 01426 Used by the routine at #R1131.

@@ -241,13 +241,13 @@ c00223 ld bc,8189    ; ZX Spectrum +2A/+3 page control register
  00234 out (c),a     ;
  00236 ret           ;
 
-; Routine at 237
+; Open file
 ;
-; Used by the routines at #R699, #R717, #R735 and #R1410.
-c00237 ld a,36       ;
- 00239 ld b,1        ;
+; Used by the routines at #R699, #R717, #R735.
+c00237 ld a,36       ; ESXDOS_SYSTEM_DRIVE
+ 00239 ld b,1        ; ESXDOS_MODE_READ
  00241 rst 8         ; ESXDOS_SYS_CALL
- 00242 sbc a,d       ;
+ 00242 defb 154      ; RST $8 op-code (ESXDOS_SYS_F_OPEN)
  00243 ret           ;
 
 ; Routine at 244
@@ -384,35 +384,35 @@ c00257 ld bc,10800   ; Delay counter
  00511 call 1073     ;
  00514 ld a,13       ; <CR>
  00516 rst 16        ; Display character
- 00517 ld hl,1732    ;
- 00520 call 635      ; Display 'Loading <filename>.SYS...'
- 00523 call 735      ;
- 00526 push af       ;
- 00527 call 662      ;
- 00530 pop af        ;
- 00531 jr c,618      ;
+ 00517 ld hl,1732    ; 'ESXDOS' message
+ 00520 call 635      ; Display 'Loading ESXDOS.SYS...'
+ 00523 call 735      ; Load '/SYS/ESXDOS.SYS'
+ 00526 push af       ; Save flags
+ 00527 call 662      ; Display '[ERROR]' or '[OK]'. Carry clear = OK
+ 00530 pop af        ; Restore flags
+ 00531 jr c,618      ; Jump if there was an error
  00533 call 9961     ;
  00536 ld hl,9984    ;
  00539 call 7049     ;
- 00542 ld hl,1409    ;
- 00545 call 635      ;
+ 00542 ld hl,1409    ; 'RTC' message
+ 00545 call 635      ; Display 'Loading RTC.SYS...'
  00548 call 1413     ;
- 00551 call 662      ;
- 00554 ld hl,1769    ;
- 00557 call 635      ;
+ 00551 call 662      ; Display '[ERROR]' or '[OK]'. Carry clear = OK
+ 00554 ld hl,1769    ; 'NMI' message
+ 00557 call 635      ; Display 'Loading NMI.SYS...'
  00560 call 717      ;
- 00563 call 662      ;
+ 00563 call 662      ; Display '[ERROR]' or '[OK]'. Carry clear = OK
  00566 jr nz,591     ;
  00568 ld a,(11923)  ;
  00571 and a         ;
  00572 jr nz,591     ;
  00574 ld hl,1449    ; 'BETADISK' message
- 00577 call 635      ;
+ 00577 call 635      ; Display 'Loading BETADISK.SYS...'
  00580 call 699      ;
  00583 push af       ;
  00584 call nc,983   ;
  00587 pop af        ;
- 00588 call 662      ;
+ 00588 call 662      ; Display '[ERROR]' or '[OK]'. Carry clear = OK
 *00591 call 627      ;
  00594 ld de,2000    ;
  00597 call 244      ;
@@ -477,9 +477,9 @@ c00635 ex de,hl      ;
 ; Routine at 662
 ;
 ; Used by the routine at #R257.
-c00662 ld hl,1751    ;
+c00662 ld hl,1751    ; '[OK]' message
  00665 jr nc,670     ;
- 00667 ld hl,1739    ; [ERROR] message
+ 00667 ld hl,1739    ; '[ERROR]' message
 *00670 jp 2127       ;
 
 ; Display disk label
@@ -523,7 +523,7 @@ c00717 call 237      ;
  00720 ret c         ;
  00721 ld hl,12032   ;
  00724 ld bc,3584    ;
-; This entry point is used by the routines at #R699 and #R1410.
+; This entry point is used by the routines at #R699.
 *00727 ld e,a        ;
  00728 push de       ;
  00729 rst 8         ; ESXDOS_SYS_CALL
@@ -535,26 +535,30 @@ c00717 call 237      ;
 ; Routine at 735
 ;
 ; Used by the routine at #R257.
-c00735 call 237      ;
- 00738 ret c         ;
- 00739 push af       ;
- 00740 ld hl,8192    ;
- 00743 ld bc,2043    ;
+;
+; Input:hl Pointer to full file path
+;
+; Used by the routine at #R257.
+c00735 call 237      ; Open file pointed to by hl
+ 00738 ret c         ; exit if an error ocurred.
+ 00739 push af       ; Save the file handle
+ 00740 ld hl,8192    ; Load address
+ 00743 ld bc,2043    ; Bytes to read
  00746 rst 8         ; ESXDOS_SYS_CALL
- 00747 sbc a,l       ;
- 00748 ld a,1        ;
+ 00747 defb 157      ; RST $08 op-code (ESXDOS_SYS_F_READ)
+ 00748 ld a,1        ; Map in DivMMC RAM bank 1
  00750 out (227),a   ;
- 00752 pop af        ;
- 00753 push af       ;
- 00754 ld hl,12288   ;
- 00757 ld bc,2047    ;
+ 00752 pop af        ; Restore file handle
+ 00753 push af       ; and save it again.
+ 00754 ld hl,12288   ; Load address
+ 00757 ld bc,2047    ; Bytes to read
  00760 rst 8         ; ESXDOS_SYS_CALL
- 00761 sbc a,l       ;
- 00762 pop af        ;
+ 00761 defb 157      ; RST $08 op-code (ESXDOS_SYS_F_READ)
+ 00762 pop af        ; Restore file handle
 ; This entry point is used by the routine at #R717.
 *00763 rst 8         ; ESXDOS_SYS_CALL
- 00764 sbc a,e       ;
- 00765 ld a,0        ;
+ 00764 defb 155      ; RST $08 op-code (ESXDOS_SYS_F_CLOSE)
+ 00765 ld a,0        ; Map in DivMMC RAM bank 0
  00767 out (227),a   ;
  00769 ret           ;
 
@@ -1057,15 +1061,17 @@ c01399 push de       ;
  01404 jr c,1390     ;
  01406 jp 8206       ;
 
-; Data block at 1409
-b01409 defb 82
+; 'RTC' message
+t01409 defm "RTC",0
 
-; Routine at 1410
-c01410 ld d,h        ;
- 01411 ld b,e        ;
- 01412 nop           ;
+; Routine at 1413
+;
+; Used by the routine at #R257.
+;
+; .
+;
 ; This entry point is used by the routine at #R257.
-*01413 call 237      ;
+c01413 call 237      ;
  01416 ret c         ;
  01417 ld hl,9984    ;
  01420 ld bc,256     ;
