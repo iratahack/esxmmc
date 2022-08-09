@@ -132,12 +132,14 @@ C 00230,2 ZX Spectrum 128 page control register
 C 00232,2 Lower bit of ROM selection
 c 00237 Open file
 D 00237 Used by the routines at #R699, #R717, #R735.
+@ 00237 label=openFile
 C 00237,2 ESXDOS_SYSTEM_DRIVE
 C 00239,2 ESXDOS_MODE_READ
 C 00241,1 ESXDOS_SYS_CALL
 B 00242,1,1 RST $8 op-code (ESXDOS_SYS_F_OPEN)
-c 00244 Routine at 244
+c 00244 Delay for de * 255 loops
 D 00244 Used by the routine at #R257.
+@ 00244 label=wait
 b 00254 Data at 254
 B 00254,3,3
 c 00257 Controller init
@@ -206,8 +208,8 @@ C 00413,3 Date string
 C 00416,3 Display string
 C 00419,3 Display the ESXDOS logo.
 C 00422,3 ???
-C 00428,3 Destination address for the code copy performed by the next call.
-C 00431,3 Do the copy.
+C 00428,3 Destination address for the copy performed below
+C 00431,3 Copy 4 bytes from $1ffc
 C 00443,2 Op-code for jr
 C 00445,3 8222 is the address jumped to after a 48K ROM NMI
 C 00454,3 Address of return from DivMMC
@@ -225,15 +227,25 @@ C 00526,1 Save flags
 C 00527,3 Display '[ERROR]' or '[OK]'. Carry clear = OK
 C 00530,1 Restore flags
 C 00531,2 Jump if there was an error
+C 00533,3 Call into ESXDOS.SYS??? Maybe init?
+C 00536,3 Destination address for the copy performed below
+C 00539,3 Copy 4 bytes from $1ffc
 C 00542,3 'RTC' message
 C 00545,3 Display 'Loading RTC.SYS...'
+C 00548,3 Load '/SYS/RTC.SYS'
 C 00551,3 Display '[ERROR]' or '[OK]'. Carry clear = OK
 C 00554,3 'NMI' message
 C 00557,3 Display 'Loading NMI.SYS...'
+C 00560,3 Load NMI.SYS
 C 00563,3 Display '[ERROR]' or '[OK]'. Carry clear = OK
 C 00574,3 'BETADISK' message
 C 00577,3 Display 'Loading BETADISK.SYS...'
+C 00580,3 Load BETADISK.SYS
+C 00584,3 ???
 C 00588,3 Display '[ERROR]' or '[OK]'. Carry clear = OK
+C 00591,3 Wait for SPACE to be released.
+C 00594,3 Delay count
+C 00600,3 Call into ESXDOS.SYS to see if something is pressed.
 c 00610 Normal Initialization
 D 00610 Used by the routine at #R257.
 @ 00610 label=normalInit
@@ -252,6 +264,7 @@ C 00632,1 Return if SPACE is not pressed
 C 00633,2 else, keep looping.
 c 00635 Display loading messages
 D 00635 Used by the routine at #R257.
+@ 00635 label=loadingMessage
 C 00636,3 'Loading' message
 C 00639,3 Display null terminated string pointed to by hl.
 C 00642,1 hl points to value passed in.
@@ -262,8 +275,9 @@ C 00651,3 Display null terminated string pointed to by hl.
 C 00654,3 '...' message
 C 00657,3 Display null terminated string pointed to by hl.
 C 00660,1 hl points to the full file path
-c 00662 Routine at 662
+c 00662 Display error or ok message
 D 00662 Used by the routine at #R257.
+@ 00662 label=okError
 C 00662,3 '[OK]' message
 C 00667,3 '[ERROR]' message
 c 00673 Display disk label
@@ -282,16 +296,33 @@ C 00689,3 Address of string returned from ESXDOS_SYS_DISK_STATUS
 C 00692,3 Display null terminated string pointed to by hl.
 C 00695,2 <CR>
 C 00697,1 Display character
-c 00699 Routine at 699
+c 00699 Load /SYS/BETADISK.SYS
 D 00699 Used by the routine at #R257.
-c 00717 Routine at 717
+@ 00699 label=loadBETADISK
+C 00699,3 Open the file
+C 00703,1 Save file handle
+C 00704,2 Map in DivMMC RAM bank 3
+C 00708,1 Restore file handle
+C 00709,3 Load address
+C 00712,3 Byte to read
+c 00717 Load /SYS/NMI.SYS
 D 00717 Used by the routine at #R257.
+@ 00717 label=loadNMI
+C 00717,3 Open file
+C 00720,1 Return if there is an error
+C 00721,3 Load address
+C 00724,3 Bytes to load
 N 00727 This entry point is used by the routines at #R699.
+@ 00727 label=readFile
+C 00727,1 Save file handle
 C 00729,1 ESXDOS_SYS_CALL
-c 00735 Routine at 735
+B 00730,1,1 RST $08 op-code (ESXDOS_SYS_F_READ)
+C 00732,1 Restore file handle
+c 00735 Load /SYS/ESXDOS.SYS
 D 00735 Used by the routine at #R257.
 R 00735 Input:hl Pointer to full file path
 N 00735 Used by the routine at #R257.
+@ 00735 label=loadESXDOS
 C 00735,3 Open file pointed to by hl
 C 00738,1 exit if an error ocurred.
 C 00739,1 Save the file handle
@@ -374,8 +405,9 @@ D 01091 Used by the routine at #R1073.
 B 01091,16,8
 c 01107 Routine at 1107
 C 01128,1 Display character
-c 01131 Routine at 1131
+c 01131 Display ESXDOS logo
 D 01131 Used by the routine at #R257.
+@ 01131 label=displayLogo
 c 01162 Display drive device name
 D 01162 Display Unix style device name, e.g. sda, sda1, etc.
 C 01191,1 Display character
@@ -409,9 +441,15 @@ c 01399 Routine at 1399
 D 01399 Used by the routine at #R1378.
 t 01409 'RTC' message
 T 01409,4,3:n1
-c 01413 Routine at 1413
+c 01413 Load /SYS/RTC.SYS
 D 01413 Used by the routine at #R257.
 N 01413 This entry point is used by the routine at #R257.
+@ 01413 label=loadRTC
+C 01413,3 Open the file pointed to by hl
+C 01416,1 Return if there was an error.
+C 01417,3 Load address
+C 01420,3 Bytes to load
+C 01423,3 Load file
 c 01426 Routine at 1426
 D 01426 Used by the routine at #R1131.
 t 01449 BETADISK message
@@ -973,6 +1011,7 @@ T 07026,23,22:n1
 c 07049 Copy code
 D 07049 Copy 4 bytes of code from $1ffc to the address passed in hl.
 N 07049 Used by the routine at #R257.
+@ 07049 label=copyBytes
 C 07049,1 Move the destination address to de.
 C 07050,3 Load hl with the source address.
 C 07053,2 Copy 4 bytes.
