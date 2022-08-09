@@ -171,16 +171,20 @@ c00102 ret           ; NMI does nothing in DivMMC
  00128 ld a,(11900)  ; ???
  00131 jp 8222       ; Spring-board into the NMI handler in RAM.
 
-; Routine at 134
+; RST $30 dispatcher
 ;
-; Used by the routine at #R46.
+; Looks up the address of a routine to call based on the RST $30 op-code.
+;
+; .
+;
+; Called the routine at #R48.
 c00134 ld (15860),hl ; Save hl
  00137 pop hl        ; Pop the return address and
  00138 inc hl        ; increment it to skip over the op-code and
  00139 push hl       ; put it back on the stack.
  00140 dec hl        ; Decrement it back to where it was.
  00141 push de       ; Save de
- 00142 ld d,0        ;
+ 00142 ld d,0        ; Upper 16-bits of op-code is always 0.
  00144 ld e,(hl)     ; Read the op-code
  00145 ld hl,1458    ; Get the jump table address
  00148 add hl,de     ; Add the op-code twice to
@@ -381,7 +385,7 @@ c00257 ld bc,10800   ; Delay counter
  00514 ld a,13       ; <CR>
  00516 rst 16        ; Display character
  00517 ld hl,1732    ;
- 00520 call 635      ;
+ 00520 call 635      ; Display 'Loading <filename>.SYS...'
  00523 call 735      ;
  00526 push af       ;
  00527 call 662      ;
@@ -402,7 +406,7 @@ c00257 ld bc,10800   ; Delay counter
  00568 ld a,(11923)  ;
  00571 and a         ;
  00572 jr nz,591     ;
- 00574 ld hl,1449    ;
+ 00574 ld hl,1449    ; 'BETADISK' message
  00577 call 635      ;
  00580 call 699      ;
  00583 push af       ;
@@ -453,21 +457,21 @@ c00627 ld a,127      ; Read the keyboard half row
  00632 ret c         ; Return if SPACE is not pressed
  00633 jr 627        ; else, keep looping.
 
-; Routine at 635
+; Display loading messages
 ;
 ; Used by the routine at #R257.
 c00635 ex de,hl      ;
- 00636 ld hl,1760    ;
+ 00636 ld hl,1760    ; 'Loading' message
  00639 call 2127     ; Display null terminated string pointed to by hl.
- 00642 ex de,hl      ;
- 00643 call 770      ;
- 00646 push hl       ;
- 00647 ld de,5       ;
+ 00642 ex de,hl      ; hl points to value passed in.
+ 00643 call 770      ; Build the full file path name
+ 00646 push hl       ; Pointer to file path
+ 00647 ld de,5       ; Skip passed '/SYS/'
  00650 add hl,de     ;
  00651 call 2127     ; Display null terminated string pointed to by hl.
- 00654 ld hl,1773    ;
+ 00654 ld hl,1773    ; '...' message
  00657 call 2127     ; Display null terminated string pointed to by hl.
- 00660 pop hl        ;
+ 00660 pop hl        ; hl points to the full file path
  00661 ret           ;
 
 ; Routine at 662
@@ -475,7 +479,7 @@ c00635 ex de,hl      ;
 ; Used by the routine at #R257.
 c00662 ld hl,1751    ;
  00665 jr nc,670     ;
- 00667 ld hl,1739    ;
+ 00667 ld hl,1739    ; [ERROR] message
 *00670 jp 2127       ;
 
 ; Display disk label
@@ -554,15 +558,18 @@ c00735 call 237      ;
  00767 out (227),a   ;
  00769 ret           ;
 
-; Routine at 770
+; Build path name
 ;
-; Used by the routine at #R635.
+; Build a path to a file in the /SYS directory.
+;
+;  Input:hl Pointer to null terminated file name. e.g. 'BETADISK\000'
+; Output:hl Pointer to full path. e.g. '/SYS/BETADISK.SYS\000'
 c00770 call 792      ;
- 00773 ld hl,78      ;
+ 00773 ld hl,78      ; Add extension, pointer to 'SYS' message
 ; This entry point is used by the routine at #R784.
-*00776 call 83       ;
- 00779 ld (de),a     ;
- 00780 ld hl,11726   ;
+*00776 call 83       ; Copy (hl) -> (de) until '\000'
+ 00779 ld (de),a     ; Null terminator
+ 00780 ld hl,11726   ; Pointer to filename
  00783 ret           ;
 
 ; Routine at 784
@@ -574,15 +581,15 @@ c00784 call 792      ;
 ;
 ; Used by the routines at #R770 and #R784.
 c00792 push hl       ;
- 00793 ld de,11726   ;
- 00796 ld hl,77      ;
- 00799 call 83       ;
- 00802 ld a,47       ;
+ 00793 ld de,11726   ; File name storage area
+ 00796 ld hl,77      ; '/SYS' message
+ 00799 call 83       ; Copy (hl) -> (de) until '\000'
+ 00802 ld a,47       ; '/'
  00804 ld (de),a     ;
  00805 inc de        ;
- 00806 pop hl        ;
- 00807 call 83       ;
- 00810 ld a,46       ;
+ 00806 pop hl        ; Pointer to message passed in
+ 00807 call 83       ; Copy (hl) -> (de) until '\000'
+ 00810 ld a,46       ; '.'
  00812 ld (de),a     ;
  00813 inc de        ;
  00814 ret           ;
@@ -1314,22 +1321,15 @@ c01723 ld (hl),e     ;
  01730 inc hl        ;
  01731 ret           ;
 
-; Routine at 1732
-c01732 ld b,l        ;
- 01733 ld d,e        ;
- 01734 ld e,b        ;
- 01735 ld b,h        ;
- 01736 ld c,a        ;
- 01737 ld d,e        ;
- 01738 nop           ;
- 01739 rla           ;
- 01740 jr 1743       ;
+; ESXDOS message
+t01732 defm "ESXDOS",0
 
 ; [ERROR] message
-t01742 defm "[ERROR]",13,0
+t01739 defm 23,24,1        ; TAB 256 + 24
+ 01742 defm "[ERROR]",13,0
 
 ; [OK] message
-t01751 defm 23,27,1,"[OK]",13,0
+t01751 defm 23,27,1,"[OK]",13,0 ; TAB 256 + 27
 
 ; Loading message
 t01760 defm "Loading ",0

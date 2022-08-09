@@ -86,14 +86,16 @@ C 00121,3 Restore hl.
 C 00124,2 Map in RAM bank 0.
 C 00128,3 ???
 C 00131,3 Spring-board into the NMI handler in RAM.
-c 00134 Routine at 134
-D 00134 Used by the routine at #R46.
+c 00134 RST $30 dispatcher
+D 00134 Looks up the address of a routine to call based on the RST $30 op-code.
+N 00134 Called the routine at #R48.
 C 00134,3 Save hl
 C 00137,1 Pop the return address and
 C 00138,1 increment it to skip over the op-code and
 C 00139,1 put it back on the stack.
 C 00140,1 Decrement it back to where it was.
 C 00141,1 Save de
+C 00142,2 Upper 16-bits of op-code is always 0.
 C 00144,1 Read the op-code
 C 00145,3 Get the jump table address
 C 00148,1 Add the op-code twice to
@@ -109,15 +111,15 @@ C 00159,1 Return to the address read from the table
 u 00160 Unused
 B 00160,1,1
 t 00161 Version string
-T 00161,7 BRIGHT 1; TAB 256 + 19; BRIGHT 0
+T 00161,7,n7 BRIGHT 1; TAB 256 + 19; BRIGHT 0
 T 00168,13,13
-T 00181,8 <CR>; BRIGHT 1; TAB 256 + 21; BRIGHT 0
-T 00189,1 (C) and end of message
+T 00181,8,n8 <CR>; BRIGHT 1; TAB 256 + 21; BRIGHT 0
+T 00189,1,n1 (C) and end of message
 t 00190 Copyright date
-T 00190,10
-T 00200,8 <CR>; BRIGHT 1; TAB 256 + 19; BRIGHT 0
-T 00208,13
-T 00221,2 <CR>; <CR> + end of message
+T 00190,10,10
+T 00200,8,n8 <CR>; BRIGHT 1; TAB 256 + 19; BRIGHT 0
+T 00208,13,13
+T 00221,2,n2 <CR>; <CR> + end of message
 c 00223 Map 48K ROM
 D 00223 The upper bit of the ROM selection is in bit 2 of the ZX Spectrum +2A/+3 page control register at $1ffd and the lower bit is in bit 4 of the ZX Spectrum 128 page control register at $7ffd.
 D 00223 This routine works on all Spectrums >= 128K
@@ -213,6 +215,8 @@ C 00482,1 Display character
 C 00496,3 Display null terminated string pointed to by hl.
 C 00514,2 <CR>
 C 00516,1 Display character
+C 00520,3 Display 'Loading <filename>.SYS...'
+C 00574,3 'BETADISK' message
 c 00610 Normal Initialization
 D 00610 Used by the routine at #R257.
 @ 00610 label=normalInit
@@ -229,13 +233,21 @@ C 00629,2 containing the SPACE key.
 C 00631,1 Move the bit (bit-0) representing the SPACE key to the carry flag.
 C 00632,1 Return if SPACE is not pressed
 C 00633,2 else, keep looping.
-c 00635 Routine at 635
+c 00635 Display loading messages
 D 00635 Used by the routine at #R257.
+C 00636,3 'Loading' message
 C 00639,3 Display null terminated string pointed to by hl.
+C 00642,1 hl points to value passed in.
+C 00643,3 Build the full file path name
+C 00646,1 Pointer to file path
+C 00647,3 Skip passed '/SYS/'
 C 00651,3 Display null terminated string pointed to by hl.
+C 00654,3 '...' message
 C 00657,3 Display null terminated string pointed to by hl.
+C 00660,1 hl points to the full file path
 c 00662 Routine at 662
 D 00662 Used by the routine at #R257.
+C 00667,3 [ERROR] message
 c 00673 Display disk label
 D 00673 Used by the routine at #R257.
 @ 00673 label=getDiskStatus
@@ -264,12 +276,25 @@ C 00746,1 ESXDOS_SYS_CALL
 C 00760,1 ESXDOS_SYS_CALL
 N 00763 This entry point is used by the routine at #R717.
 C 00763,1 ESXDOS_SYS_CALL
-c 00770 Routine at 770
-D 00770 Used by the routine at #R635.
+c 00770 Build path name
+D 00770 Build a path to a file in the /SYS directory.
+R 00770 Input:hl Pointer to null terminated file name. e.g. 'BETADISK\000'
+R 00770 Output:hl Pointer to full path. e.g. '/SYS/BETADISK.SYS\000'
+C 00773,3 Add extension, pointer to 'SYS' message
 N 00776 This entry point is used by the routine at #R784.
+C 00776,3 Copy (hl) -> (de) until '\000'
+C 00779,1 Null terminator
+C 00780,3 Pointer to filename
 c 00784 Routine at 784
 c 00792 Routine at 792
 D 00792 Used by the routines at #R770 and #R784.
+C 00793,3 File name storage area
+C 00796,3 '/SYS' message
+C 00799,3 Copy (hl) -> (de) until '\000'
+C 00802,2 '/'
+C 00806,1 Pointer to message passed in
+C 00807,3 Copy (hl) -> (de) until '\000'
+C 00810,2 '.'
 c 00815 Routine at 815
 D 00815 Used by the routine at #R257.
 c 00833 Routine at 833
@@ -379,7 +404,7 @@ c 01512 Routine at 1512
 D 01512 Used by the routines at #R1498 and #R1519.
 c 01519 Routine at 1519
 C 01532,1 ESXDOS_SYS_CALL
-B 01533,1 RST $8 op-code ESXDOS_SYS_F_WRITE
+B 01533,1,1 RST $8 op-code ESXDOS_SYS_F_WRITE
 c 01541 48K ROM: COLLECT NEXT CHARACTER
 C 01541,1 ESXDOS_ROM_CALL
 W 01542,2,2 Address to call in 48K ROM
@@ -405,11 +430,13 @@ W 01720,2,2 Address to call in 48K ROM
 c 01723 Get 32-bit value
 D 01723 Read a 32-bit value pointed to by hl into the register pairs bcde
 N 01723 Used by the routine at #R6802.
-c 01732 Routine at 1732
-t 01742 [ERROR] message
+t 01732 ESXDOS message
+T 01732,7,6:n1
+t 01739 [ERROR] message
+T 01739,3,n3 TAB 256 + 24
 T 01742,9,7:n2
 t 01751 [OK] message
-T 01751,9,n3:4:n2
+T 01751,9,n3:4:n2 TAB 256 + 27
 t 01760 Loading message
 T 01760,9,8:n1
 t 01769 NMI message
