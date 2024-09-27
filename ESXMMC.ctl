@@ -86,14 +86,16 @@ C 00121,3 Restore hl.
 C 00124,2 Map in RAM bank 0.
 C 00128,3 ???
 C 00131,3 Spring-board into the NMI handler in RAM.
-c 00134 Routine at 134
-D 00134 Used by the routine at #R46.
+c 00134 RST $30 dispatcher
+D 00134 Looks up the address of a routine to call based on the RST $30 op-code.
+N 00134 Called the routine at #R48.
 C 00134,3 Save hl
 C 00137,1 Pop the return address and
 C 00138,1 increment it to skip over the op-code and
 C 00139,1 put it back on the stack.
 C 00140,1 Decrement it back to where it was.
 C 00141,1 Save de
+C 00142,2 Upper 16-bits of op-code is always 0.
 C 00144,1 Read the op-code
 C 00145,3 Get the jump table address
 C 00148,1 Add the op-code twice to
@@ -109,15 +111,15 @@ C 00159,1 Return to the address read from the table
 u 00160 Unused
 B 00160,1,1
 t 00161 Version string
-T 00161,7 BRIGHT 1; TAB 256 + 19; BRIGHT 0
+T 00161,7,n7 BRIGHT 1; TAB 256 + 19; BRIGHT 0
 T 00168,13,13
-T 00181,8 <CR>; BRIGHT 1; TAB 256 + 21; BRIGHT 0
-T 00189,1 (C) and end of message
+T 00181,8,n8 <CR>; BRIGHT 1; TAB 256 + 21; BRIGHT 0
+T 00189,1,n1 (C) and end of message
 t 00190 Copyright date
-T 00190,10
-T 00200,8 <CR>; BRIGHT 1; TAB 256 + 19; BRIGHT 0
-T 00208,13
-T 00221,2 <CR>; <CR> + end of message
+T 00190,10,10
+T 00200,8,n8 <CR>; BRIGHT 1; TAB 256 + 19; BRIGHT 0
+T 00208,13,13
+T 00221,2,n2 <CR>; <CR> + end of message
 c 00223 Map 48K ROM
 D 00223 The upper bit of the ROM selection is in bit 2 of the ZX Spectrum +2A/+3 page control register at $1ffd and the lower bit is in bit 4 of the ZX Spectrum 128 page control register at $7ffd.
 D 00223 This routine works on all Spectrums >= 128K
@@ -128,11 +130,16 @@ C 00223,3 ZX Spectrum +2A/+3 page control register
 C 00226,2 Upper bit of ROM selection
 C 00230,2 ZX Spectrum 128 page control register
 C 00232,2 Lower bit of ROM selection
-c 00237 Routine at 237
-D 00237 Used by the routines at #R699, #R717, #R735 and #R1410.
+c 00237 Open file
+D 00237 Used by #R699, #R717, #R735, and #R1413.
+@ 00237 label=openFile
+C 00237,2 ESXDOS_SYSTEM_DRIVE
+C 00239,2 ESXDOS_MODE_READ
 C 00241,1 ESXDOS_SYS_CALL
-c 00244 Routine at 244
+B 00242,1,1 RST $8 op-code (ESXDOS_SYS_F_OPEN)
+c 00244 Delay for de * 255 loops
 D 00244 Used by the routine at #R257.
+@ 00244 label=wait
 b 00254 Data at 254
 B 00254,3,3
 c 00257 Controller init
@@ -194,25 +201,60 @@ C 00360,1 Select DivMMC bank 0
 C 00363,1 Save the value from l
 C 00367,2 Set the initFlag to $aa so as
 C 00369,3 not to go through the full init on the next reset.
-C 00389,3 Screen address ?
+C 00375,3 CHANS - Address of channel data
+C 00381,3 CURCHL - Address of information used for input and output
+C 00386,3 ATTR-T - Temporary current colours
+C 00389,3 Start of screen
+C 00392,3 DF-CC - Address in display file of PRINT position
+C 00398,3 S-POSN - Column and line number for PRINT position
+C 00404,3 CHARS - 256 less than address of character set
 C 00407,3 Version string
 C 00410,3 Display string
 C 00413,3 Date string
 C 00416,3 Display string
 C 00419,3 Display the ESXDOS logo.
-C 00422,3 ???
-C 00428,3 Destination address for the code copy performed by the next call.
-C 00431,3 Do the copy.
+C 00422,3 Setup init routine address for MMC
+C 00428,3 Destination address for the copy performed below
+C 00431,3 Copy 4 bytes from $1ffc
 C 00443,2 Op-code for jr
-C 00445,3 8222 is the address jumped to after a 48K ROM NMI
+C 00445,3 $201e is the address jumped to after a 48K ROM NMI
 C 00454,3 Address of return from DivMMC
+C 00465,3 Op-codes, SCF, RET
 C 00474,3 Detecting devices... message
 C 00477,3 Display null terminated string pointed to by hl.
 C 00480,2 <CR>
 C 00482,1 Display character
+C 00483,2 ESXDOS_SYS_DISK_STATUS
+C 00488,2 ESXDOS_SYS_M_DOSVERSION
 C 00496,3 Display null terminated string pointed to by hl.
 C 00514,2 <CR>
 C 00516,1 Display character
+C 00517,3 'ESXDOS' message
+C 00520,3 Display 'Loading ESXDOS.SYS...'
+C 00523,3 Load '/SYS/ESXDOS.SYS'
+C 00526,1 Save flags
+C 00527,3 Display '[ERROR]' or '[OK]'. Carry clear = OK
+C 00530,1 Restore flags
+C 00531,2 Jump if there was an error
+C 00533,3 Call into ESXDOS.SYS??? Maybe init?
+C 00536,3 Destination address for the copy performed below
+C 00539,3 Copy 4 bytes from $1ffc
+C 00542,3 'RTC' message
+C 00545,3 Display 'Loading RTC.SYS...'
+C 00548,3 Load '/SYS/RTC.SYS'
+C 00551,3 Display '[ERROR]' or '[OK]'. Carry clear = OK
+C 00554,3 'NMI' message
+C 00557,3 Display 'Loading NMI.SYS...'
+C 00560,3 Load NMI.SYS
+C 00563,3 Display '[ERROR]' or '[OK]'. Carry clear = OK
+C 00574,3 'BETADISK' message
+C 00577,3 Display 'Loading BETADISK.SYS...'
+C 00580,3 Load BETADISK.SYS
+C 00584,3 ???
+C 00588,3 Display '[ERROR]' or '[OK]'. Carry clear = OK
+C 00591,3 Wait for SPACE to be released.
+C 00594,3 Delay count
+C 00600,3 Call into ESXDOS.SYS to see if something is pressed.
 c 00610 Normal Initialization
 D 00610 Used by the routine at #R257.
 @ 00610 label=normalInit
@@ -229,13 +271,24 @@ C 00629,2 containing the SPACE key.
 C 00631,1 Move the bit (bit-0) representing the SPACE key to the carry flag.
 C 00632,1 Return if SPACE is not pressed
 C 00633,2 else, keep looping.
-c 00635 Routine at 635
+c 00635 Display loading messages
 D 00635 Used by the routine at #R257.
+@ 00635 label=loadingMessage
+C 00636,3 'Loading' message
 C 00639,3 Display null terminated string pointed to by hl.
+C 00642,1 hl points to value passed in.
+C 00643,3 Build the full file path name
+C 00646,1 Pointer to file path
+C 00647,3 Skip passed '/SYS/'
 C 00651,3 Display null terminated string pointed to by hl.
+C 00654,3 '...' message
 C 00657,3 Display null terminated string pointed to by hl.
-c 00662 Routine at 662
+C 00660,1 hl points to the full file path
+c 00662 Display error or ok message
 D 00662 Used by the routine at #R257.
+@ 00662 label=okError
+C 00662,3 '[OK]' message
+C 00667,3 '[ERROR]' message
 c 00673 Display disk label
 D 00673 Used by the routine at #R257.
 @ 00673 label=getDiskStatus
@@ -248,30 +301,83 @@ C 00683,2 ':'
 C 00685,1 Display character
 C 00686,2 ' '
 C 00688,1 Display character
-C 00689,3 Address of string returned from ESXDOS_SYS_DISK_STATUS
+C 00689,3 Address of string returned from RST $08
 C 00692,3 Display null terminated string pointed to by hl.
 C 00695,2 <CR>
 C 00697,1 Display character
-c 00699 Routine at 699
+c 00699 Load /SYS/BETADISK.SYS
 D 00699 Used by the routine at #R257.
-c 00717 Routine at 717
+@ 00699 label=loadBETADISK
+C 00699,3 Open the file
+C 00703,1 Save file handle
+C 00704,2 Map in DivMMC RAM bank 3
+C 00708,1 Restore file handle
+C 00709,3 Load address
+C 00712,3 Byte to read
+c 00717 Load /SYS/NMI.SYS
 D 00717 Used by the routine at #R257.
-N 00727 This entry point is used by the routines at #R699 and #R1410.
+@ 00717 label=loadNMI
+C 00717,3 Open file
+C 00720,1 Return if there is an error
+C 00721,3 Load address
+C 00724,3 Bytes to load
+N 00727 This entry point is used by the routines at #R699, and #R1413.
+@ 00727 label=readFile
+C 00727,1 Save file handle
 C 00729,1 ESXDOS_SYS_CALL
-c 00735 Routine at 735
+B 00730,1,1 RST $08 op-code (ESXDOS_SYS_F_READ)
+C 00732,1 Restore file handle
+c 00735 Load /SYS/ESXDOS.SYS
 D 00735 Used by the routine at #R257.
+R 00735 Input:hl Pointer to full file path
+N 00735 Used by the routine at #R257.
+@ 00735 label=loadESXDOS
+C 00735,3 Open file pointed to by hl
+C 00738,1 exit if an error ocurred.
+C 00739,1 Save the file handle
+C 00740,3 Load address
+C 00743,3 Bytes to read
 C 00746,1 ESXDOS_SYS_CALL
+B 00747,1,1 RST $08 op-code (ESXDOS_SYS_F_READ)
+C 00748,2 Map in DivMMC RAM bank 1
+C 00752,1 Restore file handle
+C 00753,1 and save it again.
+C 00754,3 Load address
+C 00757,3 Bytes to read
 C 00760,1 ESXDOS_SYS_CALL
+B 00761,1,1 RST $08 op-code (ESXDOS_SYS_F_READ)
+C 00762,1 Restore file handle
 N 00763 This entry point is used by the routine at #R717.
 C 00763,1 ESXDOS_SYS_CALL
-c 00770 Routine at 770
-D 00770 Used by the routine at #R635.
+B 00764,1,1 RST $08 op-code (ESXDOS_SYS_F_CLOSE)
+C 00765,2 Map in DivMMC RAM bank 0
+c 00770 Build path name
+D 00770 Build a path to a file in the /SYS directory.
+R 00770 Input:hl Pointer to null terminated file name. e.g. 'BETADISK\000'
+R 00770 Output:hl Pointer to full path. e.g. '/SYS/BETADISK.SYS\000'
+C 00773,3 Add extension, pointer to 'SYS' message
 N 00776 This entry point is used by the routine at #R784.
+C 00776,3 Copy (hl) -> (de) until '\000'
+C 00779,1 Null terminator
+C 00780,3 Pointer to filename
 c 00784 Routine at 784
-c 00792 Routine at 792
+c 00792 Build a system file path
 D 00792 Used by the routines at #R770 and #R784.
-c 00815 Routine at 815
+@ 00792 label=buildSysPath
+C 00793,3 File name storage area
+C 00796,3 '/SYS' message
+C 00799,3 Copy (hl) -> (de) until '\000'
+C 00802,2 '/'
+C 00806,1 Pointer to message passed in
+C 00807,3 Copy (hl) -> (de) until '\000'
+C 00810,2 '.'
+c 00815 Setup MMC routine addresses
 D 00815 Used by the routine at #R257.
+C 00815,3 Address to save routine pointers
+C 00818,3 Address of SPI init routine
+C 00821,1 Save the address to (hl)
+C 00825,3 What is this address in RAM???
+C 00828,1 Also being saved to (hl)
 c 00833 Routine at 833
 D 00833 Used by the routine at #R7954.
 c 00854 Routine at 854
@@ -308,14 +414,15 @@ D 01058 Used by the routine at #R1021.
 c 01073 Routine at 1073
 D 01073 Used by the routine at #R257.
 C 01077,1 ESXDOS_SYS_CALL
-B 01078,1,1 RST $08 op-code
+B 01078,1,1 RST $08 op-code (???)
 b 01091 Data block at 1091
 D 01091 Used by the routine at #R1073.
 B 01091,16,8
 c 01107 Routine at 1107
 C 01128,1 Display character
-c 01131 Routine at 1131
+c 01131 Display ESXDOS logo
 D 01131 Used by the routine at #R257.
+@ 01131 label=displayLogo
 c 01162 Display drive device name
 D 01162 Display Unix style device name, e.g. sda, sda1, etc.
 C 01191,1 Display character
@@ -347,10 +454,17 @@ c 01378 LD_BYTES entry point from 48K ROM
 N 01390 This entry point is used by the routine at #R1399.
 c 01399 Routine at 1399
 D 01399 Used by the routine at #R1378.
-b 01409 Data block at 1409
-B 01409,1,1
-c 01410 Routine at 1410
+t 01409 'RTC' message
+T 01409,4,3:n1
+c 01413 Load /SYS/RTC.SYS
+D 01413 Used by the routine at #R257.
 N 01413 This entry point is used by the routine at #R257.
+@ 01413 label=loadRTC
+C 01413,3 Open the file pointed to by hl
+C 01416,1 Return if there was an error.
+C 01417,3 Load address
+C 01420,3 Bytes to load
+C 01423,3 Load file
 c 01426 Routine at 1426
 D 01426 Used by the routine at #R1131.
 t 01449 BETADISK message
@@ -379,7 +493,7 @@ c 01512 Routine at 1512
 D 01512 Used by the routines at #R1498 and #R1519.
 c 01519 Routine at 1519
 C 01532,1 ESXDOS_SYS_CALL
-B 01533,1 RST $8 op-code ESXDOS_SYS_F_WRITE
+B 01533,1,1 RST $8 op-code (ESXDOS_SYS_F_WRITE)
 c 01541 48K ROM: COLLECT NEXT CHARACTER
 C 01541,1 ESXDOS_ROM_CALL
 W 01542,2,2 Address to call in 48K ROM
@@ -405,11 +519,13 @@ W 01720,2,2 Address to call in 48K ROM
 c 01723 Get 32-bit value
 D 01723 Read a 32-bit value pointed to by hl into the register pairs bcde
 N 01723 Used by the routine at #R6802.
-c 01732 Routine at 1732
-t 01742 [ERROR] message
+t 01732 ESXDOS message
+T 01732,7,6:n1
+t 01739 [ERROR] message
+T 01739,3,n3 TAB 256 + 24
 T 01742,9,7:n2
 t 01751 [OK] message
-T 01751,9,n3:4:n2
+T 01751,9,n3:4:n2 TAB 256 + 27
 t 01760 Loading message
 T 01760,9,8:n1
 t 01769 NMI message
@@ -419,9 +535,9 @@ T 01773,4,3:n1
 c 01777 Routine at 1777
 D 01777 Used by the routine at #R257.
 C 01781,1 ESXDOS_SYS_CALL
-B 01782,1,1 RST $08 op-coode
+B 01782,1,1 RST $08 op-code (???)
 C 01791,1 ESXDOS_SYS_CALL
-B 01792,1,1 RST $08 op-coode
+B 01792,1,1 RST $08 op-code (???)
 c 01800 Routine at 1800
 c 01828 Routine at 1828
 D 01828 Used by the routine at #R1800.
@@ -431,6 +547,7 @@ c 01856 Routine at 1856
 D 01856 Used by the routine at #R1842.
 c 01860 Routine at 1860
 C 01887,1 ESXDOS_SYS_CALL
+B 01888,1,1 RST $8 op-code (???)
 c 01894 Routine at 1894
 D 01894 Used by the routine at #R1860.
 c 01935 Routine at 1935
@@ -449,7 +566,6 @@ c 02055 Routine at 2055
 D 02055 Used by the routine at #R2003.
 c 02062 Routine at 2062
 D 02062 Used by the routine at #R2003.
-B 02082,1,1 M + end of message
 b 02083 Data block at 2083
 B 02083,1,1
 t 02084 No SYSTEM
@@ -496,29 +612,124 @@ C 02317,1 Display character
 C 02321,1 Display character
 c 02323 Routine at 2323
 D 02323 Used by the routine at #R2283.
-b 02350 Data block at 2350
-B 02350,16,8
-c 02366 Routine at 2366
-b 02368 Data block at 2368
-B 02368,30,8*3,6
-c 02398 Routine at 2398
-c 02452 Routine at 2452
+b 02350 Lookup table for RST $08
+W 02350,2,2 ESXDOS_SYS_DISK_STATUS ($80)
+W 02352,2,2 ESXDOS_SYS_DISK_READ ($81)
+W 02354,2,2 ($82)
+W 02356,2,2 ($83)
+W 02358,2,2 ($84)
+W 02360,2,2 ($85)
+W 02362,2,2 ($86)
+W 02364,2,2 ($87)
+W 02366,2,2 ESXDOS_SYS_M_DOSVERSION ($88)
+W 02368,2,2 ESXDOS_SYS_M_GETSETDRV ($89)
+W 02370,2,2 ($8a)
+W 02372,2,2 ($8b)
+W 02374,2,2 ($8c)
+W 02376,2,2 ($8d)
+W 02378,2,2 ($8e)
+W 02380,2,2 ($8f)
+W 02382,2,2 ($90)
+W 02384,2,2 ($91)
+W 02386,2,2 ($92)
+W 02388,2,2 ($93)
+W 02390,2,2 ($94)
+W 02392,2,2 ($95)
+W 02394,2,2 ($96)
+W 02396,2,2 ($97)
+W 02398,2,2 ($98)
+W 02400,2,2 ($99)
+W 02402,2,2 ($9a)
+W 02404,2,2 ($9b)
+W 02406,2,2 ($9c)
+W 02408,2,2 ($9d)
+W 02410,2,2 ($9e)
+W 02412,2,2 ($9f)
+W 02414,2,2 ($a0)
+W 02416,2,2 ($a1)
+W 02418,2,2 ($a2)
+W 02420,2,2 ($a3)
+W 02422,2,2 ($a4)
+W 02424,2,2 ($a5)
+W 02426,2,2 ($a6)
+W 02428,2,2 ($a7)
+W 02430,2,2 ($a8)
+W 02432,2,2 ($a9)
+W 02434,2,2 ($aa)
+W 02436,2,2 ($ab)
+W 02438,2,2 ($ac)
+W 02440,2,2 ($ad)
+W 02442,2,2 ($ae)
+W 02444,2,2 ($af)
+W 02446,2,2 ($b0)
+W 02448,2,2 ($b1)
+W 02450,2,2 ($b2)
+W 02452,2,2 ($b3)
+W 02454,2,2 ($b4)
+c 02456 Routine at 2456
+D 02456 Used by the routine at #R8.
 N 02456 This entry point is used by the routine at #R7.
+C 02456,1 Get the return address from the stack into hl
+C 02457,3 Save 'a' for use later
+C 02460,1 Get the op-code
+C 02461,1 Move return address passed op-code
+C 02462,1 Put return address back on to the stack
 N 02463 This entry point is used by the routines at #R2398 and #R3348.
-c 02503 Routine at 2503
+C 02469,2 Save op-code - 128
+C 02471,4 ixl = Current DivMMC RAM bank, ixh = Value of 'a' saved above
+C 02475,1 Map in DivMMC RAM bank 0
+C 02478,2 Move current DivMMC RAM bank to a
+C 02480,3 and save it.
+c 02503 RST $8 Op-code dispatcher
 D 02503 Used by the routine at #R2452.
-c 02523 Routine at 2523
+C 02503,2 Get the op-code - 128
+C 02506,3 RST $8 function table
+C 02509,1 Double a and
+C 02510,1 add it to l
+C 02511,1 and store it back into l
+C 02512,2 If there was no carry do not increment h
+C 02514,1 Increment h
+C 02515,1 Get low 8-bits of routine address
+C 02517,1 Get hi 8-bits of the routine address
+C 02518,1 Put lo 8-bits of address into l
+C 02521,1 Put the routine address on the stack
+C 02522,1 and return to it.
+c 02523 No SYS error
+@ 02523 label=noSysError
+C 02523,2 No SYS error code
+C 02525,1 Setting the carry flag signifies an error
+C 02526,1 Return to caller
 c 02527 Routine at 2527
-c 02532 Routine at 2532
-c 02540 Routine at 2540
-D 02540 Used by the routine at #R2532.
+c 02532 Set/Get default drive
+R 02532 Input:a = 0, get default drive.
+R 02532 Input:a <> 0, set default drive.
+@ 02532 label=getSetDefaultDrive
 c 02560 Routine at 2560
-c 02590 Routine at 2590
-c 02632 Routine at 2632
+c 02590 ESXDOS_SYS_DISK_STATUS
+@ 02590 label=diskStatus
+C 02590,3 Save a, bc, de, hl
+C 02608,2 Error code, Device is BUSY
+C 02611,3 Point to the address holding the address of the SPI routines
+C 02614,1 Read low 8-bits
+C 02615,1 Next byte
+C 02616,1 Read high 8-bits
+C 02618,1 Check if the high 8-bits
+C 02619,1 are zero and if they are return.
+C 02620,2 Error code, No such DEVICE
+C 02622,1 Set the carry flag
+C 02623,1 Return if high order 8-bits of address are zero.
+C 02625,3 call (de)
+C 02630,2 Next routine to call
+c 02632 call (de)
 D 02632 Used by the routine at #R2590.
+C 02632,3 Restore the saved registers
+C 02642,1 Push the routine address onto the stack
+C 02643,4 Restore de
+C 02647,1 Jump to address on stack
 c 02648 Routine at 2648
 D 02648 Used by the routines at #R2659 and #R2673.
-c 02659 Routine at 2659
+c 02659 ESXDOS_SYS_DISK_READ
+@ 02659 label=diskRead
 c 02673 Routine at 2673
 D 02673 Used by the routine at #R2560.
 N 02677 This entry point is used by the routine at #R2659.
@@ -533,6 +744,7 @@ D 02786 Used by the routine at #R2764.
 N 02803 This entry point is used by the routine at #R2840.
 c 02806 Routine at 2806
 C 02826,1 ESXDOS_SYS_CALL
+B 02827,1,1 RST $8 op-code (???)
 c 02840 Routine at 2840
 N 02859 This entry point is used by the routines at #R1800 and #R2740.
 N 02864 This entry point is used by the routine at #R2786.
@@ -548,7 +760,11 @@ D 02977 Used by the routine at #R2965.
 c 03018 Routine at 3018
 D 03018 Used by the routine at #R2965.
 N 03088 This entry point is used by the routine at #R2977.
-c 03096 Routine at 3096
+c 03096 Get DOS version
+R 03096 Output:hl BCD version number
+@ 03096 label=getDOSVersion
+C 03096,1 Clear carry flag
+C 03097,3 Version number 0.8.9.0
 c 03101 Routine at 3101
 D 03101 Used by the routine at #R27.
 C 03112,1 ESXDOS_ROM_CALL
@@ -608,7 +824,9 @@ c 03513 Routine at 3513
 c 03540 Routine at 3540
 D 03540 Used by the routines at #R3481 and #R3513.
 C 03553,1 ESXDOS_SYS_CALL
+B 03554,1,1 RST $8 op-code (ESXDOS_SYS_F_READ)
 C 03558,1 ESXDOS_SYS_CALL
+B 03559,1,1 RST $8 op-code (ESXDOS_SYS_F_CLOSE)
 b 03568 Data block at 3568
 D 03568 Used by the routine at #R3481.
 B 03568,39,8*4,7
@@ -650,12 +868,15 @@ D 04234 Used by the routine at #R4212.
 c 04261 Routine at 4261
 D 04261 Used by the routines at #R3719, #R4037, #R4292, #R4297 and #R4625.
 C 04266,1 ESXDOS_SYS_CALL
+B 04267,1,1 RST $8 op-code (ESXDOS_SYS_DISK_READ)
 c 04271 Routine at 4271
 D 04271 Used by the routine at #R4588.
 C 04274,1 ESXDOS_SYS_CALL
+B 04275,1,1 RST $8 op-code (???)
 c 04277 Routine at 4277
 D 04277 Used by the routines at #R4287 and #R4384.
 C 04282,1 ESXDOS_SYS_CALL
+B 04283,1,1 RST $8 op-code (???)
 c 04287 Routine at 4287
 D 04287 Used by the routine at #R4384.
 c 04292 Routine at 4292
@@ -706,6 +927,7 @@ D 04674 Used by the routine at #R6568.
 c 04683 Routine at 4683
 D 04683 Used by the routine at #R6506.
 C 04701,1 ESXDOS_SYS_CALL
+B 04702,1,1 RST $8 op-code (ESXDOS_SYS_DISK_READ)
 c 04710 Routine at 4710
 D 04710 Used by the routines at #R5254, #R6032 and #R6489.
 c 04724 Routine at 4724
@@ -732,6 +954,7 @@ D 04938 Used by the routine at #R5928.
 c 04952 Routine at 4952
 D 04952 Used by the routine at #R6506.
 C 04970,1 ESXDOS_SYS_CALL
+B 04971,1,1 RST $8 op-code (???)
 c 04979 Routine at 4979
 c 05041 Routine at 5041
 D 05041 Used by the routine at #R5434.
@@ -835,6 +1058,7 @@ c 06082 Routine at 6082
 D 06082 Used by the routine at #R5928.
 N 06094 This entry point is used by the routine at #R6202.
 C 06098,1 ESXDOS_SYS_CALL
+B 06099,1,1 RST $8 op-code (???)
 c 06144 Routine at 6144
 D 06144 Used by the routines at #R5928 and #R6202.
 c 06156 Routine at 6156
@@ -892,9 +1116,12 @@ c 06817 Routine at 6817
 c 06842 Routine at 6842
 c 06856 Routine at 6856
 C 06884,1 ESXDOS_SYS_CALL
+B 06885,1,1 RST $8 op-code (ESXDOS_SYS_F_WRITE)
 C 06889,1 ESXDOS_SYS_CALL
+B 06890,1,1 RST $8 op-code (???)
 c 06894 Routine at 6894
 C 06962,1 ESXDOS_SYS_CALL
+B 06963,1,1 RST $8 op-code (ESXDOS_SYS_F_READ)
 N 06979 This entry point is used by the routine at #R6856.
 c 06993 Routine at 6993
 D 06993 Used by the routine at #R1107.
@@ -910,6 +1137,7 @@ T 07026,23,22:n1
 c 07049 Copy code
 D 07049 Copy 4 bytes of code from $1ffc to the address passed in hl.
 N 07049 Used by the routine at #R257.
+@ 07049 label=copyBytes
 C 07049,1 Move the destination address to de.
 C 07050,3 Load hl with the source address.
 C 07053,2 Copy 4 bytes.
@@ -921,10 +1149,12 @@ N 07096 This entry point is used by the routine at #R7062.
 b 07107 ESXDOS logo
 B 07107,289,16*18,1
 c 07396 Routine at 7396
+c 07408 Routine at 7408
 c 07427 Routine at 7427
 D 07427 Used by the routines at #R7438 and #R7892.
 c 07438 Routine at 7438
 D 07438 Used by the routine at #R7396.
+C 07448,3 Reset MMC
 c 07546 Routine at 7546
 D 07546 Used by the routine at #R7438.
 c 07555 Routine at 7555
@@ -936,6 +1166,7 @@ c 07602 Routine at 7602
 D 07602 Used by the routine at #R7438.
 c 07619 Routine at 7619
 D 07619 Used by the routine at #R7438.
+C 07635,2 GO_IDLE_STATE
 N 07649 This entry point is used by the routines at #R7602, #R7656 and #R7852.
 c 07656 Routine at 7656
 N 07658 This entry point is used by the routines at #R7587 and #R7602.
@@ -945,14 +1176,34 @@ c 07671 Routine at 7671
 D 07671 Used by the routines at #R7619 and #R7684.
 c 07684 Routine at 7684
 D 07684 Used by the routines at #R7438 and #R7555.
-c 07709 Routine at 7709
-D 07709 Used by the routines at #R7656 and #R7671.
+c 07709 Output SPI command
+D 07709 Sends the contents of a, b, c, d, e to port $eb The CRC is $95 for CMD0 and $87 for CMD8, all other commands use a CRC of $ff.
+N 07709 Used by the routines at #R7656 and #R7671.
+C 07714,1 Save command
+C 07731,1 Restore command
+C 07732,2 Is this a GO_IDLE_STATE (CMD0)?
+C 07734,2 Set the CRC for CMD0
+C 07736,2 Yes, send the CRC
+C 07738,2 Is this SEND_IF_COND (CMD8)?
+C 07740,2 Set the CRC for CMD8
+C 07742,2 Yes, send the CRC
+C 07744,2 Default CRC is $ff
+C 07746,1 b contains the CRC
+C 07747,2 Send it out.
 c 07751 Routine at 7751
 D 07751 Used by the routine at #R7602.
-c 07765 Routine at 7765
+c 07765 Read SPI byte
 D 07765 Used by the routines at #R7684, #R7709, #R7751 and #R7852.
+C 07768,2 Read SPI byte
+C 07772,1 Return if not $ff
+C 07773,2 Poll again
+C 07776,2 Poll again
 c 07779 Routine at 7779
 D 07779 Used by the routines at #R7619 and #R7709.
+C 07779,1 Save a
+C 07780,2 Read SPI
+C 07785,2 Set MMC chip select
+C 07787,1 Restore a
 b 07789 Data block at 7789
 B 07789,29,8*3,5
 b 07818 Data block at 7818
@@ -984,6 +1235,7 @@ D 08064 Used by the routine at #R8004.
 c 08076 Routine at 8076
 D 08076 Used by the routine at #R7396.
 C 08084,1 ESXDOS_SYS_CALL
+B 08085,1,1 RST $8 op-code (???)
 c 08135 Routine at 8135
 s 08156 Unused
 S 08156,24,24
